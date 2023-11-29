@@ -2,6 +2,7 @@
 //
 #include "framework.h"
 #include "Client.h"
+#include "GameCore.h"
 
 #define MAX_LOADSTRING 100
 
@@ -39,12 +40,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	// Core 초기화
-	/*if (FAILED(CCore::GetInst()->init(g_hWnd, POINT{ 1280, 768 })))
+	if (FAILED(GameCore::GetInst()->Init(g_hWnd, POINT{ 512, 384 })))
 	{
 		MessageBox(nullptr, L"Core객체 초기화 실패", L"ERROR", MB_OK);
 
 		return FALSE;
-	}*/
+	}
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
@@ -82,7 +83,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-	WNDCLASSEXW wcex;
+	WNDCLASSEXW wcex = {};
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
