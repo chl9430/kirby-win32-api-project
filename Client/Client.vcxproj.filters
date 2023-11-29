@@ -12,11 +12,23 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Engine\Core">
+    <Filter Include="Engine\01. Header">
+      <UniqueIdentifier>{7ff84b7f-0e11-4d59-9748-9f9cfc30b0e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\02. Core">
       <UniqueIdentifier>{39f4dfb5-479f-450c-800a-991bc7f85eac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Header">
-      <UniqueIdentifier>{7ff84b7f-0e11-4d59-9748-9f9cfc30b0e1}</UniqueIdentifier>
+    <Filter Include="Engine\03. Manager">
+      <UniqueIdentifier>{f2ef364c-d3d3-45e0-b950-f27a14f4482b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Manager\ResMgr">
+      <UniqueIdentifier>{3538f17e-9554-49c8-867c-1b9e888ae064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Resource">
+      <UniqueIdentifier>{ec4c5071-4052-4a4b-b5f1-ed32b000401c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Resource\Texture">
+      <UniqueIdentifier>{14f5664c-e645-4e3e-8f40-087018569917}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,19 +45,44 @@
       <Filter>Default</Filter>
     </ClInclude>
     <ClInclude Include="GameCore.h">
-      <Filter>Engine\Core</Filter>
+      <Filter>Engine\02. Core</Filter>
     </ClInclude>
     <ClInclude Include="struct.h">
-      <Filter>Engine\Header</Filter>
+      <Filter>Engine\01. Header</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="GameResMgr.h">
+      <Filter>Engine\03. Manager\ResMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>Engine\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRes.h">
+      <Filter>Engine\04. Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTexture.h">
+      <Filter>Engine\04. Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="func.h">
+      <Filter>Engine\01. Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="GameCore.cpp">
-      <Filter>Engine\Core</Filter>
+      <Filter>Engine\02. Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameResMgr.cpp">
+      <Filter>Engine\03. Manager\ResMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameRes.cpp">
+      <Filter>Engine\04. Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTexture.cpp">
+      <Filter>Engine\04. Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="func.cpp">
+      <Filter>Engine\01. Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
