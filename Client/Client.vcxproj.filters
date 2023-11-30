@@ -33,6 +33,9 @@
     <Filter Include="Engine\03. Manager\PathMgr">
       <UniqueIdentifier>{446a28c6-0019-4a06-8418-6c34fb0cfd74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\TimeMgr">
+      <UniqueIdentifier>{fe163a0f-bb02-4142-a3ce-c2eb1751ab71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -72,6 +75,9 @@
     <ClInclude Include="GamePathMgr.h">
       <Filter>Engine\03. Manager\PathMgr</Filter>
     </ClInclude>
+    <ClInclude Include="GameTimeMgr.h">
+      <Filter>Engine\03. Manager\TimeMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -92,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="GamePathMgr.cpp">
       <Filter>Engine\03. Manager\PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimeMgr.cpp">
+      <Filter>Engine\03. Manager\TimeMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

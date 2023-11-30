@@ -3,6 +3,7 @@
 
 #include "GameResMgr.h"
 #include "GamePathMgr.h"
+#include "GameTimeMgr.h"
 
 GameCore::GameCore()
 	: m_hWnd{ 0 }
@@ -44,6 +45,7 @@ int GameCore::Init(HWND _hWnd, POINT _ptResolution)
 
 	// Manager ÃÊ±âÈ­
 	GamePathMgr::GetInst()->Init();
+	GameTimeMgr::GetInst()->Init();
 
 	return S_OK;
 }

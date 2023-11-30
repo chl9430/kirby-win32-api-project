@@ -150,6 +150,7 @@
     <ClInclude Include="GameRes.h" />
     <ClInclude Include="GameResMgr.h" />
     <ClInclude Include="GameTexture.h" />
+    <ClInclude Include="GameTimeMgr.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="struct.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="GameRes.cpp" />
     <ClCompile Include="GameResMgr.cpp" />
     <ClCompile Include="GameTexture.cpp" />
+    <ClCompile Include="GameTimeMgr.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
