@@ -2,8 +2,9 @@
 #include "GameCore.h"
 
 #include "GameResMgr.h"
+#include "GamePathMgr.h"
 
-GameCore::GameCore() 
+GameCore::GameCore()
 	: m_hWnd{ 0 }
 	, m_ptResolution{}
 	, m_hDC{ 0 }
@@ -16,7 +17,7 @@ GameCore::~GameCore()
 {
 	ReleaseDC(m_hWnd, m_hDC);
 
-	// CreatePen 항목 삭제
+	// CreatePen() 항목 삭제
 	for (size_t i = 0; i < (UINT)PEN_TYPE::END; ++i)
 	{
 		DeleteObject(m_arrPen[i]);
@@ -40,6 +41,9 @@ int GameCore::Init(HWND _hWnd, POINT _ptResolution)
 	m_pMemTex = GameResMgr::GetInst()->CreateTexture(L"BackBuffer", (UINT)m_ptResolution.x, (UINT)m_ptResolution.y);
 
 	CreateBrush();
+
+	// Manager 초기화
+	GamePathMgr::GetInst()->Init();
 
 	return S_OK;
 }
