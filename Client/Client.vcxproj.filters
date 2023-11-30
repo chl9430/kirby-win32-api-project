@@ -36,6 +36,12 @@
     <Filter Include="Engine\03. Manager\TimeMgr">
       <UniqueIdentifier>{fe163a0f-bb02-4142-a3ce-c2eb1751ab71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\KeyMgr">
+      <UniqueIdentifier>{18e54792-b9b4-449d-966d-3832bd9bc1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Manager\Camera">
+      <UniqueIdentifier>{5877fc94-a9eb-4ff7-b834-96cc6b9b0a60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -78,6 +84,9 @@
     <ClInclude Include="GameTimeMgr.h">
       <Filter>Engine\03. Manager\TimeMgr</Filter>
     </ClInclude>
+    <ClInclude Include="GameKeyMgr.h">
+      <Filter>Engine\03. Manager\KeyMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -101,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="GameTimeMgr.cpp">
       <Filter>Engine\03. Manager\TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameKeyMgr.cpp">
+      <Filter>Engine\03. Manager\KeyMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
