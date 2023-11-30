@@ -145,6 +145,7 @@
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="func.h" />
+    <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameKeyMgr.h" />
     <ClInclude Include="GamePathMgr.h" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="func.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameKeyMgr.cpp" />
     <ClCompile Include="GamePathMgr.cpp" />

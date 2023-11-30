@@ -87,6 +87,9 @@
     <ClInclude Include="GameKeyMgr.h">
       <Filter>Engine\03. Manager\KeyMgr</Filter>
     </ClInclude>
+    <ClInclude Include="GameCamera.h">
+      <Filter>Engine\03. Manager\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -113,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="GameKeyMgr.cpp">
       <Filter>Engine\03. Manager\KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>Engine\03. Manager\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

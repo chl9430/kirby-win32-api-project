@@ -5,6 +5,7 @@
 #include "GamePathMgr.h"
 #include "GameTimeMgr.h"
 #include "GameKeyMgr.h"
+#include "GameCamera.h"
 
 GameCore::GameCore()
 	: m_hWnd{ 0 }
@@ -48,6 +49,7 @@ int GameCore::Init(HWND _hWnd, POINT _ptResolution)
 	GamePathMgr::GetInst()->Init();
 	GameTimeMgr::GetInst()->Init();
 	GameKeyMgr::GetInst()->Init();
+	GameCamera::GetInst()->Init();
 
 	return S_OK;
 }

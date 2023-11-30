@@ -29,5 +29,10 @@ public:
 	{
 		return m_hDC;
 	}
+
+	POINT GetResolution()
+	{
+		return m_ptResolution;
+	}
 };
 
