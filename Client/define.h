@@ -11,6 +11,15 @@
 							type();\
 							~type();
 
+enum class SCENE_TYPE
+{
+	TITLE,
+	/*SELECT_STAGE,
+	STAGE_01,*/
+	TOOL,
+	END
+};
+
 enum class BRUSH_TYPE
 {
 	HOLLOW, // 채우기 색상이 없는 브러쉬 타입

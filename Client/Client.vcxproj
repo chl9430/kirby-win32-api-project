@@ -151,6 +151,10 @@
     <ClInclude Include="GamePathMgr.h" />
     <ClInclude Include="GameRes.h" />
     <ClInclude Include="GameResMgr.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameSceneMgr.h" />
+    <ClInclude Include="GameScene_Title.h" />
+    <ClInclude Include="GameScene_Tool.h" />
     <ClInclude Include="GameTexture.h" />
     <ClInclude Include="GameTimeMgr.h" />
     <ClInclude Include="pch.h" />
@@ -166,6 +170,10 @@
     <ClCompile Include="GamePathMgr.cpp" />
     <ClCompile Include="GameRes.cpp" />
     <ClCompile Include="GameResMgr.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSceneMgr.cpp" />
+    <ClCompile Include="GameScene_Title.cpp" />
+    <ClCompile Include="GameScene_Tool.cpp" />
     <ClCompile Include="GameTexture.cpp" />
     <ClCompile Include="GameTimeMgr.cpp" />
     <ClCompile Include="main.cpp" />

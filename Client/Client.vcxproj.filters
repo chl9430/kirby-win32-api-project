@@ -42,6 +42,18 @@
     <Filter Include="Engine\03. Manager\Camera">
       <UniqueIdentifier>{5877fc94-a9eb-4ff7-b834-96cc6b9b0a60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\SceneMgr">
+      <UniqueIdentifier>{2ba87e49-1bdf-4ba4-92e8-e309dc919d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05. Scene">
+      <UniqueIdentifier>{78050332-7835-4748-b0b7-d0c2608e7c13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05. Scene\GameScene_Title">
+      <UniqueIdentifier>{fd29b53b-0205-4c68-a4a2-c167c7d58c96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05. Scene\GameScene_Tool">
+      <UniqueIdentifier>{967a3e78-f570-4800-8355-5f8d938f8ecc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -90,6 +102,18 @@
     <ClInclude Include="GameCamera.h">
       <Filter>Engine\03. Manager\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="GameSceneMgr.h">
+      <Filter>Engine\03. Manager\SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Engine\05. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene_Title.h">
+      <Filter>Engine\05. Scene\GameScene_Title</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene_Tool.h">
+      <Filter>Engine\05. Scene\GameScene_Tool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -119,6 +143,18 @@
     </ClCompile>
     <ClCompile Include="GameCamera.cpp">
       <Filter>Engine\03. Manager\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSceneMgr.cpp">
+      <Filter>Engine\03. Manager\SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Engine\05. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene_Title.cpp">
+      <Filter>Engine\05. Scene\GameScene_Title</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene_Tool.cpp">
+      <Filter>Engine\05. Scene\GameScene_Tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
