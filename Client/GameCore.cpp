@@ -56,6 +56,13 @@ int GameCore::Init(HWND _hWnd, POINT _ptResolution)
 	return S_OK;
 }
 
+void GameCore::Progress()
+{
+	// 매니저 업데이트
+	GameTimeMgr::GetInst()->Update();
+	GameKeyMgr::GetInst()->Update();
+}
+
 void GameCore::ChangeWindowSize(Vec2 _vResolution, bool _bMenu)
 {
 	RECT rt = { 0, 0, (long)_vResolution.x, (long)_vResolution.y };

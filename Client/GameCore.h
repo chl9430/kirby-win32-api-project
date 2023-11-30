@@ -21,18 +21,24 @@ private:
 
 public:
 	int Init(HWND _hWnd, POINT _ptResolution);
+	void Progress();
 
 	void ChangeWindowSize(Vec2 _vResolution, bool _bMenu);
 	void CreateBrush();
 
-	HDC GetMainDC()
+	HWND GetMainHwnd()
 	{
-		return m_hDC;
+		return m_hWnd;
 	}
 
 	POINT GetResolution()
 	{
 		return m_ptResolution;
+	}
+
+	HDC GetMainDC()
+	{
+		return m_hDC;
 	}
 };
 

@@ -14,6 +14,8 @@ enum class KEY
 	RIGHT,
 	UP,
 	DOWN,
+	Q,
+	E,
 	W,
 	A,
 	S,
@@ -35,7 +37,9 @@ class GameKeyMgr
 
 private:
 	vector<tKeyInfo> m_vecKey;
+	Vec2 m_vCurMousePos;
 
 public:
 	void Init();
+	void Update();
 };
