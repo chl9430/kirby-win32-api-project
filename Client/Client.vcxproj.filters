@@ -54,6 +54,9 @@
     <Filter Include="Engine\05. Scene\GameScene_Tool">
       <UniqueIdentifier>{967a3e78-f570-4800-8355-5f8d938f8ecc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06. Object">
+      <UniqueIdentifier>{32a6b34a-9cca-4690-a6be-8c526ce0ec4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -114,6 +117,9 @@
     <ClInclude Include="GameScene_Tool.h">
       <Filter>Engine\05. Scene\GameScene_Tool</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\06. Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -155,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="GameScene_Tool.cpp">
       <Filter>Engine\05. Scene\GameScene_Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\06. Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

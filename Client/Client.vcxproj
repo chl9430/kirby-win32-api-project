@@ -148,6 +148,7 @@
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameKeyMgr.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePathMgr.h" />
     <ClInclude Include="GameRes.h" />
     <ClInclude Include="GameResMgr.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameKeyMgr.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePathMgr.cpp" />
     <ClCompile Include="GameRes.cpp" />
     <ClCompile Include="GameResMgr.cpp" />

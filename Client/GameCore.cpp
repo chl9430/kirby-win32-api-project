@@ -61,6 +61,7 @@ void GameCore::Progress()
 	// 매니저 업데이트
 	GameTimeMgr::GetInst()->Update();
 	GameKeyMgr::GetInst()->Update();
+	GameCamera::GetInst()->Update();
 }
 
 void GameCore::ChangeWindowSize(Vec2 _vResolution, bool _bMenu)

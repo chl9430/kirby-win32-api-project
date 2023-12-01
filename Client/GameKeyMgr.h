@@ -42,4 +42,9 @@ private:
 public:
 	void Init();
 	void Update();
+
+	KEY_STATE GetKeyState(KEY _eKey)
+	{
+		return m_vecKey[(int)_eKey].eState;
+	}
 };
