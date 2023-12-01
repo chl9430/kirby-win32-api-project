@@ -62,6 +62,7 @@ void GameCore::Progress()
 	GameTimeMgr::GetInst()->Update();
 	GameKeyMgr::GetInst()->Update();
 	GameCamera::GetInst()->Update();
+	GameSceneMgr::GetInst()->Update();
 }
 
 void GameCore::ChangeWindowSize(Vec2 _vResolution, bool _bMenu)

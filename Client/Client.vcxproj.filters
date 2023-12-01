@@ -57,6 +57,12 @@
     <Filter Include="Engine\06. Object">
       <UniqueIdentifier>{32a6b34a-9cca-4690-a6be-8c526ce0ec4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06. Object\Player">
+      <UniqueIdentifier>{8c515866-92be-4f6b-8e78-8e25c5f72672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05. Scene\GameScene_Stage">
+      <UniqueIdentifier>{62e77daa-2968-448e-9643-0a4d85c36292}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -120,6 +126,12 @@
     <ClInclude Include="GameObject.h">
       <Filter>Engine\06. Object</Filter>
     </ClInclude>
+    <ClInclude Include="GamePlayer.h">
+      <Filter>Engine\06. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene_Stage.h">
+      <Filter>Engine\05. Scene\GameScene_Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -164,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine\06. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayer.cpp">
+      <Filter>Engine\06. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene_Stage.cpp">
+      <Filter>Engine\05. Scene\GameScene_Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

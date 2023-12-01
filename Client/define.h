@@ -18,11 +18,25 @@
 
 #define KEY_HOLD(key) KEY_CHECK(key, KEY_STATE::HOLD)
 
+enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
+{
+	DEFAULT,
+	TILE,
+	GROUND,
+	MONSTER,
+	PLAYER,
+	PROJ_PLAYER,
+	PROJ_MONSTER,
+
+	UI = 31,
+	END = 32
+};
+
 enum class SCENE_TYPE
 {
 	TITLE,
-	/*SELECT_STAGE,
-	STAGE_01,*/
+	// SELECT_STAGE,
+	STAGE_01,
 	TOOL,
 	END
 };

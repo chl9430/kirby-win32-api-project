@@ -150,10 +150,12 @@
     <ClInclude Include="GameKeyMgr.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePathMgr.h" />
+    <ClInclude Include="GamePlayer.h" />
     <ClInclude Include="GameRes.h" />
     <ClInclude Include="GameResMgr.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameSceneMgr.h" />
+    <ClInclude Include="GameScene_Stage.h" />
     <ClInclude Include="GameScene_Title.h" />
     <ClInclude Include="GameScene_Tool.h" />
     <ClInclude Include="GameTexture.h" />
@@ -170,10 +172,12 @@
     <ClCompile Include="GameKeyMgr.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePathMgr.cpp" />
+    <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="GameRes.cpp" />
     <ClCompile Include="GameResMgr.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameSceneMgr.cpp" />
+    <ClCompile Include="GameScene_Stage.cpp" />
     <ClCompile Include="GameScene_Title.cpp" />
     <ClCompile Include="GameScene_Tool.cpp" />
     <ClCompile Include="GameTexture.cpp" />
