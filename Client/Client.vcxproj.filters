@@ -63,6 +63,15 @@
     <Filter Include="Engine\05. Scene\GameScene_Stage">
       <UniqueIdentifier>{62e77daa-2968-448e-9643-0a4d85c36292}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\CollisionMgr">
+      <UniqueIdentifier>{3698c616-1c29-4be3-86c9-eb651560aaf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07. Component">
+      <UniqueIdentifier>{3d3e855b-2032-4571-b7a8-7405b7936f86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07. Component\Collider">
+      <UniqueIdentifier>{2058ca4c-c2f3-49f1-ab7b-299c7568cd8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -132,6 +141,12 @@
     <ClInclude Include="GameScene_Stage.h">
       <Filter>Engine\05. Scene\GameScene_Stage</Filter>
     </ClInclude>
+    <ClInclude Include="GameCollisionMgr.h">
+      <Filter>Engine\03. Manager\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCollider.h">
+      <Filter>Engine\07. Component\Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -182,6 +197,12 @@
     </ClCompile>
     <ClCompile Include="GameScene_Stage.cpp">
       <Filter>Engine\05. Scene\GameScene_Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCollisionMgr.cpp">
+      <Filter>Engine\03. Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCollider.cpp">
+      <Filter>Engine\07. Component\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

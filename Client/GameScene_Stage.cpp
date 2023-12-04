@@ -2,6 +2,7 @@
 #include "GameScene_Stage.h"
 
 #include "GameCore.h"
+#include "GameCollisionMgr.h"
 
 #include "GamePlayer.h"
 
@@ -24,4 +25,8 @@ void GameScene_Stage::Enter()
 	RegisterPlayer(pObj);
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
+
+	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
+
+	Start();
 }

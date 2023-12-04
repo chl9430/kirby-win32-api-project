@@ -7,6 +7,7 @@ GamePlayer::GamePlayer()
 	, m_iDir{ 1 }
 	, m_iPrevDir{ 1 }
 {
+	CreateCollider();
 }
 
 GamePlayer::~GamePlayer()

@@ -1,5 +1,7 @@
 #pragma once
 
+class GameCollider;
+
 class GameObject
 {
 private:
@@ -7,9 +9,13 @@ private:
 	Vec2 m_vPos;
 	Vec2 m_vScale;
 	bool m_bAlive;
+	GameCollider* m_pCollider;
 
 public:
+	virtual void Start() {};
 	virtual void Update() = 0;
+
+	void CreateCollider();
 
 	void SetName(const wstring& _strName)
 	{

@@ -10,6 +10,7 @@ private:
 	GameObject* m_pPlayer;
 
 public:
+	virtual void Start();
 	virtual void Update();
 	virtual void FinalUpdate();
 
