@@ -3,6 +3,7 @@
 
 #include "GameCollider.h"
 #include "GameRigidBody.h"
+#include "GameAnimator.h"
 
 GameObject::GameObject()
 	: m_strName{}
@@ -11,6 +12,7 @@ GameObject::GameObject()
 	, m_bAlive{ true }
 	, m_pCollider{ nullptr }
 	, m_pRigidBody{ nullptr }
+	, m_pAnimator{ nullptr }
 {
 }
 
@@ -28,4 +30,10 @@ void GameObject::CreateRigidBody()
 {
 	m_pRigidBody = new GameRigidBody;
 	m_pRigidBody->m_pOwner = this;
+}
+
+void GameObject::CreateAnimator()
+{
+	m_pAnimator = new GameAnimator;
+	m_pAnimator->m_pOwner = this;
 }

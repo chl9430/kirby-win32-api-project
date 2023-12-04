@@ -145,6 +145,8 @@
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="func.h" />
+    <ClInclude Include="GameAnimation.h" />
+    <ClInclude Include="GameAnimator.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameCollider.h" />
     <ClInclude Include="GameCollisionMgr.h" />
@@ -170,6 +172,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="func.cpp" />
+    <ClCompile Include="GameAnimation.cpp" />
+    <ClCompile Include="GameAnimator.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameCollider.cpp" />
     <ClCompile Include="GameCollisionMgr.cpp" />

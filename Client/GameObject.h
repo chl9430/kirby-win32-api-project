@@ -2,6 +2,7 @@
 
 class GameCollider;
 class GameRigidBody;
+class GameAnimator;
 
 class GameObject
 {
@@ -13,6 +14,7 @@ private:
 
 	GameCollider* m_pCollider;
 	GameRigidBody* m_pRigidBody;
+	GameAnimator* m_pAnimator;
 
 public:
 	virtual void Start() {};
@@ -20,6 +22,7 @@ public:
 
 	void CreateCollider();
 	void CreateRigidBody();
+	void CreateAnimator();
 
 	void SetName(const wstring& _strName)
 	{
@@ -49,6 +52,11 @@ public:
 	GameRigidBody* GetRigidBody()
 	{
 		return m_pRigidBody;
+	}
+
+	GameAnimator* GetAnimator()
+	{
+		return m_pAnimator;
 	}
 
 	GameObject();

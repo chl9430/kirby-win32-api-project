@@ -75,6 +75,12 @@
     <Filter Include="Engine\07. Component\RigidBody">
       <UniqueIdentifier>{a849674a-23c4-4ae2-a093-20426a13deba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\07. Component\Animator">
+      <UniqueIdentifier>{74b06be5-1d64-4479-b1d8-a7befc49fd76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07. Component\Animator\Animation">
+      <UniqueIdentifier>{18c4e49b-9a15-46bd-ab20-61413ad3ce36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -153,6 +159,12 @@
     <ClInclude Include="GameRigidBody.h">
       <Filter>Engine\07. Component\RigidBody</Filter>
     </ClInclude>
+    <ClInclude Include="GameAnimator.h">
+      <Filter>Engine\07. Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAnimation.h">
+      <Filter>Engine\07. Component\Animator\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -212,6 +224,12 @@
     </ClCompile>
     <ClCompile Include="GameRigidBody.cpp">
       <Filter>Engine\07. Component\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="GameAnimator.cpp">
+      <Filter>Engine\07. Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="GameAnimation.cpp">
+      <Filter>Engine\07. Component\Animator\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

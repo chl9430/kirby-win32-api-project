@@ -4,6 +4,7 @@
 #include "GameKeyMgr.h"
 
 #include "GameRigidBody.h"
+#include "GameAnimator.h"
 
 GamePlayer::GamePlayer()
 	: m_eCurState{ PLAYER_STATE::IDLE }
@@ -13,7 +14,7 @@ GamePlayer::GamePlayer()
 {
 	CreateCollider();
 	CreateRigidBody();
-	CreateCollider();
+	CreateAnimator();
 }
 
 GamePlayer::~GamePlayer()
@@ -100,4 +101,34 @@ void GamePlayer::UpdateMove()
 
 void GamePlayer::UpdateAnimation()
 {
+	if (m_ePrevState == m_eCurState && m_iPrevDir == m_iDir)
+		return;
+
+	switch (m_eCurState)
+	{
+	case PLAYER_STATE::IDLE:
+	{
+		if (m_iDir == -1)
+			GetAnimator()->Play(L"IDLE_LEFT", true);
+		else
+			GetAnimator()->Play(L"IDLE_RIGHT", true);
+	}
+	break;
+	case PLAYER_STATE::WALK:
+	{
+		if (m_iDir == -1)
+			GetAnimator()->Play(L"WALK_LEFT", true);
+		else
+			GetAnimator()->Play(L"WALK_RIGHT", true);
+	}
+	break;
+	case PLAYER_STATE::JUMP:
+	{
+		if (m_iDir == -1)
+			GetAnimator()->Play(L"JUMP_LEFT", true);
+		else
+			GetAnimator()->Play(L"JUMP_RIGHT", true);
+	}
+	break;
+	}
 }
