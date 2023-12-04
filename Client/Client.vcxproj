@@ -155,6 +155,7 @@
     <ClInclude Include="GamePlayer.h" />
     <ClInclude Include="GameRes.h" />
     <ClInclude Include="GameResMgr.h" />
+    <ClInclude Include="GameRigidBody.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameSceneMgr.h" />
     <ClInclude Include="GameScene_Stage.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="GameRes.cpp" />
     <ClCompile Include="GameResMgr.cpp" />
+    <ClCompile Include="GameRigidBody.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameSceneMgr.cpp" />
     <ClCompile Include="GameScene_Stage.cpp" />

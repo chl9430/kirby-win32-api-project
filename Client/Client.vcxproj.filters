@@ -72,6 +72,9 @@
     <Filter Include="Engine\07. Component\Collider">
       <UniqueIdentifier>{2058ca4c-c2f3-49f1-ab7b-299c7568cd8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\07. Component\RigidBody">
+      <UniqueIdentifier>{a849674a-23c4-4ae2-a093-20426a13deba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -147,6 +150,9 @@
     <ClInclude Include="GameCollider.h">
       <Filter>Engine\07. Component\Collider</Filter>
     </ClInclude>
+    <ClInclude Include="GameRigidBody.h">
+      <Filter>Engine\07. Component\RigidBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -203,6 +209,9 @@
     </ClCompile>
     <ClCompile Include="GameCollider.cpp">
       <Filter>Engine\07. Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRigidBody.cpp">
+      <Filter>Engine\07. Component\RigidBody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

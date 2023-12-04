@@ -6,6 +6,17 @@ struct Vec2
 	float y;
 
 public:
+	float Length()
+	{
+		return sqrt(x * x + y * y); // iostream을 포함 시키니 float값용 sqrt함수가 불러졌다.
+	}
+
+	void operator+=(Vec2 _vOther)
+	{
+		x += _vOther.x;
+		y += _vOther.y;
+	}
+
 	Vec2& operator=(POINT _pt)
 	{
 		x = (float)_pt.x;

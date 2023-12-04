@@ -14,9 +14,10 @@
 #define fDT GameTimeMgr::GetInst()->GetfDT()
 #define DT GameTimeMgr::GetInst()->GetfDT()
 
-#define KEY_CHECK(key, state) GameKeyMgr::GetInst()->GetKeyState(key) == state
-
+#define KEY_TAP(key) KEY_CHECK(key, KEY_STATE::TAP)
 #define KEY_HOLD(key) KEY_CHECK(key, KEY_STATE::HOLD)
+
+#define KEY_CHECK(key, state) GameKeyMgr::GetInst()->GetKeyState(key) == state
 
 enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
 {

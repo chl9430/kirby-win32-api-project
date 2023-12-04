@@ -1,6 +1,7 @@
 #pragma once
 
 class GameCollider;
+class GameRigidBody;
 
 class GameObject
 {
@@ -9,13 +10,16 @@ private:
 	Vec2 m_vPos;
 	Vec2 m_vScale;
 	bool m_bAlive;
+
 	GameCollider* m_pCollider;
+	GameRigidBody* m_pRigidBody;
 
 public:
 	virtual void Start() {};
 	virtual void Update() = 0;
 
 	void CreateCollider();
+	void CreateRigidBody();
 
 	void SetName(const wstring& _strName)
 	{
@@ -40,6 +44,11 @@ public:
 	void SetPos(Vec2 _vPos)
 	{
 		m_vPos = _vPos;
+	}
+
+	GameRigidBody* GetRigidBody()
+	{
+		return m_pRigidBody;
 	}
 
 	GameObject();

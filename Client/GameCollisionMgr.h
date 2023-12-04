@@ -9,7 +9,4 @@ private:
 
 public:
 	void CheckGroup(GROUP_TYPE _eLeft, GROUP_TYPE _eRight);
-
-	GameCollisionMgr();
-	~GameCollisionMgr();
 };

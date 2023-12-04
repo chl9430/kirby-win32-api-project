@@ -2,6 +2,7 @@
 
 // 미리 컴파일 된 헤더
 #include <Windows.h>
+#include <iostream>
 
 #include <map>
 using std::map;
@@ -11,6 +12,8 @@ using std::wstring;
 
 #include <vector>
 using std::vector;
+
+#include <math.h>
 
 #include "Resource.h"
 #include "define.h"
