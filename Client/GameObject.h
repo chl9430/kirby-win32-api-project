@@ -3,6 +3,7 @@
 class GameCollider;
 class GameRigidBody;
 class GameAnimator;
+class GameGravity;
 
 class GameObject
 {
@@ -15,6 +16,7 @@ private:
 	GameCollider* m_pCollider;
 	GameRigidBody* m_pRigidBody;
 	GameAnimator* m_pAnimator;
+	GameGravity* m_pGravity;
 
 public:
 	virtual void Start() {};
@@ -23,6 +25,7 @@ public:
 	void CreateCollider();
 	void CreateRigidBody();
 	void CreateAnimator();
+	void CreateGravity();
 
 	void SetName(const wstring& _strName)
 	{

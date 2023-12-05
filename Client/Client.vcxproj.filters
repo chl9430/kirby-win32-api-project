@@ -81,6 +81,9 @@
     <Filter Include="Engine\07. Component\Animator\Animation">
       <UniqueIdentifier>{18c4e49b-9a15-46bd-ab20-61413ad3ce36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\07. Component\Gravity">
+      <UniqueIdentifier>{726e7480-03b2-4a4e-80f0-071cf6d0d45e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -165,6 +168,9 @@
     <ClInclude Include="GameAnimation.h">
       <Filter>Engine\07. Component\Animator\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="GameGravity.h">
+      <Filter>Engine\07. Component\Gravity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -230,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="GameAnimation.cpp">
       <Filter>Engine\07. Component\Animator\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="GameGravity.cpp">
+      <Filter>Engine\07. Component\Gravity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

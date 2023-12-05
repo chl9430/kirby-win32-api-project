@@ -4,6 +4,7 @@
 #include "GameCollider.h"
 #include "GameRigidBody.h"
 #include "GameAnimator.h"
+#include "GameGravity.h"
 
 GameObject::GameObject()
 	: m_strName{}
@@ -13,6 +14,7 @@ GameObject::GameObject()
 	, m_pCollider{ nullptr }
 	, m_pRigidBody{ nullptr }
 	, m_pAnimator{ nullptr }
+	, m_pGravity{ nullptr }
 {
 }
 
@@ -36,4 +38,10 @@ void GameObject::CreateAnimator()
 {
 	m_pAnimator = new GameAnimator;
 	m_pAnimator->m_pOwner = this;
+}
+
+void GameObject::CreateGravity()
+{
+	m_pGravity = new GameGravity;
+	m_pGravity->m_pOwner = this;
 }

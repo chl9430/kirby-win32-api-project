@@ -15,6 +15,7 @@ GamePlayer::GamePlayer()
 	CreateCollider();
 	CreateRigidBody();
 	CreateAnimator();
+	CreateGravity();
 }
 
 GamePlayer::~GamePlayer()
