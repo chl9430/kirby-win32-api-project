@@ -12,6 +12,11 @@ private:
 public:
     void Create(UINT _iWidth, UINT _iHeight);
 
+    HDC GetDC()
+    {
+        return m_dc;
+    }
+
     GameTexture();
     virtual ~GameTexture();
 };

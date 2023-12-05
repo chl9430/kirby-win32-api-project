@@ -8,6 +8,10 @@
 #include "GameCamera.h"
 #include "GameSceneMgr.h"
 
+#include "GameTexture.h"
+
+#include "SelectGDI.h"
+
 GameCore::GameCore()
 	: m_hWnd{ 0 }
 	, m_ptResolution{}
@@ -28,6 +32,13 @@ GameCore::~GameCore()
 	}
 
 	DestroyMenu(m_hMenu);
+}
+
+void GameCore::Clear()
+{
+	SelectGDI gdi(m_pMemTex->GetDC(), BRUSH_TYPE::BLACK);
+
+	Rectangle(m_pMemTex->GetDC(), -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
 }
 
 int GameCore::Init(HWND _hWnd, POINT _ptResolution)
@@ -53,6 +64,9 @@ int GameCore::Init(HWND _hWnd, POINT _ptResolution)
 	GameCamera::GetInst()->Init();
 	GameSceneMgr::GetInst()->Init();
 
+	// 화면 클리어
+	Clear();
+
 	return S_OK;
 }
 
@@ -63,6 +77,8 @@ void GameCore::Progress()
 	GameKeyMgr::GetInst()->Update();
 	GameCamera::GetInst()->Update();
 	GameSceneMgr::GetInst()->Update();
+
+	// 랜더링
 }
 
 void GameCore::ChangeWindowSize(Vec2 _vResolution, bool _bMenu)

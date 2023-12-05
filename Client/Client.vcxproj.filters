@@ -84,6 +84,9 @@
     <Filter Include="Engine\07. Component\Gravity">
       <UniqueIdentifier>{726e7480-03b2-4a4e-80f0-071cf6d0d45e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\08. Module">
+      <UniqueIdentifier>{b37fab4f-ed14-4fd0-9f03-e00b9be47410}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -171,6 +174,9 @@
     <ClInclude Include="GameGravity.h">
       <Filter>Engine\07. Component\Gravity</Filter>
     </ClInclude>
+    <ClInclude Include="SelectGDI.h">
+      <Filter>Engine\08. Module</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -239,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="GameGravity.cpp">
       <Filter>Engine\07. Component\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectGDI.cpp">
+      <Filter>Engine\08. Module</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

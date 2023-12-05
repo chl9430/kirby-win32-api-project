@@ -5,4 +5,7 @@ class GameAnimation
 private:
 
 public:
+
+	GameAnimation();
+	~GameAnimation();
 };

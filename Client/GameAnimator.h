@@ -1,6 +1,7 @@
 #pragma once
 
 class GameAnimation;
+class GameObject;
 
 class GameAnimator
 {
