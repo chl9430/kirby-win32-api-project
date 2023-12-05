@@ -49,3 +49,30 @@ void GameScene::Update()
 void GameScene::FinalUpdate()
 {
 }
+
+void GameScene::Render(HDC _dc)
+{
+	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
+	{
+		/*if ((UINT)GROUP_TYPE::TILE == i)
+		{
+			Render_Tile(_dc);
+			continue;
+		}*/
+
+		vector<GameObject*>::iterator iter = m_arrObj[i].begin();
+
+		for ( ; iter != m_arrObj[i].end(); )
+		{
+			if (!(*iter)->IsDead()) // 오브젝트가 죽지 않았다면
+			{
+				(*iter)->Render(_dc);
+				++iter;
+			}
+			else // 오브젝트가 죽지 않았다면
+			{
+				iter = m_arrObj[i].erase(iter); // 해당하는 값을 벡터에서 지우고, 다음 원소의 iter값을 반환
+			}
+		}
+	}
+}

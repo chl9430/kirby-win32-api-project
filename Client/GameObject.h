@@ -21,6 +21,10 @@ private:
 public:
 	virtual void Start() {};
 	virtual void Update() = 0;
+	virtual void FinalUpdate();
+	virtual void Render(HDC _dc);
+
+	void ComponentRender(HDC _dc);
 
 	void CreateCollider();
 	void CreateRigidBody();

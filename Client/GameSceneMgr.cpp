@@ -47,3 +47,8 @@ void GameSceneMgr::Update()
 
 	m_pCurScene->FinalUpdate();
 }
+
+void GameSceneMgr::Render(HDC _dc)
+{
+	m_pCurScene->Render(_dc);
+}

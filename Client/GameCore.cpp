@@ -64,9 +64,6 @@ int GameCore::Init(HWND _hWnd, POINT _ptResolution)
 	GameCamera::GetInst()->Init();
 	GameSceneMgr::GetInst()->Init();
 
-	// 화면 클리어
-	Clear();
-
 	return S_OK;
 }
 
@@ -78,7 +75,15 @@ void GameCore::Progress()
 	GameCamera::GetInst()->Update();
 	GameSceneMgr::GetInst()->Update();
 
-	// 랜더링
+	// 화면 클리어
+	Clear();
+
+	// 렌더링
+	GameSceneMgr::GetInst()->Render(m_pMemTex->GetDC());
+	// GameCamera::GetInst()->Render();
+
+	// 사본용 DC에 그려진 걸 메인 DC에 복사한다.
+	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_pMemTex->GetDC(), 0, 0, SRCCOPY);
 }
 
 void GameCore::ChangeWindowSize(Vec2 _vResolution, bool _bMenu)

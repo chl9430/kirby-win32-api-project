@@ -6,13 +6,14 @@ class GameScene
 {
 private:
 	wstring m_strName;
-	vector<GameObject*> m_arrObj[(UINT)GROUP_TYPE::END];
+	vector<GameObject*> m_arrObj[(UINT)GROUP_TYPE::END]; // 벡터를 원소로 하는 배열을 선언
 	GameObject* m_pPlayer;
 
 public:
 	virtual void Start();
 	virtual void Update();
 	virtual void FinalUpdate();
+	virtual void Render(HDC _dc);
 
 	virtual void Enter() = 0;
 
