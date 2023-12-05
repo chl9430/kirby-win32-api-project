@@ -12,3 +12,7 @@ GameScene_Title::~GameScene_Title()
 void GameScene_Title::Enter()
 {
 }
+
+void GameScene_Title::Exit()
+{
+}

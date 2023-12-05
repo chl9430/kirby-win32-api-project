@@ -76,3 +76,11 @@ void GameScene::Render(HDC _dc)
 		}
 	}
 }
+
+void GameScene::DeleteAll()
+{
+	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
+	{
+		Safe_Delete_Vec<GameObject*>(m_arrObj[i]);
+	}
+}

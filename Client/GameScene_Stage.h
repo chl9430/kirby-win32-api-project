@@ -8,6 +8,7 @@ private:
 
 public:
 	virtual void Enter();
+	virtual void Exit();
 
 	GameScene_Stage();
 	~GameScene_Stage();

@@ -8,6 +8,7 @@ private:
 
 public:
 	virtual void Enter();
+	virtual void Exit();
 
 	GameScene_Title();
 	~GameScene_Title();

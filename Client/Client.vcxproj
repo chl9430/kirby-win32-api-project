@@ -151,6 +151,7 @@
     <ClInclude Include="GameCollider.h" />
     <ClInclude Include="GameCollisionMgr.h" />
     <ClInclude Include="GameCore.h" />
+    <ClInclude Include="GameEventMgr.h" />
     <ClInclude Include="GameGravity.h" />
     <ClInclude Include="GameKeyMgr.h" />
     <ClInclude Include="GameObject.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="GameCollider.cpp" />
     <ClCompile Include="GameCollisionMgr.cpp" />
     <ClCompile Include="GameCore.cpp" />
+    <ClCompile Include="GameEventMgr.cpp" />
     <ClCompile Include="GameGravity.cpp" />
     <ClCompile Include="GameKeyMgr.cpp" />
     <ClCompile Include="GameObject.cpp" />

@@ -7,6 +7,7 @@
 #include "GameKeyMgr.h"
 #include "GameCamera.h"
 #include "GameSceneMgr.h"
+#include "GameEventMgr.h"
 
 #include "GameTexture.h"
 
@@ -86,6 +87,9 @@ void GameCore::Progress()
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_pMemTex->GetDC(), 0, 0, SRCCOPY);
 
 	GameTimeMgr::GetInst()->Render();
+
+	// 이벤트 지연처리
+	GameEventMgr::GetInst()->Update();
 }
 
 void GameCore::ChangeWindowSize(Vec2 _vResolution, bool _bMenu)

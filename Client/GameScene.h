@@ -15,7 +15,10 @@ public:
 	virtual void FinalUpdate();
 	virtual void Render(HDC _dc);
 
+	void DeleteAll();
+
 	virtual void Enter() = 0;
+	virtual void Exit() = 0;
 
 	void AddObject(GameObject* _pObj, GROUP_TYPE _eType)
 	{

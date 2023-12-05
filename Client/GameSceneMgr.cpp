@@ -24,6 +24,15 @@ GameSceneMgr::~GameSceneMgr()
 	}
 }
 
+void GameSceneMgr::ChangeScene(SCENE_TYPE _eNext)
+{
+	m_pCurScene->Exit();
+
+	m_pCurScene = m_arrScene[(UINT)_eNext];
+
+	m_pCurScene->Start();
+}
+
 void GameSceneMgr::Init()
 {
 	// ¾À »ý¼º

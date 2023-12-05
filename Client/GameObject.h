@@ -18,6 +18,11 @@ private:
 	GameAnimator* m_pAnimator;
 	GameGravity* m_pGravity;
 
+	void SetDead()
+	{
+		m_bAlive = false;
+	}
+
 public:
 	virtual void Start() {};
 	virtual void Update() = 0;
@@ -68,4 +73,6 @@ public:
 
 	GameObject();
 	virtual ~GameObject();
+
+	friend class GameEventMgr;
 };
