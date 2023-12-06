@@ -22,6 +22,20 @@ void GameAnimator::Play(const wstring& _strName, bool _bRepeat)
 	m_bRepeat = _bRepeat;
 }
 
+void GameAnimator::CreateAnimation(const wstring& _strName, GameTexture* _pTex, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vStep, float _fDuration, UINT _iFrameCount)
+{
+	GameAnimation* pAnim = FindAnimation(_strName);
+
+	assert(nullptr == pAnim); // 키값이 이미 추가된 애니메이션의 키값이라면 프로그램 종료
+
+	pAnim = new GameAnimation;
+	pAnim->SetName(_strName);
+	pAnim->m_pAnimator = this;
+	pAnim->Create(_pTex, _vLT, _vSliceSize, _vStep, _fDuration, _iFrameCount);
+
+	m_mapAnim.insert(make_pair(_strName, pAnim));
+}
+
 GameAnimation* GameAnimator::FindAnimation(const wstring& _strName)
 {
 	map<wstring, GameAnimation*>::iterator iter = m_mapAnim.find(_strName);

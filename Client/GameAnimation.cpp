@@ -161,3 +161,19 @@ void GameAnimation::Load(const wstring& _strRelativePath)
 
 	fclose(pFile);
 }
+
+void GameAnimation::Create(GameTexture* _pTex, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vStep, float _fDuration, UINT _iFrameCount)
+{
+	m_pTex = _pTex;
+
+	tAnimFrm frm = {};
+
+	for (UINT i = 0; i < _iFrameCount; ++i)
+	{
+		frm.fDuration = _fDuration;
+		frm.vSlice = _vSliceSize;
+		frm.vLT = _vLT + _vStep * (float)i;
+
+		m_vecFrm.push_back(frm);
+	}
+}

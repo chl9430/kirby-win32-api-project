@@ -24,6 +24,8 @@ GamePlayer::GamePlayer()
 
 	CreateAnimator();
 
+	GetAnimator()->CreateAnimation(L"WALK_RIGHT", pRightTex, Vec2{ 0.f, 0.f }, Vec2{ 38.f, 36.f }, Vec2{ 38.f, 0.f }, 0.1f, 4);
+
 	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
 
@@ -51,6 +53,11 @@ void GamePlayer::Update()
 
 	m_ePrevState = m_eCurState;
 	m_iPrevDir = m_iDir;
+}
+
+void GamePlayer::Render(HDC _dc)
+{
+	ComponentRender(_dc);
 }
 
 void GamePlayer::UpdateState()

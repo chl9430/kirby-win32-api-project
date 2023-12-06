@@ -25,6 +25,22 @@ public:
 		return *this;
 	}
 
+	Vec2& operator+(Vec2 _vOther)
+	{
+		x += _vOther.x;
+		y += _vOther.y;
+
+		return *this;
+	}
+
+	Vec2& operator*(float _f)
+	{
+		x = x * _f;
+		y = y * _f;
+
+		return *this;
+	}
+
 	Vec2()
 		: x(0.f)
 		, y(0.f)
