@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GameResMgr.h"
 
+#include "GamePathMgr.h"
+
 #include "GameTexture.h"
 
 GameResMgr::GameResMgr()
@@ -11,6 +13,28 @@ GameResMgr::GameResMgr()
 GameResMgr::~GameResMgr()
 {
 	Safe_Delete_Map(m_mapTex);
+}
+
+GameTexture* GameResMgr::LoadTexture(const wstring& _strKey, const wstring& _strRelativePath)
+{
+	GameTexture* pTex = FindTexture(_strKey);
+
+	if (pTex != nullptr)
+	{
+		return pTex;
+	}
+
+	wstring strFilePath = GamePathMgr::GetInst()->GetContentPath();
+	strFilePath += _strRelativePath;
+
+	pTex = new GameTexture;
+	pTex->Load(strFilePath);
+	pTex->SetKey(_strKey);
+	pTex->SetRelativePath(_strRelativePath);
+
+	m_mapTex.insert(make_pair(_strKey, pTex));
+
+	return pTex;
 }
 
 GameTexture* GameResMgr::CreateTexture(const wstring& _strKey, UINT _iWidth, UINT _iHeight)

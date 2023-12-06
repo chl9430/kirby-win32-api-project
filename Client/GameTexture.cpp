@@ -16,6 +16,20 @@ GameTexture::~GameTexture()
 	DeleteObject(m_hBit);
 }
 
+void GameTexture::Load(const wstring& _strFilePath)
+{
+	m_hBit = (HBITMAP)LoadImage(nullptr, _strFilePath.c_str(), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
+	assert(m_hBit);
+
+	m_dc = CreateCompatibleDC(GameCore::GetInst()->GetMainDC()); // 새로운 이미지 비트맵용 dc를 생성
+
+	HBITMAP hPrevBit = (HBITMAP)SelectObject(m_dc, m_hBit); // 디폴트로 만들어진 비트맵을 삭제하고, 이미지 비트맵을 방금 만든 비트맵용 dc에 연결
+	DeleteObject(hPrevBit);
+
+	// 비트맵정보
+	GetObject(m_hBit, sizeof(BITMAP), &m_bitInfo);
+}
+
 void GameTexture::Create(UINT _iWidth, UINT _iHeight)
 {
 	HDC mainDC = GameCore::GetInst()->GetMainDC(); // 메인 DC를 가져온다.

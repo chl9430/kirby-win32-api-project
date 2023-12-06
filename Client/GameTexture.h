@@ -10,6 +10,7 @@ private:
     BITMAP m_bitInfo;
 
 public:
+    void Load(const wstring& _strFilePath);
     void Create(UINT _iWidth, UINT _iHeight);
 
     HDC GetDC()

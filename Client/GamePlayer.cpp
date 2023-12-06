@@ -2,9 +2,13 @@
 #include "GamePlayer.h"
 
 #include "GameKeyMgr.h"
+#include "GameResMgr.h"
+
+#include "GameTexture.h"
 
 #include "GameRigidBody.h"
 #include "GameAnimator.h"
+#include "GameAnimation.h"
 
 GamePlayer::GamePlayer()
 	: m_eCurState{ PLAYER_STATE::IDLE }
@@ -14,7 +18,15 @@ GamePlayer::GamePlayer()
 {
 	CreateCollider();
 	CreateRigidBody();
+
+	// Texture ·Îµù
+	GameTexture* pRightTex = GameResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Kirby_Walk_Right.bmp");
+
 	CreateAnimator();
+
+	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
+	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
+
 	CreateGravity();
 }
 
