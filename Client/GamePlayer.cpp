@@ -24,7 +24,7 @@ GamePlayer::GamePlayer()
 
 	CreateAnimator();
 
-	GetAnimator()->CreateAnimation(L"WALK_RIGHT", pRightTex, Vec2{ 0.f, 0.f }, Vec2{ 38.f, 36.f }, Vec2{ 38.f, 0.f }, 0.1f, 4);
+	GetAnimator()->CreateAnimation(L"WALK_RIGHT", pRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
 
 	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
@@ -131,7 +131,7 @@ void GamePlayer::UpdateAnimation()
 		if (m_iDir == -1)
 			GetAnimator()->Play(L"IDLE_LEFT", true);
 		else
-			GetAnimator()->Play(L"IDLE_RIGHT", true);
+			GetAnimator()->Play(L"WALK_RIGHT", true);
 	}
 	break;
 	case PLAYER_STATE::WALK:

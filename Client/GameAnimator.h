@@ -2,6 +2,7 @@
 
 class GameAnimation;
 class GameObject;
+class GameTexture;
 
 class GameAnimator
 {
@@ -24,6 +25,14 @@ public:
 	);
 	GameAnimation* FindAnimation(const wstring& _strName);
 	void LoadAnimation(const wstring& _strRelativePath);
+
+	void FinalUpdate();
+	void Render(HDC _dc);
+
+	GameObject* GetObj()
+	{
+		return m_pOwner;
+	}
 
 	GameAnimator();
 	~GameAnimator();

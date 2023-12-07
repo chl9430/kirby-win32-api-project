@@ -14,6 +14,11 @@ GameScene_Stage::~GameScene_Stage()
 {
 }
 
+void GameScene_Stage::Render(HDC _dc)
+{
+	GameScene::Render(_dc);
+}
+
 void GameScene_Stage::Enter()
 {
 	GameObject* pObj = new GamePlayer; // 부모 클래스에서 삭제 담당

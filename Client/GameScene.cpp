@@ -48,6 +48,13 @@ void GameScene::Update()
 
 void GameScene::FinalUpdate()
 {
+	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
+	{
+		for (size_t j = 0; j < m_arrObj[i].size(); ++j)
+		{
+			m_arrObj[i][j]->FinalUpdate();
+		}
+	}
 }
 
 void GameScene::Render(HDC _dc)

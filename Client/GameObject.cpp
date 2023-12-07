@@ -36,12 +36,12 @@ GameObject::~GameObject()
 void GameObject::FinalUpdate()
 {
 	/*if (m_pCollider)
-		m_pCollider->FinalUpdate();
+		m_pCollider->FinalUpdate();*/
 
 	if (m_pAnimator)
 		m_pAnimator->FinalUpdate();
 
-	if (m_pRigidBody)
+	/*if (m_pRigidBody)
 		m_pRigidBody->FinalUpdate();
 
 	if (m_pGravity)
@@ -69,14 +69,14 @@ void GameObject::Render(HDC _dc)
 
 void GameObject::ComponentRender(HDC _dc)
 {
-	/*if (nullptr != m_pCollider)
-	{
-		m_pCollider->Render(_dc);
-	}
-
 	if (nullptr != m_pAnimator)
 	{
 		m_pAnimator->Render(_dc);
+	}
+
+	/*if (nullptr != m_pCollider)
+	{
+		m_pCollider->Render(_dc);
 	}*/
 }
 

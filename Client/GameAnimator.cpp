@@ -54,3 +54,22 @@ void GameAnimator::LoadAnimation(const wstring& _strRelativePath)
 	pAnim->m_pAnimator = this;
 	m_mapAnim.insert(make_pair(pAnim->GetName(), pAnim));
 }
+
+void GameAnimator::FinalUpdate()
+{
+	if (m_pCurAnim != nullptr)
+	{
+		m_pCurAnim->Update();
+
+		if (m_bRepeat && m_pCurAnim->IsFinish())
+		{
+			m_pCurAnim->SetFrame(0);
+		}
+	}
+}
+
+void GameAnimator::Render(HDC _dc)
+{
+	if (nullptr != m_pCurAnim)
+		m_pCurAnim->Render(_dc);
+}
