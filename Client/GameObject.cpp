@@ -35,17 +35,17 @@ GameObject::~GameObject()
 
 void GameObject::FinalUpdate()
 {
-	/*if (m_pCollider)
-		m_pCollider->FinalUpdate();*/
-
 	if (m_pAnimator)
 		m_pAnimator->FinalUpdate();
 
-	/*if (m_pRigidBody)
+	if (m_pGravity)
+		m_pGravity->FinalUpdate();
+
+	if (m_pRigidBody)
 		m_pRigidBody->FinalUpdate();
 
-	if (m_pGravity)
-		m_pGravity->FinalUpdate();*/
+	if (m_pCollider)
+		m_pCollider->FinalUpdate();
 }
 
 void GameObject::Render(HDC _dc)
@@ -74,10 +74,10 @@ void GameObject::ComponentRender(HDC _dc)
 		m_pAnimator->Render(_dc);
 	}
 
-	/*if (nullptr != m_pCollider)
+	if (nullptr != m_pCollider)
 	{
 		m_pCollider->Render(_dc);
-	}*/
+	}
 }
 
 void GameObject::CreateCollider()

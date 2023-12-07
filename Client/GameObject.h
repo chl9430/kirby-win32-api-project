@@ -29,6 +29,10 @@ public:
 	virtual void FinalUpdate();
 	virtual void Render(HDC _dc);
 
+	virtual void OnCollision(GameCollider* _pOther) {}
+	virtual void OnCollisionEnter(GameCollider* _pOther) {}
+	virtual void OnCollisionExit(GameCollider* _pOther) {}
+
 	void ComponentRender(HDC _dc);
 
 	void CreateCollider();
@@ -60,15 +64,17 @@ public:
 	{
 		m_vPos = _vPos;
 	}
-
 	GameRigidBody* GetRigidBody()
 	{
 		return m_pRigidBody;
 	}
-
 	GameAnimator* GetAnimator()
 	{
 		return m_pAnimator;
+	}
+	GameCollider* GetCollider()
+	{
+		return m_pCollider;
 	}
 
 	GameObject();

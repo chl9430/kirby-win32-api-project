@@ -8,6 +8,7 @@ private:
 	GameObject* m_pOwner;
 
 public:
+	void FinalUpdate();
 
 	GameGravity();
 	~GameGravity();

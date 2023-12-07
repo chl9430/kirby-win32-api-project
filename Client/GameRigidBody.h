@@ -9,8 +9,16 @@ private:
 
 	Vec2 m_vForce;
 	Vec2 m_vVelocity;
+	Vec2 m_vAccel;
+	Vec2 m_vAccelA;
+	float m_fMass;
+	float m_fFricCoeff;
+	Vec2 m_vMaxVelocity;
 
 public:
+	void FinalUpdate();
+	void Move();
+
 	void AddForce(Vec2 _vF)
 	{
 		m_vForce += _vF;

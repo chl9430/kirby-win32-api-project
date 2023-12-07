@@ -4,15 +4,17 @@
 #include <Windows.h>
 #include <iostream>
 
+using namespace std;
+
 #include <map>
-using std::map;
+// using std::map;
 
 #include <string>
-using std::string;
-using std::wstring;
+// using std::string;
+// using std::wstring;
 
 #include <vector>
-using std::vector;
+// using std::vector;
 
 #include <math.h>
 #include <assert.h>

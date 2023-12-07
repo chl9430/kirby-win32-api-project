@@ -26,9 +26,12 @@ public:
     virtual void Update();
     virtual void Render(HDC _dc);
 
+    virtual void OnCollisionEnter(GameCollider* _pOther);
+
     void UpdateState();
     void UpdateMove();
     void UpdateAnimation();
+    void UpdateGravity();
 
     GamePlayer();
     virtual ~GamePlayer();

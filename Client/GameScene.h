@@ -24,7 +24,6 @@ public:
 	{
 		m_arrObj[(UINT)_eType].push_back(_pObj);
 	}
-
 	void SetName(const wstring& _strName)
 	{
 		m_strName = _strName;
@@ -32,6 +31,10 @@ public:
 	void RegisterPlayer(GameObject* _pPlayer)
 	{
 		m_pPlayer = _pPlayer;
+	}
+	const vector<GameObject*>& GetGroupObject(GROUP_TYPE _eType)
+	{
+		return m_arrObj[(UINT)_eType];
 	}
 
 	GameScene();

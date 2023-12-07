@@ -8,6 +8,7 @@
 #include "GameCamera.h"
 #include "GameSceneMgr.h"
 #include "GameEventMgr.h"
+#include "GameCollisionMgr.h"
 
 #include "GameTexture.h"
 
@@ -75,6 +76,9 @@ void GameCore::Progress()
 	GameKeyMgr::GetInst()->Update();
 	GameCamera::GetInst()->Update();
 	GameSceneMgr::GetInst()->Update();
+
+	// 충돌체크
+	GameCollisionMgr::GetInst()->Update();
 
 	// 화면 클리어
 	Clear();

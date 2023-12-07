@@ -5,10 +5,10 @@
 #include "GameResMgr.h"
 
 #include "GameTexture.h"
-
 #include "GameRigidBody.h"
 #include "GameAnimator.h"
 #include "GameAnimation.h"
+#include "GameCollider.h"
 
 GamePlayer::GamePlayer()
 	: m_eCurState{ PLAYER_STATE::IDLE }
@@ -17,6 +17,9 @@ GamePlayer::GamePlayer()
 	, m_iPrevDir{ 1 }
 {
 	CreateCollider();
+	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
+	GetCollider()->SetScale(Vec2{ 40.f, 40.f });
+
 	CreateRigidBody();
 
 	// Texture ·Îµù
@@ -49,8 +52,6 @@ void GamePlayer::Update()
 		SetPos(Vec2{ 640.f, 384.f });
 	}*/
 
-	// GetAnimator()->Update();
-
 	m_ePrevState = m_eCurState;
 	m_iPrevDir = m_iDir;
 }
@@ -58,6 +59,19 @@ void GamePlayer::Update()
 void GamePlayer::Render(HDC _dc)
 {
 	ComponentRender(_dc);
+}
+
+void GamePlayer::OnCollisionEnter(GameCollider* _pOther)
+{
+	GameObject* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Ground")
+	{
+		Vec2 vPos = GetPos();
+		if (vPos.y < pOtherObj->GetPos().y)
+		{
+			m_eCurState = PLAYER_STATE::IDLE;
+		}
+	}
 }
 
 void GamePlayer::UpdateState()
@@ -115,7 +129,7 @@ void GamePlayer::UpdateMove()
 
 	if (KEY_TAP(KEY::D))
 	{
-		pRigid->SetVelocity(Vec2{ -100.f, pRigid->GetVelocity().y });
+		pRigid->SetVelocity(Vec2{ 100.f, pRigid->GetVelocity().y });
 	}
 }
 
@@ -129,7 +143,7 @@ void GamePlayer::UpdateAnimation()
 	case PLAYER_STATE::IDLE:
 	{
 		if (m_iDir == -1)
-			GetAnimator()->Play(L"IDLE_LEFT", true);
+			GetAnimator()->Play(L"WALK_RIGHT", true);
 		else
 			GetAnimator()->Play(L"WALK_RIGHT", true);
 	}
@@ -137,7 +151,7 @@ void GamePlayer::UpdateAnimation()
 	case PLAYER_STATE::WALK:
 	{
 		if (m_iDir == -1)
-			GetAnimator()->Play(L"WALK_LEFT", true);
+			GetAnimator()->Play(L"WALK_RIGHT", true);
 		else
 			GetAnimator()->Play(L"WALK_RIGHT", true);
 	}
@@ -151,4 +165,9 @@ void GamePlayer::UpdateAnimation()
 	}
 	break;
 	}
+}
+
+void GamePlayer::UpdateGravity()
+{
+	GetRigidBody()->AddForce(Vec2{ 0.f, 500.f });
 }
