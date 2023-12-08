@@ -31,7 +31,7 @@ void GameAnimator::CreateAnimation(const wstring& _strName, GameTexture* _pTex, 
 	pAnim = new GameAnimation;
 	pAnim->SetName(_strName);
 	pAnim->m_pAnimator = this;
-	pAnim->Create(_pTex, _vLT, _vSliceSize, _vStep, _fDuration, _iFrameCount);
+	pAnim->Create(_strName, _pTex, _vLT, _vSliceSize, _vStep, _fDuration, _iFrameCount);
 
 	m_mapAnim.insert(make_pair(_strName, pAnim));
 }

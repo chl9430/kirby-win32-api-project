@@ -23,11 +23,17 @@ GamePlayer::GamePlayer()
 	CreateRigidBody();
 
 	// Texture ·Îµù
-	GameTexture* pRightTex = GameResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Kirby_Walk_Right.bmp");
+	GameTexture* pIdleRightTex = GameResMgr::GetInst()->LoadTexture(L"IdleRight", L"texture\\Kirby_Idle_Right.bmp");
+	GameTexture* pIdleLeftTex = GameResMgr::GetInst()->LoadTexture(L"IdleLeft", L"texture\\Kirby_Idle_Left.bmp");
+	GameTexture* pWalkRightTex = GameResMgr::GetInst()->LoadTexture(L"WalkRight", L"texture\\Kirby_Walk_Right.bmp");
+	GameTexture* pWalkLeftTex = GameResMgr::GetInst()->LoadTexture(L"WalkLeft", L"texture\\Kirby_Walk_Left.bmp");
 
 	CreateAnimator();
 
-	GetAnimator()->CreateAnimation(L"WALK_RIGHT", pRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"IDLE_RIGHT", pIdleRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"IDLE_LEFT", pIdleLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"WALK_RIGHT", pWalkRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"WALK_LEFT", pWalkLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
 
 	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
@@ -122,7 +128,7 @@ void GamePlayer::UpdateMove()
 		pRigid->AddForce(Vec2{ 200.f, 0.f });
 	}
 
-	if (KEY_TAP(KEY::A))
+	/*if (KEY_TAP(KEY::A))
 	{
 		pRigid->SetVelocity(Vec2{ -100.f, pRigid->GetVelocity().y });
 	}
@@ -130,7 +136,7 @@ void GamePlayer::UpdateMove()
 	if (KEY_TAP(KEY::D))
 	{
 		pRigid->SetVelocity(Vec2{ 100.f, pRigid->GetVelocity().y });
-	}
+	}*/
 }
 
 void GamePlayer::UpdateAnimation()
@@ -143,15 +149,15 @@ void GamePlayer::UpdateAnimation()
 	case PLAYER_STATE::IDLE:
 	{
 		if (m_iDir == -1)
-			GetAnimator()->Play(L"WALK_RIGHT", true);
+			GetAnimator()->Play(L"IDLE_LEFT", true);
 		else
-			GetAnimator()->Play(L"WALK_RIGHT", true);
+			GetAnimator()->Play(L"IDLE_RIGHT", true);
 	}
 	break;
 	case PLAYER_STATE::WALK:
 	{
 		if (m_iDir == -1)
-			GetAnimator()->Play(L"WALK_RIGHT", true);
+			GetAnimator()->Play(L"WALK_LEFT", true);
 		else
 			GetAnimator()->Play(L"WALK_RIGHT", true);
 	}

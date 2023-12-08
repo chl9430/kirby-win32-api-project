@@ -76,7 +76,7 @@ void GameObject::ComponentRender(HDC _dc)
 
 	if (nullptr != m_pCollider)
 	{
-		m_pCollider->Render(_dc);
+		// m_pCollider->Render(_dc);
 	}
 }
 
