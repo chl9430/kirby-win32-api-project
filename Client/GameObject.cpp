@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GameObject.h"
 
+#include "GameCamera.h"
+
 #include "GameCollider.h"
 #include "GameRigidBody.h"
 #include "GameAnimator.h"
@@ -50,19 +52,13 @@ void GameObject::FinalUpdate()
 
 void GameObject::Render(HDC _dc)
 {
-	/*Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vPos);
+	Vec2 vRenderPos = GameCamera::GetInst()->GetRenderPos(m_vPos);
 
 	Rectangle(_dc
 		, (int)(vRenderPos.x - m_vScale.x / 2.f)
 		, (int)(vRenderPos.y - m_vScale.y / 2.f)
 		, (int)(vRenderPos.x + m_vScale.x / 2.f)
-		, (int)(vRenderPos.y + m_vScale.y / 2.f));*/
-
-	Rectangle(_dc
-		, (int)(m_vPos.x - m_vScale.x / 2.f)
-		, (int)(m_vPos.y - m_vScale.y / 2.f)
-		, (int)(m_vPos.x + m_vScale.x / 2.f)
-		, (int)(m_vPos.y + m_vScale.y / 2.f));
+		, (int)(vRenderPos.y + m_vScale.y / 2.f));
 
 	ComponentRender(_dc);
 }
@@ -76,7 +72,7 @@ void GameObject::ComponentRender(HDC _dc)
 
 	if (nullptr != m_pCollider)
 	{
-		// m_pCollider->Render(_dc);
+		m_pCollider->Render(_dc);
 	}
 }
 

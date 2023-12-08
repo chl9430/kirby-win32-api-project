@@ -4,6 +4,7 @@
 #include "GamePathMgr.h"
 #include "GameResMgr.h"
 #include "GameTimeMgr.h"
+#include "GameCamera.h"
 
 #include "GameTexture.h"
 #include "GameObject.h"
@@ -288,6 +289,8 @@ void GameAnimation::Render(HDC _dc)
 	Vec2 vPos = pObj->GetPos();
 
 	vPos += m_vecFrm[m_iCurFrm].vOffset;
+
+	vPos = GameCamera::GetInst()->GetRenderPos(vPos);
 
 	TransparentBlt(_dc
 		, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f)
