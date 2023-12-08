@@ -2,7 +2,9 @@
 #include "GameScene_Stage.h"
 
 #include "GameCore.h"
+
 #include "GameCollisionMgr.h"
+#include "GameCamera.h"
 
 #include "GamePlayer.h"
 
@@ -32,6 +34,9 @@ void GameScene_Stage::Enter()
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
+
+	//// Camera Look ÁöÁ¤
+	//GameCamera::GetInst()->SetLookAt(vResolution / 2.f);
 
 	Start();
 }

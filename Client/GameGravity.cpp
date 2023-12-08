@@ -1,9 +1,8 @@
 #include "pch.h"
 #include "GameGravity.h"
 
-void GameGravity::FinalUpdate()
-{
-}
+#include "GameObject.h"
+#include "GameRigidBody.h"
 
 GameGravity::GameGravity()
 	: m_pOwner{ nullptr }
@@ -12,4 +11,9 @@ GameGravity::GameGravity()
 
 GameGravity::~GameGravity()
 {
+}
+
+void GameGravity::FinalUpdate()
+{
+	m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 800.f });
 }

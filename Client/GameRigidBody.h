@@ -23,20 +23,21 @@ public:
 	{
 		m_vForce += _vF;
 	}
-
 	Vec2 GetVelocity()
 	{
 		return m_vVelocity;
 	}
-
 	void SetVelocity(Vec2 _v)
 	{
 		m_vVelocity = _v;
 	}
-
 	float GetSpeed()
 	{
 		return m_vVelocity.Length();
+	}
+	void SetAccelAlpha(Vec2 _vAccel)
+	{
+		m_vAccelA = _vAccel;
 	}
 
 	GameRigidBody();
