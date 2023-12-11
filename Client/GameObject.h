@@ -52,6 +52,10 @@ public:
 	{
 		m_vScale = _vScale;
 	}
+	Vec2 GetScale()
+	{
+		return m_vScale;
+	}
 	bool IsDead()
 	{
 		return !m_bAlive;
@@ -75,6 +79,10 @@ public:
 	GameCollider* GetCollider()
 	{
 		return m_pCollider;
+	}
+	GameGravity* GetGravity()
+	{
+		return m_pGravity;
 	}
 
 	GameObject();

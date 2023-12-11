@@ -48,7 +48,7 @@ void GameRigidBody::FinalUpdate()
 	if (!m_vVelocity.IsZero())
 	{
 		Vec2 vFricDir = -m_vVelocity;
-		-vFricDir.Normalize();
+		vFricDir.Normalize();
 
 		Vec2 vFriction = vFricDir * m_fFricCoeff * fDT;
 		if (m_vVelocity.Length() <= vFriction.Length()) // 본래 속도보다 마찰가속도가 크다면

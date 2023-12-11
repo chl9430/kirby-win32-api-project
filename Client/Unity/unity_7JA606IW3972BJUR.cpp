@@ -1,4 +1,7 @@
 
+#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GamePlayer.cpp"
+
+
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameRes.cpp"
 
 

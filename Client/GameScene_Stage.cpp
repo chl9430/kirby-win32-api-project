@@ -7,6 +7,7 @@
 #include "GameCamera.h"
 
 #include "GamePlayer.h"
+#include "GameGround.h"
 
 GameScene_Stage::GameScene_Stage()
 {
@@ -33,7 +34,14 @@ void GameScene_Stage::Enter()
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 
+	GameObject* pGround = new GameGround;
+	pGround->SetName(L"Ground");
+	pGround->SetPos(Vec2{ 100.f, 300.f });
+	pGround->SetScale(Vec2{ 100.f, 60.f });
+	AddObject(pGround, GROUP_TYPE::GROUND);
+
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
+	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::GROUND);
 
 	//// Camera Look ÁöÁ¤
 	//GameCamera::GetInst()->SetLookAt(vResolution / 2.f);
