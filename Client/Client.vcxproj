@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AI.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
@@ -154,7 +155,10 @@
     <ClInclude Include="GameEventMgr.h" />
     <ClInclude Include="GameGravity.h" />
     <ClInclude Include="GameGround.h" />
+    <ClInclude Include="GameIdleState.h" />
     <ClInclude Include="GameKeyMgr.h" />
+    <ClInclude Include="GameMonster.h" />
+    <ClInclude Include="GameMonsterFactory.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePathMgr.h" />
     <ClInclude Include="GamePlayer.h" />
@@ -166,6 +170,7 @@
     <ClInclude Include="GameScene_Stage.h" />
     <ClInclude Include="GameScene_Title.h" />
     <ClInclude Include="GameScene_Tool.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="GameTexture.h" />
     <ClInclude Include="GameTimeMgr.h" />
     <ClInclude Include="pch.h" />
@@ -175,6 +180,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AI.cpp" />
     <ClCompile Include="func.cpp" />
     <ClCompile Include="GameAnimation.cpp" />
     <ClCompile Include="GameAnimator.cpp" />
@@ -185,7 +191,10 @@
     <ClCompile Include="GameEventMgr.cpp" />
     <ClCompile Include="GameGravity.cpp" />
     <ClCompile Include="GameGround.cpp" />
+    <ClCompile Include="GameIdleState.cpp" />
     <ClCompile Include="GameKeyMgr.cpp" />
+    <ClCompile Include="GameMonster.cpp" />
+    <ClCompile Include="GameMonsterFactory.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePathMgr.cpp" />
     <ClCompile Include="GamePlayer.cpp" />
@@ -197,6 +206,7 @@
     <ClCompile Include="GameScene_Stage.cpp" />
     <ClCompile Include="GameScene_Title.cpp" />
     <ClCompile Include="GameScene_Tool.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameTexture.cpp" />
     <ClCompile Include="GameTimeMgr.cpp" />
     <ClCompile Include="main.cpp" />

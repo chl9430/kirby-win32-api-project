@@ -1,13 +1,4 @@
 
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GamePlayer.cpp"
-
-
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameRes.cpp"
-
-
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameResMgr.cpp"
-
-
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameRigidBody.cpp"
 
 
@@ -26,6 +17,9 @@
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameScene_Tool.cpp"
 
 
+#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameState.cpp"
+
+
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameTexture.cpp"
 
 
@@ -33,7 +27,4 @@
 
 
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\main.cpp"
-
-
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\SelectGDI.cpp"
 

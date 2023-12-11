@@ -8,6 +8,8 @@
 
 #include "GamePlayer.h"
 #include "GameGround.h"
+#include "GameMonster.h"
+#include "GameMonsterFactory.h"
 
 GameScene_Stage::GameScene_Stage()
 {
@@ -34,10 +36,14 @@ void GameScene_Stage::Enter()
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 
+	GameMonster* pMon = GameMonsterFactory::CreateMonster(MON_TYPE::NORMAL, Vec2{ 200.f, 100.f });
+	pMon->SetName(L"Monster");
+	AddObject(pMon, GROUP_TYPE::MONSTER);
+
 	GameObject* pGround = new GameGround;
 	pGround->SetName(L"Ground");
 	pGround->SetPos(Vec2{ 100.f, 300.f });
-	pGround->SetScale(Vec2{ 100.f, 60.f });
+	pGround->SetScale(Vec2{ 500.f, 60.f });
 	AddObject(pGround, GROUP_TYPE::GROUND);
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);

@@ -39,6 +39,10 @@ public:
 	{
 		m_vAccelA = _vAccel;
 	}
+	void SetMass(float _fMass)
+	{
+		m_fMass = _fMass;
+	}
 
 	GameRigidBody();
 	~GameRigidBody();

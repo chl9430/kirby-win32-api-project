@@ -65,3 +65,14 @@ enum class EVENT_TYPE
 	CHANGE_AI_STATE,
 	END
 };
+
+enum class MON_STATE
+{
+	IDLE,
+	PATROL,
+	TRACE,
+	ATT,
+	RUN,
+	DEAD,
+	END
+};

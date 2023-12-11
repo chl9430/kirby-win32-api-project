@@ -5,6 +5,8 @@ class GameObject;
 class GameCollider
 {
 private:
+	static UINT g_iNextID;
+
 	GameObject* m_pOwner;
 	Vec2 m_vOffsetPos;
 	Vec2 m_vScale;

@@ -1,4 +1,7 @@
 
+#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\AI.cpp"
+
+
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\func.cpp"
 
 
@@ -24,16 +27,4 @@
 
 
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameGravity.cpp"
-
-
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameGround.cpp"
-
-
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameKeyMgr.cpp"
-
-
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameObject.cpp"
-
-
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GamePathMgr.cpp"
 

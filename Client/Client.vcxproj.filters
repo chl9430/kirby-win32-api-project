@@ -93,6 +93,24 @@
     <Filter Include="Engine\06. Object\Ground">
       <UniqueIdentifier>{f23f80a4-a9a4-467f-8610-4c6e7535de41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06. Object\Monster">
+      <UniqueIdentifier>{1709a970-0456-43e8-b829-33ab22a8abde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09. Factory">
+      <UniqueIdentifier>{c998ef6b-731f-4cd9-bcb8-7bae1e3eaa15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09. Factory\MonFactory">
+      <UniqueIdentifier>{9a3e3b8a-e2b2-41ff-a339-920ad9372aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08. Module\AI">
+      <UniqueIdentifier>{b98f81e7-15cc-4bce-9eb5-7d3960623f49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08. Module\AI\State">
+      <UniqueIdentifier>{207d2d76-6631-45c4-9b8a-fa4574a736c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08. Module\AI\State\Idle">
+      <UniqueIdentifier>{1851b1db-50f6-49d2-b5bc-9f71ee8d7814}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -189,6 +207,21 @@
     <ClInclude Include="GameGround.h">
       <Filter>Engine\06. Object\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="GameMonster.h">
+      <Filter>Engine\06. Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMonsterFactory.h">
+      <Filter>Engine\09. Factory\MonFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Engine\08. Module\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Engine\08. Module\AI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="GameIdleState.h">
+      <Filter>Engine\08. Module\AI\State\Idle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -266,6 +299,21 @@
     </ClCompile>
     <ClCompile Include="GameGround.cpp">
       <Filter>Engine\06. Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMonster.cpp">
+      <Filter>Engine\06. Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMonsterFactory.cpp">
+      <Filter>Engine\09. Factory\MonFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Engine\08. Module\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Engine\08. Module\AI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="GameIdleState.cpp">
+      <Filter>Engine\08. Module\AI\State\Idle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

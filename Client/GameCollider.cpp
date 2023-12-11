@@ -6,13 +6,15 @@
 #include "GameObject.h"
 #include "SelectGDI.h"
 
+UINT GameCollider::g_iNextID = 0;
+
 GameCollider::GameCollider()
 	: m_pOwner{ nullptr }
 	, m_vOffsetPos{}
 	, m_vScale{}
 	, m_iCol{ 0 }
 	, m_vFinalPos{}
-	, m_iId{ 0 }
+	, m_iId{ g_iNextID++ }
 {
 }
 
