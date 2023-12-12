@@ -26,7 +26,7 @@ void GameGround::OnCollisionEnter(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Player")
+	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster")
 	{
 		pOtherObj->GetGravity()->SetGround(true);
 
@@ -51,7 +51,7 @@ void GameGround::OnCollision(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Player")
+	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster")
 	{
 		pOtherObj->GetGravity()->SetGround(true);
 
@@ -76,7 +76,7 @@ void GameGround::OnCollisionExit(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Player")
+	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster")
 	{
 		pOtherObj->GetGravity()->SetGround(false);
 	}

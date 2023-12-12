@@ -26,6 +26,9 @@ private:
 
 public:
 	virtual void Update();
+	virtual void Render(HDC _dc);
+
+	void UpdateAnimation();
 
 	void SetAI(AI* _pAI);
 

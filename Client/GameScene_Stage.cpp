@@ -36,7 +36,7 @@ void GameScene_Stage::Enter()
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 
-	GameMonster* pMon = GameMonsterFactory::CreateMonster(MON_TYPE::NORMAL, Vec2{ 200.f, 100.f });
+	GameMonster* pMon = GameMonsterFactory::CreateMonster(MON_TYPE::NORMAL, Vec2{ 300.f, 320.f });
 	pMon->SetName(L"Monster");
 	AddObject(pMon, GROUP_TYPE::MONSTER);
 
@@ -48,6 +48,7 @@ void GameScene_Stage::Enter()
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::GROUND);
+	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::GROUND, GROUP_TYPE::MONSTER);
 
 	//// Camera Look ÁöÁ¤
 	//GameCamera::GetInst()->SetLookAt(vResolution / 2.f);

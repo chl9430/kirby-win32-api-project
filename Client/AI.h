@@ -16,6 +16,10 @@ public:
 	void AddState(GameState* _pState);
 	GameState* GetState(MON_STATE _eState);
 	void SetCurState(MON_STATE _eState);
+	GameState* GetCurState()
+	{
+		return m_pCurState;
+	}
 
 	AI();
 	~AI();

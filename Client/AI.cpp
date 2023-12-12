@@ -2,6 +2,8 @@
 #include "AI.h"
 
 #include "GameState.h"
+#include "GameMonster.h"
+#include "GameAnimator.h"
 
 AI::AI()
 	: m_mapState{}
@@ -41,5 +43,6 @@ GameState* AI::GetState(MON_STATE _eState)
 void AI::SetCurState(MON_STATE _eState)
 {
 	m_pCurState = GetState(_eState);
+	
 	assert(m_pCurState);
 }
