@@ -4,8 +4,12 @@
 enum class PLAYER_STATE
 {
     IDLE,
+    WALK_READY,
     WALK,
+    WALK_STOP,
+    RUN_READY,
     RUN,
+    RUN_STOP,
     DOWN,
     INHALE,
     JUMP,

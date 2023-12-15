@@ -247,6 +247,75 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		m_vecFrm.push_back(frm10);
 	}
 
+	if (_strName == L"RUN_RIGHT" || _strName == L"RUN_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 48.f, 38.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 52.f, 0.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 38.f, 38.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 96.f, 2.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 34.f, 36.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 136.f, 0.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 36.f, 38.f };
+		m_vecFrm.push_back(frm04);
+
+		tAnimFrm frm05 = {};
+		frm05.fDuration = _fDuration;
+		frm05.vLT = Vec2{ 178.f, 0.f };
+		frm05.vOffset = Vec2{ 0.f, 0.f };
+		frm05.vSlice = Vec2{ 38.f, 38.f };
+		m_vecFrm.push_back(frm05);
+
+		tAnimFrm frm06 = {};
+		frm06.fDuration = _fDuration;
+		frm06.vLT = Vec2{ 220.f, 0.f };
+		frm06.vOffset = Vec2{ 0.f, 0.f };
+		frm06.vSlice = Vec2{ 36.f, 38.f };
+		m_vecFrm.push_back(frm06);
+
+		tAnimFrm frm07 = {};
+		frm07.fDuration = _fDuration;
+		frm07.vLT = Vec2{ 260.f, 2.f };
+		frm07.vOffset = Vec2{ 0.f, 0.f };
+		frm07.vSlice = Vec2{ 34.f, 36.f };
+		m_vecFrm.push_back(frm07);
+
+		tAnimFrm frm08 = {};
+		frm08.fDuration = _fDuration;
+		frm08.vLT = Vec2{ 298.f, 0.f };
+		frm08.vOffset = Vec2{ 0.f, 0.f };
+		frm08.vSlice = Vec2{ 38.f, 38.f };
+		m_vecFrm.push_back(frm08);
+	}
+
+	if (_strName == L"STOP_RIGHT" || _strName == L"STOP_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 44.f, 40.f };
+		m_vecFrm.push_back(frm01);
+	}
+
 	if (_strName == L"WADDLE_DEE_WALK_RIGHT" || _strName == L"WADDLE_DEE_WALK_LEFT")
 	{
 		tAnimFrm frm01 = {};

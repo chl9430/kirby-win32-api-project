@@ -16,6 +16,7 @@
 
 #define KEY_TAP(key) KEY_CHECK(key, KEY_STATE::TAP)
 #define KEY_HOLD(key) KEY_CHECK(key, KEY_STATE::HOLD)
+#define KEY_AWAY(key) KEY_CHECK(key, KEY_STATE::AWAY)
 
 #define KEY_CHECK(key, state) GameKeyMgr::GetInst()->GetKeyState(key) == state
 
