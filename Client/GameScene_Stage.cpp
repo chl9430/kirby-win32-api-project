@@ -28,7 +28,7 @@ void GameScene_Stage::Enter()
 {
 	GameObject* pObj = new GamePlayer; // 부모 클래스에서 삭제 담당
 	pObj->SetName(L"Player");
-	pObj->SetPos(Vec2{ 100.f, 100.f });
+	pObj->SetPos(Vec2{ 100.f, 300.f });
 	pObj->SetScale(Vec2{ 50.f, 50.f });
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
@@ -42,7 +42,7 @@ void GameScene_Stage::Enter()
 
 	GameObject* pGround = new GameGround;
 	pGround->SetName(L"Ground");
-	pGround->SetPos(Vec2{ 100.f, 300.f });
+	pGround->SetPos(Vec2{ 100.f, 400.f });
 	pGround->SetScale(Vec2{ 500.f, 60.f });
 	AddObject(pGround, GROUP_TYPE::GROUND);
 

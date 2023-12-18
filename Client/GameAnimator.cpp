@@ -8,6 +8,7 @@ GameAnimator::GameAnimator()
 	, m_pOwner{}
 	, m_pCurAnim{ nullptr }
 	, m_bRepeat{ false }
+	, m_pPrevAnim{ nullptr }
 {
 }
 
@@ -18,7 +19,12 @@ GameAnimator::~GameAnimator()
 
 void GameAnimator::Play(const wstring& _strName, bool _bRepeat)
 {
+	m_pPrevAnim = m_pCurAnim;
 	m_pCurAnim = FindAnimation(_strName);
+	if (m_pPrevAnim != m_pCurAnim)
+	{
+		m_pCurAnim->SetFrame(0);
+	}
 	m_bRepeat = _bRepeat;
 }
 

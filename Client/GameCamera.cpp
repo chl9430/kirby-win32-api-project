@@ -27,7 +27,12 @@ GameCamera::~GameCamera()
 
 void GameCamera::CalDiff()
 {
-	m_fAccTime += fDT;
+	if (m_pTargetObj)
+	{
+		Vec2 vCenterPos = Vec2{ (float)GameCore::GetInst()->GetResolution().x / 2, m_pTargetObj->GetPos().y };
+		m_vDiff = m_pTargetObj->GetPos() - vCenterPos;
+	}
+	/*m_fAccTime += fDT;
 
 	if (m_fTime <= m_fAccTime)
 	{
@@ -47,7 +52,7 @@ void GameCamera::CalDiff()
 	Vec2 vCenter = vResolution / 2;
 
 	m_vDiff = m_vCurLookAt;
-	m_vPrevLookAt = m_vCurLookAt;
+	m_vPrevLookAt = m_vCurLookAt;*/
 }
 
 void GameCamera::Init()
@@ -71,7 +76,7 @@ void GameCamera::Update()
 		}
 	}
 
-	if (KEY_HOLD(KEY::UP))
+	/*if (KEY_HOLD(KEY::UP))
 	{
 		m_vLookAt.y -= 500.f * fDT;
 	}
@@ -86,8 +91,8 @@ void GameCamera::Update()
 	else if (KEY_HOLD(KEY::RIGHT))
 	{
 		m_vLookAt.x += 500.f * fDT;
-	}
+	}*/
 
 	// 화면 중앙좌표와 카메라 LookAt 좌표간의 차이값 계산
-	CalDiff();
+	 CalDiff();
 }

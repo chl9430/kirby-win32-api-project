@@ -316,6 +316,75 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		m_vecFrm.push_back(frm01);
 	}
 
+	if (_strName == L"JUMP_RIGHT" || _strName == L"JUMP_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 40.f, 40.f };
+		m_vecFrm.push_back(frm01);
+	}
+
+	if (_strName == L"DROP_RIGHT" || _strName == L"DROP_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 2.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 42.f, 38.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 46.f, 4.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 40.f, 36.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 88.f, 2.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 42.f, 38.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 134.f, 0.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 40.f, 40.f };
+		m_vecFrm.push_back(frm04);
+
+		tAnimFrm frm05 = {};
+		frm05.fDuration = _fDuration;
+		frm05.vLT = Vec2{ 178.f, 6.f };
+		frm05.vOffset = Vec2{ 0.f, 0.f };
+		frm05.vSlice = Vec2{ 42.f, 34.f };
+		m_vecFrm.push_back(frm05);
+
+		tAnimFrm frm06 = {};
+		frm06.fDuration = _fDuration;
+		frm06.vLT = Vec2{ 224.f, 4.f };
+		frm06.vOffset = Vec2{ 0.f, 0.f };
+		frm06.vSlice = Vec2{ 44.f, 36.f };
+		m_vecFrm.push_back(frm06);
+
+		tAnimFrm frm07 = {};
+		frm07.fDuration = _fDuration;
+		frm07.vLT = Vec2{ 272.f, 2.f };
+		frm07.vOffset = Vec2{ 0.f, 0.f };
+		frm07.vSlice = Vec2{ 42.f, 38.f };
+		m_vecFrm.push_back(frm07);
+
+		tAnimFrm frm08 = {};
+		frm08.fDuration = _fDuration;
+		frm08.vLT = Vec2{ 316.f, 2.f };
+		frm08.vOffset = Vec2{ 0.f, 0.f };
+		frm08.vSlice = Vec2{ 40.f, 38.f };
+		m_vecFrm.push_back(frm08);
+	}
+
 	if (_strName == L"WADDLE_DEE_WALK_RIGHT" || _strName == L"WADDLE_DEE_WALK_LEFT")
 	{
 		tAnimFrm frm01 = {};
@@ -387,32 +456,31 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 
 void GameAnimation::Update()
 {
-	if (m_bFinish)
-		return;
-
-	m_fAccTime += fDT;
-
-	if (m_vecFrm[m_iCurFrm].fDuration < m_fAccTime)
+	if (!m_bFinish)
 	{
-		++m_iCurFrm;
+		m_fAccTime += fDT;
 
-		if (m_vecFrm.size() <= m_iCurFrm)
+		if (m_vecFrm[m_iCurFrm].fDuration < m_fAccTime)
 		{
-			m_iCurFrm = -1;
-			m_bFinish = true;
-			m_fAccTime = 0.f;
-			return;
-		}
+			++m_iCurFrm;
 
-		m_fAccTime = m_fAccTime - m_vecFrm[m_iCurFrm].fDuration;
+			if (m_vecFrm.size() <= m_iCurFrm)
+			{
+				if (m_pAnimator->IsRepeatAnim())
+					m_iCurFrm = -1;
+				else m_iCurFrm -= 1;
+				m_bFinish = true;
+				m_fAccTime = 0.f;
+				return;
+			}
+
+			m_fAccTime = m_fAccTime - m_vecFrm[m_iCurFrm].fDuration;
+		}
 	}
 }
 
 void GameAnimation::Render(HDC _dc)
 {
-	if (m_bFinish)
-		return;
-
 	GameObject* pObj = m_pAnimator->GetObj();
 	Vec2 vPos = pObj->GetPos();
 

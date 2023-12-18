@@ -13,6 +13,7 @@ enum class PLAYER_STATE
     DOWN,
     INHALE,
     JUMP,
+    DROP,
     FLOAT,
     EXHALE
 };
@@ -25,6 +26,8 @@ private:
     PLAYER_STATE m_ePrevState;
     int m_iDir; // 플레이어의 방향정보
     int m_iPrevDir;
+    float m_fJumpStartPos;
+    bool isRunning;
 
 public:
     virtual void Update();

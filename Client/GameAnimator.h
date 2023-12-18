@@ -10,6 +10,7 @@ private:
 	map<wstring, GameAnimation*> m_mapAnim;
 	GameObject* m_pOwner;
 	GameAnimation* m_pCurAnim;
+	GameAnimation* m_pPrevAnim;
 	bool m_bRepeat;
 
 public:
@@ -32,6 +33,10 @@ public:
 	GameObject* GetObj()
 	{
 		return m_pOwner;
+	}
+	bool IsRepeatAnim()
+	{
+		return m_bRepeat;
 	}
 
 	GameAnimator();

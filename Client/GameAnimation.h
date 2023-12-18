@@ -39,14 +39,12 @@ public:
 	{
 		return m_strName;
 	}
-
 	void SetFrame(int _iFrameIdx)
 	{
 		m_bFinish = false;
 		m_iCurFrm = _iFrameIdx;
 		m_fAccTime = 0.f;
 	}
-
 	bool IsFinish()
 	{
 		return m_bFinish;
