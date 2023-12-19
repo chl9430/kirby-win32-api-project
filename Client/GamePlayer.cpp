@@ -20,6 +20,8 @@ GamePlayer::GamePlayer()
 	, m_iDir{ 1 }
 	, m_iPrevDir{ 1 }
 	, m_fJumpStartPos{ 0 }
+	, m_bRightMove{ false }
+	, m_bLeftMove{ false }
 {
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
@@ -53,8 +55,8 @@ GamePlayer::GamePlayer()
 	GetAnimator()->CreateAnimation(L"STOP_LEFT", pStopLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
 	GetAnimator()->CreateAnimation(L"JUMP_RIGHT", pJumpRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
 	GetAnimator()->CreateAnimation(L"JUMP_LEFT", pJumpLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
-	GetAnimator()->CreateAnimation(L"DROP_RIGHT", pDropRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
-	GetAnimator()->CreateAnimation(L"DROP_LEFT", pDropLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"DROP_RIGHT", pDropRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
+	GetAnimator()->CreateAnimation(L"DROP_LEFT", pDropLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
 
 	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
@@ -68,6 +70,7 @@ GamePlayer::~GamePlayer()
 
 void GamePlayer::Update()
 {
+	UpdateDirection();
 	UpdateState();
 	UpdateMove();
 	UpdateAnimation();
@@ -83,6 +86,10 @@ void GamePlayer::Update()
 
 void GamePlayer::Render(HDC _dc)
 {
+	wchar_t szBuffer[255] = {};
+	swprintf_s(szBuffer, L"Left : %d, Right : %d, Dir : %d, SecondDir : %d", m_bLeftMove, m_bRightMove, m_iDir, m_iSecondDir);
+	SetWindowText(GameCore::GetInst()->GetMainHwnd(), szBuffer);
+
 	ComponentRender(_dc);
 }
 
@@ -99,18 +106,50 @@ void GamePlayer::OnCollisionEnter(GameCollider* _pOther)
 	}
 }
 
+void GamePlayer::UpdateDirection()
+{
+	/*if (KEY_TAP(KEY::A))
+	{
+		m_iDir = -1;
+	}
+
+	if (KEY_TAP(KEY::D))
+	{
+		m_iDir = 1;
+	}
+
+	if (KEY_TAP(KEY::A) && KEY_HOLD(KEY::D))
+	{
+		m_iDir = -1;
+	}
+
+	if (KEY_TAP(KEY::D) && KEY_HOLD(KEY::A))
+	{
+		m_iDir = 1;
+	}
+
+	if (KEY_AWAY(KEY::A) && KEY_HOLD(KEY::D))
+	{
+		m_iDir = 1;
+	}
+
+	if (KEY_AWAY(KEY::D) && KEY_HOLD(KEY::A))
+	{
+		m_iDir = -1;
+	}*/
+}
+
 void GamePlayer::UpdateState()
 {
-	if (m_eCurState == PLAYER_STATE::IDLE)
+	if (m_eCurState == PLAYER_STATE::WALK_READY && GetRigidBody()->GetVelocity().Length() == 0.f)
 	{
-		if (GetRigidBody()->GetVelocity().Length() != 0.f)
+		if (KEY_HOLD(KEY::A) || KEY_HOLD(KEY::D))
 		{
-			m_eCurState = PLAYER_STATE::RUN_READY;
-
-			if (KEY_HOLD(KEY::A) || KEY_HOLD(KEY::D))
-			{
-				m_eCurState = PLAYER_STATE::WALK;
-			}
+			m_eCurState = PLAYER_STATE::WALK;
+		}
+		else
+		{
+			m_eCurState = PLAYER_STATE::IDLE;
 		}
 	}
 
@@ -122,9 +161,9 @@ void GamePlayer::UpdateState()
 		}
 	}
 
-	if (m_eCurState == PLAYER_STATE::WALK_STOP)
+	if (m_eCurState == PLAYER_STATE::IDLE)
 	{
-		if (GetRigidBody()->GetVelocity().Length() == 0.f)
+		if (m_ePrevState == PLAYER_STATE::DROP)
 		{
 			if (KEY_HOLD(KEY::A) || KEY_HOLD(KEY::D))
 			{
@@ -132,28 +171,23 @@ void GamePlayer::UpdateState()
 			}
 			else
 			{
-				m_eCurState = PLAYER_STATE::IDLE;
-			}
-		}
-	}
-
-	if (m_eCurState == PLAYER_STATE::RUN_STOP)
-	{
-		if (GetRigidBody()->GetVelocity().Length() == 0.f)
-		{
-			if (KEY_HOLD(KEY::A) || KEY_HOLD(KEY::D))
-			{
-				m_eCurState = PLAYER_STATE::RUN;
-			}
-			else
-			{
-				m_eCurState = PLAYER_STATE::IDLE;
+				if (GetRigidBody()->GetVelocity().x != 0.f)
+				{
+					m_eCurState = PLAYER_STATE::WALK_READY;
+				}
+				else
+				{
+					m_eCurState = PLAYER_STATE::IDLE;
+				}
 			}
 		}
 	}
 
 	if (KEY_TAP(KEY::A))
 	{
+		m_iDir = -1;
+
+
 		if (m_eCurState == PLAYER_STATE::IDLE)
 		{
 			m_eCurState = PLAYER_STATE::WALK;
@@ -162,75 +196,11 @@ void GamePlayer::UpdateState()
 
 	if (KEY_TAP(KEY::D))
 	{
+		m_iDir = 1;
+
 		if (m_eCurState == PLAYER_STATE::IDLE)
 		{
 			m_eCurState = PLAYER_STATE::WALK;
-		}
-	}
-
-	if (KEY_HOLD(KEY::A))
-	{
-		if (!(KEY_TAP(KEY::D) || KEY_HOLD(KEY::D)))
-		{
-			if (m_eCurState != PLAYER_STATE::WALK_STOP && m_eCurState != PLAYER_STATE::RUN_STOP)
-				m_iDir = -1;
-		}
-
-		if (KEY_AWAY(KEY::D))
-		{
-			if (m_eCurState != PLAYER_STATE::WALK_STOP && m_eCurState != PLAYER_STATE::RUN_STOP)
-				m_iDir = -1;
-		}
-
-		if (m_eCurState == PLAYER_STATE::WALK)
-		{
-			if (KEY_TAP(KEY::D))
-			{
-				m_iDir = 1;
-				m_eCurState = PLAYER_STATE::WALK_STOP;
-			}
-		}
-
-		if (m_eCurState == PLAYER_STATE::RUN)
-		{
-			if (KEY_TAP(KEY::D))
-			{
-				m_iDir = 1;
-				m_eCurState = PLAYER_STATE::RUN_STOP;
-			}
-		}
-	}
-	
-	if (KEY_HOLD(KEY::D))
-	{
-		if (!(KEY_TAP(KEY::A) || KEY_HOLD(KEY::A)))
-		{
-			if (m_eCurState != PLAYER_STATE::WALK_STOP && m_eCurState != PLAYER_STATE::RUN_STOP)
-				m_iDir = 1;
-		}
-
-		if (KEY_AWAY(KEY::A))
-		{
-			if (m_eCurState != PLAYER_STATE::WALK_STOP && m_eCurState != PLAYER_STATE::RUN_STOP)
-				m_iDir = 1;
-		}
-
-		if (m_eCurState == PLAYER_STATE::WALK)
-		{
-			if (KEY_TAP(KEY::A))
-			{
-				m_iDir = -1;
-				m_eCurState = PLAYER_STATE::WALK_STOP;
-			}
-		}
-
-		if (m_eCurState == PLAYER_STATE::RUN)
-		{
-			if (KEY_TAP(KEY::A))
-			{
-				m_iDir = -1;
-				m_eCurState = PLAYER_STATE::RUN_STOP;
-			}
 		}
 	}
 
@@ -238,21 +208,9 @@ void GamePlayer::UpdateState()
 	{
 		if (m_eCurState == PLAYER_STATE::WALK)
 		{
-			m_eCurState = PLAYER_STATE::WALK_READY;
-
-			if (KEY_HOLD(KEY::D))
+			if (!(KEY_HOLD(KEY::D)))
 			{
-				m_eCurState = PLAYER_STATE::WALK_STOP;
-			}
-		}
-
-		if (m_eCurState == PLAYER_STATE::RUN)
-		{
-			m_eCurState = PLAYER_STATE::RUN_READY;
-
-			if (KEY_HOLD(KEY::D))
-			{
-				m_eCurState = PLAYER_STATE::RUN_STOP;
+				m_eCurState = PLAYER_STATE::WALK_READY;
 			}
 		}
 	}
@@ -261,95 +219,31 @@ void GamePlayer::UpdateState()
 	{
 		if (m_eCurState == PLAYER_STATE::WALK)
 		{
-			m_eCurState = PLAYER_STATE::WALK_READY;
-
-			if (KEY_HOLD(KEY::A))
+			if (!(KEY_HOLD(KEY::A)))
 			{
-				m_eCurState = PLAYER_STATE::WALK_STOP;
-			}
-		}
-
-		if (m_eCurState == PLAYER_STATE::RUN)
-		{
-			m_eCurState = PLAYER_STATE::RUN_READY;
-
-			if (KEY_HOLD(KEY::A))
-			{
-				m_eCurState = PLAYER_STATE::RUN_STOP;
+				m_eCurState = PLAYER_STATE::WALK_READY;
 			}
 		}
 	}
 
-	if (m_eCurState == PLAYER_STATE::WALK_READY)
+	if (KEY_TAP(KEY::A) && KEY_HOLD(KEY::D))
 	{
-		if (GetRigidBody()->GetVelocity().Length() == 0.f)
-		{
-			m_eCurState = PLAYER_STATE::IDLE;
-		}
-		else
-		{
-			if (KEY_TAP(KEY::A))
-			{
-				if (m_iDir == 1)
-				{
-					m_iDir = -1;
-					m_eCurState = PLAYER_STATE::WALK_STOP;
-				}
-				else
-				{
-					m_eCurState = PLAYER_STATE::RUN;
-				}
-			}
-
-			if (KEY_TAP(KEY::D))
-			{
-				if (m_iDir == -1)
-				{
-					m_iDir = 1;
-					m_eCurState = PLAYER_STATE::WALK_STOP;
-				}
-				else
-				{
-					m_eCurState = PLAYER_STATE::RUN;
-				}
-			}
-		}
+		m_iDir = -1;
 	}
 
-	if (m_eCurState == PLAYER_STATE::RUN_READY)
+	if (KEY_TAP(KEY::D) && KEY_HOLD(KEY::A))
 	{
-		if (GetRigidBody()->GetVelocity().Length() == 0.f)
-		{
-			m_eCurState = PLAYER_STATE::IDLE;
-		}
-		else
-		{
-			if (KEY_TAP(KEY::A))
-			{
-				if (m_iDir == 1)
-				{
-					m_iDir = -1;
-					m_eCurState = PLAYER_STATE::RUN_STOP;
-				}
-				else
-				{
-					m_eCurState = PLAYER_STATE::RUN;
-				}
-			}
+		m_iDir = 1;
+	}
 
-			if (KEY_TAP(KEY::D))
-			{
-				if (m_iDir == -1)
-				{
-					m_iDir = 1;
-					m_eCurState = PLAYER_STATE::RUN_STOP;
-				}
-				else
-				{
-					m_eCurState = PLAYER_STATE::RUN;
-				}
-			}
-		}
+	if (KEY_AWAY(KEY::A) && KEY_HOLD(KEY::D))
+	{
+		m_iDir = 1;
+	}
+
+	if (KEY_AWAY(KEY::D) && KEY_HOLD(KEY::A))
+	{
+		m_iDir = -1;
 	}
 }
 
@@ -359,11 +253,13 @@ void GamePlayer::UpdateMove()
 
 	if (m_eCurState == PLAYER_STATE::WALK)
 	{
+		isRunning = false;
 		pRigid->AddForce(Vec2{ 150.f, 0.f } * (float)m_iDir);
 	}
 	
 	if (m_eCurState == PLAYER_STATE::RUN)
 	{
+		isRunning = true;
 		pRigid->AddForce(Vec2{ 200.f, 0.f } * (float)m_iDir);
 	}
 
@@ -401,6 +297,14 @@ void GamePlayer::UpdateAnimation()
 			GetAnimator()->Play(L"IDLE_RIGHT", true);
 	}
 	break;
+	case PLAYER_STATE::WALK_READY:
+	{
+		if (m_iDir == -1)
+			GetAnimator()->Play(L"WALK_LEFT", true);
+		else
+			GetAnimator()->Play(L"WALK_RIGHT", true);
+	}
+	break;
 	case PLAYER_STATE::WALK:
 	{
 		if (m_iDir == -1)
@@ -436,9 +340,9 @@ void GamePlayer::UpdateAnimation()
 	case PLAYER_STATE::RUN_STOP:
 	{
 		if (m_iDir == -1)
-			GetAnimator()->Play(L"STOP_RIGHT", true);
-		else
 			GetAnimator()->Play(L"STOP_LEFT", true);
+		else
+			GetAnimator()->Play(L"STOP_RIGHT", true);
 	}
 	break;
 	case PLAYER_STATE::JUMP:

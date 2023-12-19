@@ -28,6 +28,9 @@ private:
     int m_iPrevDir;
     float m_fJumpStartPos;
     bool isRunning;
+    int m_iSecondDir;
+    bool m_bRightMove;
+    bool m_bLeftMove;
 
 public:
     virtual void Update();
@@ -35,6 +38,7 @@ public:
 
     virtual void OnCollisionEnter(GameCollider* _pOther);
 
+    void UpdateDirection();
     void UpdateState();
     void UpdateMove();
     void UpdateAnimation();

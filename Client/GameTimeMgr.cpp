@@ -47,8 +47,8 @@ void GameTimeMgr::Render()
 		m_dAcc = 0;
 		m_iCallCount = 0;
 
-		wchar_t szBuffer[255] = {};
+		/*wchar_t szBuffer[255] = {};
 		swprintf_s(szBuffer, L"FPS : %d, DT : %f", m_iFPS, m_dDT);
-		SetWindowText(GameCore::GetInst()->GetMainHwnd(), szBuffer);
+		SetWindowText(GameCore::GetInst()->GetMainHwnd(), szBuffer);*/
 	}
 }
