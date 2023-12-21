@@ -43,6 +43,14 @@ public:
 	{
 		m_fMass = _fMass;
 	}
+	void SetFricCoeff(float _f)
+	{
+		m_fFricCoeff = -_f;
+	}
+	float GetFricCoeff()
+	{
+		return m_fFricCoeff;
+	}
 
 	GameRigidBody();
 	~GameRigidBody();

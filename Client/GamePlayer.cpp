@@ -13,15 +13,14 @@
 #include "GameAnimator.h"
 #include "GameAnimation.h"
 #include "GameCollider.h"
+#include "GameGravity.h"
 
 GamePlayer::GamePlayer()
 	: m_eCurState{ PLAYER_STATE::IDLE }
 	, m_ePrevState{ PLAYER_STATE::WALK }
 	, m_iDir{ 1 }
 	, m_iPrevDir{ 1 }
-	, m_fJumpStartPos{ 0 }
-	, m_bRightMove{ false }
-	, m_bLeftMove{ false }
+	, isRunning{ false }
 {
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
@@ -42,6 +41,10 @@ GamePlayer::GamePlayer()
 	GameTexture* pJumpLeftTex = GameResMgr::GetInst()->LoadTexture(L"JumpLeft", L"texture\\Kirby_Jump_Left.bmp");
 	GameTexture* pDropRightTex = GameResMgr::GetInst()->LoadTexture(L"DropRight", L"texture\\Kirby_Drop_Right.bmp");
 	GameTexture* pDropLeftTex = GameResMgr::GetInst()->LoadTexture(L"DropLeft", L"texture\\Kirby_Drop_Left.bmp");
+	GameTexture* pFloatStartRightTex = GameResMgr::GetInst()->LoadTexture(L"FloatStartRight", L"texture\\Kirby_Float_Start_Right.bmp");
+	GameTexture* pFloatStartLeftTex = GameResMgr::GetInst()->LoadTexture(L"FloatStartLeft", L"texture\\Kirby_Float_Start_Left.bmp");
+	GameTexture* pFloatIdleRightTex = GameResMgr::GetInst()->LoadTexture(L"FloatIdleRight", L"texture\\Kirby_Float_Idle_Right.bmp");
+	GameTexture* pFloatIdleLeftTex = GameResMgr::GetInst()->LoadTexture(L"FloatIdleLeft", L"texture\\Kirby_Float_Idle_Left.bmp");
 
 	CreateAnimator();
 
@@ -57,6 +60,12 @@ GamePlayer::GamePlayer()
 	GetAnimator()->CreateAnimation(L"JUMP_LEFT", pJumpLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
 	GetAnimator()->CreateAnimation(L"DROP_RIGHT", pDropRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
 	GetAnimator()->CreateAnimation(L"DROP_LEFT", pDropLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_START_RIGHT", pFloatStartRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_START_LEFT", pFloatStartLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_IDLE_RIGHT", pFloatIdleRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.1f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_IDLE_LEFT", pFloatIdleLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.1f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_END_RIGHT", pFloatStartRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_END_LEFT", pFloatStartLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
 
 	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
@@ -70,7 +79,6 @@ GamePlayer::~GamePlayer()
 
 void GamePlayer::Update()
 {
-	UpdateDirection();
 	UpdateState();
 	UpdateMove();
 	UpdateAnimation();
@@ -87,7 +95,8 @@ void GamePlayer::Update()
 void GamePlayer::Render(HDC _dc)
 {
 	wchar_t szBuffer[255] = {};
-	swprintf_s(szBuffer, L"Left : %d, Right : %d, Dir : %d, SecondDir : %d", m_bLeftMove, m_bRightMove, m_iDir, m_iSecondDir);
+	swprintf_s(szBuffer, L"fricCoeff : %5.2f", GetRigidBody()->GetFricCoeff());
+
 	SetWindowText(GameCore::GetInst()->GetMainHwnd(), szBuffer);
 
 	ComponentRender(_dc);
@@ -96,54 +105,29 @@ void GamePlayer::Render(HDC _dc)
 void GamePlayer::OnCollisionEnter(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
+
 	if (pOtherObj->GetName() == L"Ground")
 	{
 		Vec2 vPos = GetPos();
+
 		if (vPos.y < pOtherObj->GetPos().y)
 		{
-			m_eCurState = PLAYER_STATE::IDLE;
+			if (m_eCurState != PLAYER_STATE::FLOAT_START
+				&& m_eCurState != PLAYER_STATE::FLOAT_IDLE
+				&& m_eCurState != PLAYER_STATE::FLOAT_END)
+			{
+				m_eCurState = PLAYER_STATE::IDLE;
+			}
 		}
 	}
 }
 
-void GamePlayer::UpdateDirection()
-{
-	/*if (KEY_TAP(KEY::A))
-	{
-		m_iDir = -1;
-	}
-
-	if (KEY_TAP(KEY::D))
-	{
-		m_iDir = 1;
-	}
-
-	if (KEY_TAP(KEY::A) && KEY_HOLD(KEY::D))
-	{
-		m_iDir = -1;
-	}
-
-	if (KEY_TAP(KEY::D) && KEY_HOLD(KEY::A))
-	{
-		m_iDir = 1;
-	}
-
-	if (KEY_AWAY(KEY::A) && KEY_HOLD(KEY::D))
-	{
-		m_iDir = 1;
-	}
-
-	if (KEY_AWAY(KEY::D) && KEY_HOLD(KEY::A))
-	{
-		m_iDir = -1;
-	}*/
-}
-
 void GamePlayer::UpdateState()
 {
+	// 걷기 준비 자세에서 보통상태로 자유롭게 전환
 	if (m_eCurState == PLAYER_STATE::WALK_READY && GetRigidBody()->GetVelocity().Length() == 0.f)
 	{
-		if (KEY_HOLD(KEY::A) || KEY_HOLD(KEY::D))
+		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 		{
 			m_eCurState = PLAYER_STATE::WALK;
 		}
@@ -153,19 +137,86 @@ void GamePlayer::UpdateState()
 		}
 	}
 
+	// 떠다니기 진입시 애니메이션을 자연스럽게 전환
+	if (m_eCurState == PLAYER_STATE::FLOAT_START)
+	{
+		if (GetAnimator()->GetCurrentAnim()->IsFinish())
+		{
+			m_eCurState = PLAYER_STATE::FLOAT_IDLE;
+		}
+	}
+
+	// 떠다니기 탈출시 애니메이션을 자연스럽게 전환
+	if (m_eCurState == PLAYER_STATE::FLOAT_END)
+	{
+		if (GetAnimator()->GetCurrentAnim()->IsFinish())
+		{
+			if (GetGravity()->IsOnTheGround())
+			{
+				m_eCurState = PLAYER_STATE::IDLE;
+			}
+			else
+			{
+				m_eCurState = PLAYER_STATE::DROP;
+			}
+		}
+	}
+
+	// 떠다니기 상태에서 S를 누르면 떠다니기 상태에서 탈출
+	if (m_eCurState == PLAYER_STATE::FLOAT_IDLE)
+	{
+		if (KEY_TAP(KEY::S))
+		{
+			m_eCurState = PLAYER_STATE::FLOAT_END;
+		}
+	}
+
+	// 점프나 드롭상태에서 한번 더 점프하면 떠다니기 모드로 전환
+	if (m_eCurState == PLAYER_STATE::JUMP || m_eCurState == PLAYER_STATE::DROP)
+	{
+		if (KEY_TAP(KEY::D))
+		{
+			m_eCurState = PLAYER_STATE::FLOAT_START;
+		}
+	}
+
+	// 점프하다가 떨어질때 드롭으로 상태변경
 	if (m_eCurState == PLAYER_STATE::JUMP)
 	{
 		if (GetRigidBody()->GetVelocity().y >= 0.f)
 		{
-			m_eCurState = PLAYER_STATE::DROP;
+			if (!(m_eCurState == PLAYER_STATE::FLOAT_START || m_eCurState == PLAYER_STATE::FLOAT_IDLE))
+			{
+				m_eCurState = PLAYER_STATE::DROP;
+			}
 		}
 	}
 
 	if (m_eCurState == PLAYER_STATE::IDLE)
 	{
+		// 떨어진 시점에 키를 누르고 있으면 걷고, 그렇지 않다면 천천히 걸은 후 일반 모드로 진입
 		if (m_ePrevState == PLAYER_STATE::DROP)
 		{
-			if (KEY_HOLD(KEY::A) || KEY_HOLD(KEY::D))
+			if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
+			{
+				m_eCurState = PLAYER_STATE::WALK;
+			}
+			else
+			{
+				if (GetRigidBody()->GetVelocity().x != 0.f)
+				{
+					m_eCurState = PLAYER_STATE::WALK_READY;
+				}
+				else
+				{
+					m_eCurState = PLAYER_STATE::IDLE;
+				}
+			}
+		}
+
+		if (m_ePrevState == PLAYER_STATE::FLOAT_END)
+		{
+			if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 			{
 				m_eCurState = PLAYER_STATE::WALK;
 			}
@@ -183,7 +234,7 @@ void GamePlayer::UpdateState()
 		}
 	}
 
-	if (KEY_TAP(KEY::A))
+	if (KEY_TAP(KEY::LEFT))
 	{
 		m_iDir = -1;
 
@@ -194,7 +245,7 @@ void GamePlayer::UpdateState()
 		}
 	}
 
-	if (KEY_TAP(KEY::D))
+	if (KEY_TAP(KEY::RIGHT))
 	{
 		m_iDir = 1;
 
@@ -204,44 +255,44 @@ void GamePlayer::UpdateState()
 		}
 	}
 
-	if (KEY_AWAY(KEY::A))
+	if (KEY_AWAY(KEY::LEFT))
 	{
 		if (m_eCurState == PLAYER_STATE::WALK)
 		{
-			if (!(KEY_HOLD(KEY::D)))
+			if (!(KEY_HOLD(KEY::RIGHT)))
 			{
 				m_eCurState = PLAYER_STATE::WALK_READY;
 			}
 		}
 	}
 
-	if (KEY_AWAY(KEY::D))
+	if (KEY_AWAY(KEY::RIGHT))
 	{
 		if (m_eCurState == PLAYER_STATE::WALK)
 		{
-			if (!(KEY_HOLD(KEY::A)))
+			if (!(KEY_HOLD(KEY::LEFT)))
 			{
 				m_eCurState = PLAYER_STATE::WALK_READY;
 			}
 		}
 	}
 
-	if (KEY_TAP(KEY::A) && KEY_HOLD(KEY::D))
+	if (KEY_TAP(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
 	{
 		m_iDir = -1;
 	}
 
-	if (KEY_TAP(KEY::D) && KEY_HOLD(KEY::A))
+	if (KEY_TAP(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
 	{
 		m_iDir = 1;
 	}
 
-	if (KEY_AWAY(KEY::A) && KEY_HOLD(KEY::D))
+	if (KEY_AWAY(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
 	{
 		m_iDir = 1;
 	}
 
-	if (KEY_AWAY(KEY::D) && KEY_HOLD(KEY::A))
+	if (KEY_AWAY(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
 	{
 		m_iDir = -1;
 	}
@@ -254,28 +305,39 @@ void GamePlayer::UpdateMove()
 	if (m_eCurState == PLAYER_STATE::WALK)
 	{
 		isRunning = false;
-		pRigid->AddForce(Vec2{ 150.f, 0.f } * (float)m_iDir);
+		pRigid->AddForce(Vec2{ 150.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
 	}
-	
+
 	if (m_eCurState == PLAYER_STATE::RUN)
 	{
 		isRunning = true;
-		pRigid->AddForce(Vec2{ 200.f, 0.f } * (float)m_iDir);
+		pRigid->AddForce(Vec2{ 200.f * (float)m_iDir, 0.f });
 	}
 
-	if (KEY_TAP(KEY::SPACE))
+	if (m_eCurState == PLAYER_STATE::FLOAT_IDLE || m_eCurState == PLAYER_STATE::FLOAT_START || m_eCurState == PLAYER_STATE::FLOAT_END)
 	{
-		m_eCurState = PLAYER_STATE::JUMP;
-
-		if (GetRigidBody())
+		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 		{
+			pRigid->AddForce(Vec2{ 100.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
+		}
+	}
+
+	if (KEY_TAP(KEY::D))
+	{
+		if (!(m_eCurState == PLAYER_STATE::FLOAT_START || m_eCurState == PLAYER_STATE::FLOAT_IDLE || m_eCurState == PLAYER_STATE::FLOAT_END))
+		{
+			m_eCurState = PLAYER_STATE::JUMP;
 			GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, -300.f });
+		}
+		else
+		{
+			GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, -200.f });
 		}
 	}
 
 	if (m_eCurState == PLAYER_STATE::JUMP || m_eCurState == PLAYER_STATE::DROP)
 	{
-		if (KEY_HOLD(KEY::A) || KEY_HOLD(KEY::D))
+		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 		{
 			pRigid->AddForce(Vec2{ 150.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
 		}
@@ -313,14 +375,6 @@ void GamePlayer::UpdateAnimation()
 			GetAnimator()->Play(L"WALK_RIGHT", true);
 	}
 	break;
-	case PLAYER_STATE::WALK_STOP:
-	{
-		if (m_iDir == -1)
-			GetAnimator()->Play(L"STOP_RIGHT", true);
-		else
-			GetAnimator()->Play(L"STOP_LEFT", true);
-	}
-	break;
 	case PLAYER_STATE::RUN_READY:
 	{
 		if (m_iDir == -1)
@@ -337,20 +391,36 @@ void GamePlayer::UpdateAnimation()
 			GetAnimator()->Play(L"RUN_RIGHT", true);
 	}
 	break;
-	case PLAYER_STATE::RUN_STOP:
-	{
-		if (m_iDir == -1)
-			GetAnimator()->Play(L"STOP_LEFT", true);
-		else
-			GetAnimator()->Play(L"STOP_RIGHT", true);
-	}
-	break;
 	case PLAYER_STATE::JUMP:
 	{
 		if (m_iDir == -1)
 			GetAnimator()->Play(L"JUMP_LEFT", true);
 		else
 			GetAnimator()->Play(L"JUMP_RIGHT", true);
+	}
+	break;
+	case PLAYER_STATE::FLOAT_START:
+	{
+		if (m_iDir == -1)
+			GetAnimator()->Play(L"FLOAT_START_LEFT", false);
+		else
+			GetAnimator()->Play(L"FLOAT_START_RIGHT", false);
+	}
+	break;
+	case PLAYER_STATE::FLOAT_IDLE:
+	{
+		if (m_iDir == -1)
+			GetAnimator()->Play(L"FLOAT_IDLE_LEFT", true);
+		else
+			GetAnimator()->Play(L"FLOAT_IDLE_RIGHT", true);
+	}
+	break;
+	case PLAYER_STATE::FLOAT_END:
+	{
+		if (m_iDir == -1)
+			GetAnimator()->Play(L"FLOAT_END_LEFT", false);
+		else
+			GetAnimator()->Play(L"FLOAT_END_RIGHT", false);
 	}
 	break;
 	case PLAYER_STATE::DROP:

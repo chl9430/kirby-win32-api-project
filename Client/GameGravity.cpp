@@ -2,6 +2,7 @@
 #include "GameGravity.h"
 
 #include "GameObject.h"
+#include "GamePlayer.h"
 #include "GameRigidBody.h"
 
 GameGravity::GameGravity()
@@ -16,7 +17,18 @@ GameGravity::~GameGravity()
 
 void GameGravity::FinalUpdate()
 {
-	m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 800.f });
+	GamePlayer* pPlayer = (GamePlayer*)m_pOwner;
+
+	if (pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_START
+		|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_IDLE
+		|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_END)
+	{
+		m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 400.f });
+	}
+	else
+	{
+		m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 800.f });
+	}
 }
 
 void GameGravity::SetGround(bool _b)

@@ -13,6 +13,10 @@ public:
 	void FinalUpdate();
 
 	void SetGround(bool _b);
+	bool IsOnTheGround()
+	{
+		return m_bGround;
+	}
 
 	GameGravity();
 	~GameGravity();

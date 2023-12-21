@@ -38,6 +38,10 @@ public:
 	{
 		return m_bRepeat;
 	}
+	GameAnimation* GetCurrentAnim()
+	{
+		return m_pCurAnim;
+	}
 
 	GameAnimator();
 	~GameAnimator();

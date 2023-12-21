@@ -6,15 +6,15 @@ enum class PLAYER_STATE
     IDLE,
     WALK_READY,
     WALK,
-    WALK_STOP,
     RUN_READY,
     RUN,
-    RUN_STOP,
     DOWN,
     INHALE,
     JUMP,
+    FLOAT_START,
+    FLOAT_IDLE,
+    FLOAT_END,
     DROP,
-    FLOAT,
     EXHALE
 };
 
@@ -26,11 +26,7 @@ private:
     PLAYER_STATE m_ePrevState;
     int m_iDir; // 플레이어의 방향정보
     int m_iPrevDir;
-    float m_fJumpStartPos;
     bool isRunning;
-    int m_iSecondDir;
-    bool m_bRightMove;
-    bool m_bLeftMove;
 
 public:
     virtual void Update();
@@ -38,11 +34,15 @@ public:
 
     virtual void OnCollisionEnter(GameCollider* _pOther);
 
-    void UpdateDirection();
     void UpdateState();
     void UpdateMove();
     void UpdateAnimation();
     void UpdateGravity();
+
+    PLAYER_STATE GetPlayerState()
+    {
+        return m_eCurState;
+    }
 
     GamePlayer();
     virtual ~GamePlayer();

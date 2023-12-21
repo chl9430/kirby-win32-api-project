@@ -4,6 +4,8 @@
 #include "GameTimeMgr.h"
 
 #include "GameObject.h"
+#include "GamePlayer.h"
+#include "GameGravity.h"
 
 GameRigidBody::GameRigidBody()
 	: m_pOwner{ nullptr }
@@ -51,6 +53,22 @@ void GameRigidBody::FinalUpdate()
 		vFricDir.Normalize();
 
 		Vec2 vFriction = vFricDir * m_fFricCoeff * fDT;
+
+		if (m_pOwner->GetName() == L"Player")
+		{
+			GamePlayer* pPlayer = (GamePlayer*)m_pOwner;
+
+			if (pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_START
+				|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_IDLE
+				|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_END)
+			{
+				if (m_pOwner->GetGravity()->IsOnTheGround())
+				{
+					vFriction = vFricDir * 60.f * fDT;
+				}
+			}
+		}
+
 		if (m_vVelocity.Length() <= vFriction.Length()) // 본래 속도보다 마찰가속도가 크다면
 		{
 			m_vVelocity = Vec2(0.f, 0.f);

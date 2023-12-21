@@ -385,6 +385,85 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		m_vecFrm.push_back(frm08);
 	}
 
+	if (_strName == L"FLOAT_START_RIGHT" || _strName == L"FLOAT_START_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 8.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 38.f, 40.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 42.f, 4.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 40.f, 44.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 86.f, 0.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 42.f, 48.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 134.f, 0.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 40.f, 48.f };
+		m_vecFrm.push_back(frm04);
+	}
+
+	if (_strName == L"FLOAT_IDLE_RIGHT" || _strName == L"FLOAT_IDLE_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 48.f, 50.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 52.f, 2.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 48.f, 48.f };
+		m_vecFrm.push_back(frm02);
+	}
+
+	if (_strName == L"FLOAT_END_RIGHT" || _strName == L"FLOAT_END_LEFT")
+	{
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 134.f, 0.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 40.f, 48.f };
+		m_vecFrm.push_back(frm04);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 86.f, 0.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 42.f, 48.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 42.f, 4.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 40.f, 44.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 8.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 38.f, 40.f };
+		m_vecFrm.push_back(frm01);
+	}
+
 	if (_strName == L"WADDLE_DEE_WALK_RIGHT" || _strName == L"WADDLE_DEE_WALK_LEFT")
 	{
 		tAnimFrm frm01 = {};
