@@ -91,3 +91,8 @@ void GameScene::DeleteAll()
 		Safe_Delete_Vec<GameObject*>(m_arrObj[i]);
 	}
 }
+
+void GameScene::DeleteGroup(GROUP_TYPE _eTarget)
+{
+	Safe_Delete_Vec<GameObject*>(m_arrObj[(UINT)_eTarget]);
+}

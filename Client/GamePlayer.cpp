@@ -60,12 +60,12 @@ GamePlayer::GamePlayer()
 	GetAnimator()->CreateAnimation(L"JUMP_LEFT", pJumpLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
 	GetAnimator()->CreateAnimation(L"DROP_RIGHT", pDropRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
 	GetAnimator()->CreateAnimation(L"DROP_LEFT", pDropLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
-	GetAnimator()->CreateAnimation(L"FLOAT_START_RIGHT", pFloatStartRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
-	GetAnimator()->CreateAnimation(L"FLOAT_START_LEFT", pFloatStartLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_START_RIGHT", pFloatStartRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_START_LEFT", pFloatStartLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
 	GetAnimator()->CreateAnimation(L"FLOAT_IDLE_RIGHT", pFloatIdleRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.1f, 4);
 	GetAnimator()->CreateAnimation(L"FLOAT_IDLE_LEFT", pFloatIdleLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.1f, 4);
-	GetAnimator()->CreateAnimation(L"FLOAT_END_RIGHT", pFloatStartRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
-	GetAnimator()->CreateAnimation(L"FLOAT_END_LEFT", pFloatStartLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.07f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_END_RIGHT", pFloatStartRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
+	GetAnimator()->CreateAnimation(L"FLOAT_END_LEFT", pFloatStartLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.03f, 4);
 
 	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
@@ -94,11 +94,6 @@ void GamePlayer::Update()
 
 void GamePlayer::Render(HDC _dc)
 {
-	wchar_t szBuffer[255] = {};
-	swprintf_s(szBuffer, L"fricCoeff : %5.2f", GetRigidBody()->GetFricCoeff());
-
-	SetWindowText(GameCore::GetInst()->GetMainHwnd(), szBuffer);
-
 	ComponentRender(_dc);
 }
 
@@ -305,7 +300,7 @@ void GamePlayer::UpdateMove()
 	if (m_eCurState == PLAYER_STATE::WALK)
 	{
 		isRunning = false;
-		pRigid->AddForce(Vec2{ 150.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
+		pRigid->AddForce(Vec2{ 125.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
 	}
 
 	if (m_eCurState == PLAYER_STATE::RUN)
@@ -318,7 +313,7 @@ void GamePlayer::UpdateMove()
 	{
 		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 		{
-			pRigid->AddForce(Vec2{ 100.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
+			pRigid->AddForce(Vec2{ 70.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
 		}
 	}
 

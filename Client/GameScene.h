@@ -16,6 +16,7 @@ public:
 	virtual void Render(HDC _dc);
 
 	void DeleteAll();
+	void DeleteGroup(GROUP_TYPE _eTarget);
 
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;

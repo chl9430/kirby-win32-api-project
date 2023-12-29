@@ -1,10 +1,16 @@
 #include "pch.h"
 #include "GameGround.h"
 
+#include "GameResMgr.h"
+#include "GameCamera.h"
+
 #include "GameCollider.h"
 #include "GameGravity.h"
+#include "GameTexture.h"
+#include "GameAnimator.h"
 
 GameGround::GameGround()
+	: m_pTex{ nullptr }
 {
 	CreateCollider();
 }
@@ -16,10 +22,30 @@ GameGround::~GameGround()
 void GameGround::Start()
 {
 	GetCollider()->SetScale(Vec2{ GetScale() });
+	m_pTex = GameResMgr::GetInst()->LoadTexture(L"Stage1_1", L"texture\\tile\\Stage1_1.bmp");
 }
 
 void GameGround::Update()
 {
+}
+
+void GameGround::Render(HDC _dc)
+{
+	Vec2 vPos = GameCamera::GetInst()->GetRenderPos(GetPos());
+
+	TransparentBlt(
+		_dc,
+		(int)(vPos.x - GetScale().x / 2.f),
+		(int)(vPos.y - GetScale().y / 2.f),
+		(int)GetScale().x,
+		(int)GetScale().y,
+		m_pTex->GetDC(),
+		0,
+		0,
+		(int)GetScale().x,
+		(int)GetScale().y,
+		RGB(255, 0, 255)
+	);
 }
 
 void GameGround::OnCollisionEnter(GameCollider* _pOther)

@@ -27,6 +27,10 @@ public:
 	{
 		return _vObjPos - m_vDiff;
 	}
+	Vec2 GetRealPos(Vec2 _vRenderPos)
+	{
+		return _vRenderPos + m_vDiff;
+	}
 	void SetTargetObj(GameObject* _pObj)
 	{
 		m_pTargetObj = _pObj;

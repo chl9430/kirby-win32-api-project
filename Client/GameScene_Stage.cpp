@@ -42,8 +42,8 @@ void GameScene_Stage::Enter()
 
 	GameObject* pGround = new GameGround;
 	pGround->SetName(L"Ground");
-	pGround->SetPos(Vec2{ 100.f, 400.f });
-	pGround->SetScale(Vec2{ 500.f, 60.f });
+	pGround->SetPos(Vec2{ 100.f, 350.f });
+	pGround->SetScale(Vec2{ 1400.f, 120.f });
 	AddObject(pGround, GROUP_TYPE::GROUND);
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);

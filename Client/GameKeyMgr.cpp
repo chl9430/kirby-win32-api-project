@@ -80,7 +80,6 @@ void GameKeyMgr::Update()
 		ScreenToClient(GameCore::GetInst()->GetMainHwnd(), &ptPos); // 게임 창 기준 마우스 좌표로 변환
 
 		m_vCurMousePos = ptPos;
-		int a = 0;
 	}
 	else // 내 게임 창이 포커싱 중이 아니라면
 	{

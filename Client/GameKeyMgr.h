@@ -47,4 +47,7 @@ public:
 	{
 		return m_vecKey[(int)_eKey].eState;
 	}
+	Vec2 GetMousePos() { 
+		return m_vCurMousePos; 
+	}
 };
