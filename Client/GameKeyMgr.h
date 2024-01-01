@@ -20,8 +20,10 @@ enum class KEY
 	A,
 	S,
 	D,
+	CTRL,
 	LSHIFT,
 	SPACE,
+	LBTN,
 	LAST
 };
 

@@ -15,5 +15,6 @@ public:
 	{
 		return m_szContentPath;
 	}
+	wstring GetRelativePath(const wchar_t* _filepath);
 };
 

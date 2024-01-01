@@ -172,6 +172,7 @@
     <ClInclude Include="GameScene_Tool.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameTexture.h" />
+    <ClInclude Include="GameTile.h" />
     <ClInclude Include="GameTimeMgr.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="GameScene_Tool.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameTexture.cpp" />
+    <ClCompile Include="GameTile.cpp" />
     <ClCompile Include="GameTimeMgr.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelectGDI.cpp" />

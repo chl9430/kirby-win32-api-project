@@ -28,3 +28,15 @@ void GamePathMgr::Init()
 
 	wcscat_s(m_szContentPath, 255, L"\\bin\\content\\"); // 릴리즈 모드 디렉토리 안의 경로로 재설정
 }
+
+wstring GamePathMgr::GetRelativePath(const wchar_t* _filepath)
+{
+	wstring strFilePath = _filepath;
+
+	size_t iAbsLen = wcslen(m_szContentPath);
+	size_t iFullLen = strFilePath.length();
+
+	wstring strRelativePath = strFilePath.substr(iAbsLen, iFullLen - iAbsLen);
+
+	return strRelativePath;
+}

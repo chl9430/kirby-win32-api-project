@@ -96,6 +96,18 @@ void GameCore::Progress()
 	GameEventMgr::GetInst()->Update();
 }
 
+void GameCore::DockMenu()
+{
+	SetMenu(m_hWnd, m_hMenu);
+	ChangeWindowSize(GetResolution(), true);
+}
+
+void GameCore::DivideMenu()
+{
+	SetMenu(m_hWnd, nullptr);
+	ChangeWindowSize(GetResolution(), false);
+}
+
 void GameCore::ChangeWindowSize(Vec2 _vResolution, bool _bMenu)
 {
 	RECT rt = { 0, 0, (long)_vResolution.x, (long)_vResolution.y };

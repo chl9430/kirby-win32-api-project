@@ -22,6 +22,8 @@ public:
 	int Init(HWND _hWnd, POINT _ptResolution);
 	void Progress();
 
+	void DockMenu();
+	void DivideMenu();
 	void ChangeWindowSize(Vec2 _vResolution, bool _bMenu);
 	void CreateBrush();
 
@@ -29,22 +31,18 @@ public:
 	{
 		return m_hWnd;
 	}
-
 	POINT GetResolution()
 	{
 		return m_ptResolution;
 	}
-
 	HDC GetMainDC()
 	{
 		return m_hDC;
 	}
-
 	HPEN GetPen(PEN_TYPE _eType)
 	{
 		return m_arrPen[(UINT)_eType];
 	}
-
 	HBRUSH GetBrush(BRUSH_TYPE _eType)
 	{
 		return m_arrBrush[(UINT)_eType];

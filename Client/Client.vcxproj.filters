@@ -111,6 +111,9 @@
     <Filter Include="Engine\08. Module\AI\State\Idle">
       <UniqueIdentifier>{1851b1db-50f6-49d2-b5bc-9f71ee8d7814}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06. Object\Tile">
+      <UniqueIdentifier>{fb106c6d-75c0-49d3-bd15-f17d9d904809}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -222,6 +225,9 @@
     <ClInclude Include="GameIdleState.h">
       <Filter>Engine\08. Module\AI\State\Idle</Filter>
     </ClInclude>
+    <ClInclude Include="GameTile.h">
+      <Filter>Engine\06. Object\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -314,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="GameIdleState.cpp">
       <Filter>Engine\08. Module\AI\State\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTile.cpp">
+      <Filter>Engine\06. Object\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

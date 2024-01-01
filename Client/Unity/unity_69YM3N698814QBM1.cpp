@@ -1,7 +1,4 @@
 
-#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameGround.cpp"
-
-
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameIdleState.cpp"
 
 
@@ -27,4 +24,10 @@
 
 
 #include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameResMgr.cpp"
+
+
+#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameRigidBody.cpp"
+
+
+#include "C:\Users\chl9430\Desktop\GameProgramming\C++\Win32 API\Kirby-Win32-API-Project\Client\GameScene.cpp"
 

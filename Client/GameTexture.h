@@ -17,6 +17,14 @@ public:
     {
         return m_dc;
     }
+    UINT Width()
+    {
+        return m_bitInfo.bmWidth;
+    }
+    UINT Height()
+    {
+        return m_bitInfo.bmHeight;
+    }
 
     GameTexture();
     virtual ~GameTexture();
