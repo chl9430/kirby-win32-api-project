@@ -114,6 +114,15 @@
     <Filter Include="Engine\06. Object\Tile">
       <UniqueIdentifier>{fb106c6d-75c0-49d3-bd15-f17d9d904809}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06. Object\UI">
+      <UniqueIdentifier>{99c0ed96-cd95-44b7-8009-52f4d86353e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\06. Object\UI\PanelUI">
+      <UniqueIdentifier>{e13c6a7e-76f1-471a-bfb8-1cf633625860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\06. Object\UI\BtnUI">
+      <UniqueIdentifier>{27a5f197-b597-4d53-8328-969b2c269eee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -228,6 +237,15 @@
     <ClInclude Include="GameTile.h">
       <Filter>Engine\06. Object\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>Engine\06. Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePanelUI.h">
+      <Filter>Engine\06. Object\UI\PanelUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBtnUI.h">
+      <Filter>Engine\06. Object\UI\BtnUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -323,6 +341,15 @@
     </ClCompile>
     <ClCompile Include="GameTile.cpp">
       <Filter>Engine\06. Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>Engine\06. Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePanelUI.cpp">
+      <Filter>Engine\06. Object\UI\PanelUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBtnUI.cpp">
+      <Filter>Engine\06. Object\UI\BtnUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

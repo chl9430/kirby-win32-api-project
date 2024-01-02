@@ -8,6 +8,9 @@
 #include "GameCamera.h"
 #include "GamePathMgr.h"
 
+#include "GameUI.h"
+#include "GamePanelUI.h"
+#include "GameBtnUI.h"
 #include "GameTile.h"
 
 GameScene_Tool::GameScene_Tool()
@@ -28,6 +31,20 @@ void GameScene_Tool::Enter()
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 	// GameCamera::GetInst()->SetLookAt(vResolution / 2.f);
+
+	GameUI* pPanelUI = new GamePanelUI;
+	pPanelUI->SetName(L"ParentUI");
+	pPanelUI->SetScale(Vec2{ 300.f, 150.f });
+	pPanelUI->SetPos(Vec2{ vResolution.x - pPanelUI->GetScale().x, 0.f });
+
+	GameBtnUI* pBtnUI = new GameBtnUI;
+	pBtnUI->SetName(L"ChildUI");
+	pBtnUI->SetScale(Vec2{ 100.f, 40.f });
+	pBtnUI->SetPos(Vec2{ 0.f, 0.f });
+	pBtnUI->SetClickedCallBack(this, (SCENE_MEMFUNC)&GameScene_Tool::SaveTileData);
+
+	pPanelUI->AddChild(pBtnUI);
+	AddObject(pPanelUI, GROUP_TYPE::UI);
 }
 
 void GameScene_Tool::Exit()

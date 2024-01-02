@@ -148,6 +148,7 @@
     <ClInclude Include="func.h" />
     <ClInclude Include="GameAnimation.h" />
     <ClInclude Include="GameAnimator.h" />
+    <ClInclude Include="GameBtnUI.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameCollider.h" />
     <ClInclude Include="GameCollisionMgr.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="GameMonster.h" />
     <ClInclude Include="GameMonsterFactory.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GamePanelUI.h" />
     <ClInclude Include="GamePathMgr.h" />
     <ClInclude Include="GamePlayer.h" />
     <ClInclude Include="GameRes.h" />
@@ -174,6 +176,7 @@
     <ClInclude Include="GameTexture.h" />
     <ClInclude Include="GameTile.h" />
     <ClInclude Include="GameTimeMgr.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SelectGDI.h" />
@@ -185,6 +188,7 @@
     <ClCompile Include="func.cpp" />
     <ClCompile Include="GameAnimation.cpp" />
     <ClCompile Include="GameAnimator.cpp" />
+    <ClCompile Include="GameBtnUI.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameCollider.cpp" />
     <ClCompile Include="GameCollisionMgr.cpp" />
@@ -197,6 +201,7 @@
     <ClCompile Include="GameMonster.cpp" />
     <ClCompile Include="GameMonsterFactory.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GamePanelUI.cpp" />
     <ClCompile Include="GamePathMgr.cpp" />
     <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="GameRes.cpp" />
@@ -211,6 +216,7 @@
     <ClCompile Include="GameTexture.cpp" />
     <ClCompile Include="GameTile.cpp" />
     <ClCompile Include="GameTimeMgr.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
   </ItemGroup>
