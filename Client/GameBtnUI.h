@@ -1,7 +1,8 @@
 #pragma once
 #include "GameUI.h"
 
-class GameScene;
+#include "GameScene.h"
+#include "GameObject.h"
 
 typedef void(*BTN_FUNC) (DWORD_PTR, DWORD_PTR);
 

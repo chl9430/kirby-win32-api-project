@@ -123,6 +123,9 @@
     <Filter Include="Engine\06. Object\UI\BtnUI">
       <UniqueIdentifier>{27a5f197-b597-4d53-8328-969b2c269eee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\UIMgr">
+      <UniqueIdentifier>{ad879dde-fe1e-495e-8f05-3e3dc6d81fe6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -246,6 +249,9 @@
     <ClInclude Include="GameBtnUI.h">
       <Filter>Engine\06. Object\UI\BtnUI</Filter>
     </ClInclude>
+    <ClInclude Include="GameUIMgr.h">
+      <Filter>Engine\03. Manager\UIMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -350,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="GameBtnUI.cpp">
       <Filter>Engine\06. Object\UI\BtnUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUIMgr.cpp">
+      <Filter>Engine\03. Manager\UIMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

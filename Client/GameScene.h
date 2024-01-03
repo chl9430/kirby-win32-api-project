@@ -42,6 +42,10 @@ public:
 	{
 		return m_arrObj[(UINT)_eType];
 	}
+	vector<GameObject*>& GetUIGroup() 
+	{ 
+		return m_arrObj[(UINT)GROUP_TYPE::UI]; 
+	}
 	UINT GetTileX()
 	{
 		return m_iTileX;

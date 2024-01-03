@@ -24,6 +24,11 @@ public:
     virtual void FinalUpdate();
     virtual void Render(HDC _dc);
 
+    virtual void MouseOn();
+    virtual void MouseLbtnDown();
+    virtual void MouseLbtnUp();
+    virtual void MouseLbtnClicked();
+
     void AddChild(GameUI* _pUI)
     {
         m_vecChildUI.push_back(_pUI);
@@ -41,7 +46,16 @@ public:
     {
         return m_bLbtnDown;
     }
+    bool IsMouseOn() { 
+        return m_bMouseOn;
+    }
+    const vector<GameUI*>& GetChildUI() 
+    { 
+        return m_vecChildUI; 
+    }
 
     GameUI(bool _bCamAff);
     ~GameUI();
+
+    friend class GameUIMgr;
 };

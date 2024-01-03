@@ -177,6 +177,7 @@
     <ClInclude Include="GameTile.h" />
     <ClInclude Include="GameTimeMgr.h" />
     <ClInclude Include="GameUI.h" />
+    <ClInclude Include="GameUIMgr.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SelectGDI.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="GameTile.cpp" />
     <ClCompile Include="GameTimeMgr.cpp" />
     <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="GameUIMgr.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
   </ItemGroup>

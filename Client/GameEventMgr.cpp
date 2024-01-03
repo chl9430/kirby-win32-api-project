@@ -2,6 +2,7 @@
 #include "GameEventMgr.h"
 
 #include "GameSceneMgr.h"
+#include "GameUIMgr.h"
 
 #include "GameScene.h"
 #include "GameObject.h"
@@ -45,7 +46,7 @@ void GameEventMgr::Execute(const tEvent& _tEve)
 		GameSceneMgr::GetInst()->ChangeScene((SCENE_TYPE)_tEve.lParam);
 
 		// 포커스 UI 해제(이전 Scene의 UI를 가리키고 있기 때문)
-		// CUIMgr::GetInst()->SetFocusedUI(nullptr);
+		GameUIMgr::GetInst()->SetFocusedUI(nullptr);
 	}
 	break;
 	case EVENT_TYPE::CHANGE_AI_STATE:

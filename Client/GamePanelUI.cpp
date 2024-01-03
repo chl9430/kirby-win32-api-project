@@ -13,7 +13,7 @@ GamePanelUI::~GamePanelUI()
 {
 }
 
-void GamePanelUI::render(HDC _dc)
+void GamePanelUI::Render(HDC _dc)
 {
 	GameUI::Render(_dc);
 }
@@ -22,6 +22,10 @@ void GamePanelUI::MouseOn()
 {
 	if (IsLbtnDown())
 	{
+		Vec2 v1 = { 100.f, 200.f };
+		Vec2 v2 = { 100.f, 200.f };
+		Vec2 v3 = v1 - v2;
+
 		Vec2 vDiff = MOUSE_POS - m_vDragStart;
 
 		Vec2 vCurPos = GetPos();

@@ -9,6 +9,7 @@
 #include "GameSceneMgr.h"
 #include "GameEventMgr.h"
 #include "GameCollisionMgr.h"
+#include "GameUIMgr.h"
 
 #include "GameTexture.h"
 
@@ -79,6 +80,8 @@ void GameCore::Progress()
 
 	// 충돌체크
 	GameCollisionMgr::GetInst()->Update();
+
+	GameUIMgr::GetInst()->Update();
 
 	// 화면 클리어
 	Clear();

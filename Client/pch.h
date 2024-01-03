@@ -16,6 +16,9 @@ using namespace std;
 #include <vector>
 // using std::vector;
 
+#include <list>
+// using std::list;
+
 #include <math.h>
 #include <assert.h>
 

@@ -123,3 +123,19 @@ void GameUI::Render(HDC _dc)
 	// child ui render
 	RenderChild(_dc);
 }
+
+void GameUI::MouseOn()
+{
+}
+
+void GameUI::MouseLbtnDown()
+{
+}
+
+void GameUI::MouseLbtnUp()
+{
+}
+
+void GameUI::MouseLbtnClicked()
+{
+}

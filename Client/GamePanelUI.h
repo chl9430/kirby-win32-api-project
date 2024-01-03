@@ -8,7 +8,7 @@ private:
     Vec2 m_vDragStart;
 
 public:
-    virtual void render(HDC _dc);
+    virtual void Render(HDC _dc);
 
     virtual void MouseOn();
     virtual void MouseLbtnDown();

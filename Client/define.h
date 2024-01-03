@@ -19,7 +19,7 @@
 #define KEY_AWAY(key) KEY_CHECK(key, KEY_STATE::AWAY)
 
 #define KEY_CHECK(key, state) GameKeyMgr::GetInst()->GetKeyState(key) == state
-#define MOUSE_POS GameKeyMgr::GetInst()->GetMousePos();
+#define MOUSE_POS GameKeyMgr::GetInst()->GetMousePos()
 
 #define TILE_SIZE 48
 
