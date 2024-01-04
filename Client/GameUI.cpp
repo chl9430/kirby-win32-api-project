@@ -5,6 +5,7 @@
 #include "GameCamera.h"
 
 #include "SelectGDI.h"
+#include "GameTexture.h"
 
 GameUI::GameUI(bool _bCamAff)
 	: m_vecChildUI{}
@@ -101,15 +102,21 @@ void GameUI::Render(HDC _dc)
 		vPos = GameCamera::GetInst()->GetRenderPos(vPos);
 	}
 
-	if (m_bLbtnDown)
+	if (GetCurrentTexture())
 	{
-		SelectGDI select{ _dc, PEN_TYPE::GREEN };
-
-		Rectangle(_dc
-			, (int)(vPos.x)
-			, (int)(vPos.y)
-			, (int)(vPos.x + vScale.x)
-			, (int)(vPos.y + vScale.y));
+		TransparentBlt(
+			_dc,
+			(int)(vPos.x),
+			(int)(vPos.y),
+			(int)GetScale().x,
+			(int)GetScale().y,
+			GetCurrentTexture()->GetDC(),
+			0,
+			0,
+			(int)GetScale().x,
+			(int)GetScale().y,
+			RGB(255, 0, 255)
+		);
 	}
 	else
 	{

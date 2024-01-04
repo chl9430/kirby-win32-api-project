@@ -1,5 +1,6 @@
 #pragma once
 
+class GameTexture;
 class GameCollider;
 class GameRigidBody;
 class GameAnimator;
@@ -13,6 +14,7 @@ private:
 	Vec2 m_vScale;
 	bool m_bAlive;
 
+	GameTexture* m_pCurTexture;
 	GameCollider* m_pCollider;
 	GameRigidBody* m_pRigidBody;
 	GameAnimator* m_pAnimator;
@@ -67,6 +69,14 @@ public:
 	void SetPos(Vec2 _vPos)
 	{
 		m_vPos = _vPos;
+	}
+	void SetCurrentTexture(GameTexture* _pTexture)
+	{
+		m_pCurTexture = _pTexture;
+	}
+	GameTexture* GetCurrentTexture()
+	{
+		return m_pCurTexture;
 	}
 	GameRigidBody* GetRigidBody()
 	{

@@ -21,7 +21,7 @@
 #define KEY_CHECK(key, state) GameKeyMgr::GetInst()->GetKeyState(key) == state
 #define MOUSE_POS GameKeyMgr::GetInst()->GetMousePos()
 
-#define TILE_SIZE 48
+#define TILE_SIZE 40
 
 enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
 {

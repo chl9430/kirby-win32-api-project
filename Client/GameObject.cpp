@@ -13,6 +13,7 @@ GameObject::GameObject()
 	, m_vPos{}
 	, m_vScale{}
 	, m_bAlive{ true }
+	, m_pCurTexture{ nullptr }
 	, m_pCollider{ nullptr }
 	, m_pRigidBody{ nullptr }
 	, m_pAnimator{ nullptr }

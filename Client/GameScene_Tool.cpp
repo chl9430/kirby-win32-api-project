@@ -7,6 +7,7 @@
 #include "GameKeyMgr.h"
 #include "GameCamera.h"
 #include "GamePathMgr.h"
+#include "GameResMgr.h"
 
 #include "GameUI.h"
 #include "GamePanelUI.h"
@@ -14,6 +15,7 @@
 #include "GameTile.h"
 
 GameScene_Tool::GameScene_Tool()
+	: m_eCurMode{ EDIT_MODE::NONE }
 {
 }
 
@@ -32,16 +34,19 @@ void GameScene_Tool::Enter()
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 	// GameCamera::GetInst()->SetLookAt(vResolution / 2.f);
 
-	GameUI* pPanelUI = new GamePanelUI;
+	GameUI* pPanelUI = new GamePanelUI{ false };
 	pPanelUI->SetName(L"ParentUI");
 	pPanelUI->SetScale(Vec2{ 300.f, 150.f });
 	pPanelUI->SetPos(Vec2{ vResolution.x - pPanelUI->GetScale().x, 0.f });
 
-	GameBtnUI* pBtnUI = new GameBtnUI;
+	GameBtnUI* pBtnUI = new GameBtnUI{ false };
 	pBtnUI->SetName(L"ChildUI");
-	pBtnUI->SetScale(Vec2{ 100.f, 40.f });
+	pBtnUI->SetScale(Vec2{ 150.f, 50.f });
 	pBtnUI->SetPos(Vec2{ 0.f, 0.f });
-	pBtnUI->SetClickedCallBack(this, (SCENE_MEMFUNC)&GameScene_Tool::SaveTileData);
+	pBtnUI->SetClickedCallBack(this, (SCENE_MEMFUNC)&GameScene_Tool::SetCurMode);
+	pBtnUI->SetIdleTexture(GameResMgr::GetInst()->LoadTexture(L"TileMapButton", L"texture\\Tile_Map_Button.bmp"));
+	pBtnUI->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"TileMapButtonClicked", L"texture\\Tile_Map_Button_Clicked.bmp"));
+	pBtnUI->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(L"TileMapButton"));
 
 	pPanelUI->AddChild(pBtnUI);
 	AddObject(pPanelUI, GROUP_TYPE::UI);
