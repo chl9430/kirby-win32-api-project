@@ -53,6 +53,10 @@ public:
     { 
         return m_vecChildUI; 
     }
+    bool IsCamAffected()
+    {
+        return m_bCamAffected;
+    }
 
     GameUI(bool _bCamAff);
     ~GameUI();

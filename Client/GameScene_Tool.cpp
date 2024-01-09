@@ -13,9 +13,12 @@
 #include "GamePanelUI.h"
 #include "GameBtnUI.h"
 #include "GameTile.h"
+#include "GameTexture.h"
 
 GameScene_Tool::GameScene_Tool()
 	: m_eCurMode{ EDIT_MODE::NONE }
+	, m_strTileName{}
+	, m_pPanel{ nullptr }
 {
 }
 
@@ -32,24 +35,46 @@ void GameScene_Tool::Enter()
 	CreateTile(5, 6);
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
-	// GameCamera::GetInst()->SetLookAt(vResolution / 2.f);
 
+	GameTexture* pTileTex = GameResMgr::GetInst()->FindTexture(L"Tile");
+	UINT iWidth = pTileTex->Width();
+	UINT iHeight = pTileTex->Height();
+
+	// Panel 생성
 	GameUI* pPanelUI = new GamePanelUI{ false };
 	pPanelUI->SetName(L"ParentUI");
-	pPanelUI->SetScale(Vec2{ 300.f, 150.f });
+	pPanelUI->SetScale(Vec2{ (float)iWidth, (float)iHeight + TILE_SIZE * 2 });
 	pPanelUI->SetPos(Vec2{ vResolution.x - pPanelUI->GetScale().x, 0.f });
 
-	GameBtnUI* pBtnUI = new GameBtnUI{ false };
-	pBtnUI->SetName(L"ChildUI");
-	pBtnUI->SetScale(Vec2{ 150.f, 50.f });
-	pBtnUI->SetPos(Vec2{ 0.f, 0.f });
-	pBtnUI->SetClickedCallBack(this, (SCENE_MEMFUNC)&GameScene_Tool::SetCurMode);
-	pBtnUI->SetIdleTexture(GameResMgr::GetInst()->LoadTexture(L"TileMapButton", L"texture\\Tile_Map_Button.bmp"));
-	pBtnUI->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"TileMapButtonClicked", L"texture\\Tile_Map_Button_Clicked.bmp"));
-	pBtnUI->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(L"TileMapButton"));
-
-	pPanelUI->AddChild(pBtnUI);
 	AddObject(pPanelUI, GROUP_TYPE::UI);
+
+	// 만들 수 있는 Tile의 종류 개수 가져오기
+	UINT iTileCount = (iWidth * iHeight) / (TILE_SIZE * TILE_SIZE);
+
+	UINT iX = 0;
+	UINT iY = TILE_SIZE;
+
+	for (UINT i = 0; i < iTileCount; ++i)
+	{
+		iX = i * TILE_SIZE % (UINT)pPanelUI->GetScale().x;
+
+		GameBtnUI* pTileBtn = new GameBtnUI{ false };
+		pTileBtn->SetName(L"Stage1TileButton" + to_wstring(i));
+		pTileBtn->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+		pTileBtn->SetPos(Vec2{ (float)iX, (float)iY });
+		pTileBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"Stage1TileButton" + to_wstring(i), L"texture\\tile\\Stage1_Tile_Button_" + to_wstring(i) + L".bmp"));
+		pTileBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTexture, pTileBtn->GetName());
+
+		pPanelUI->AddChild(pTileBtn);
+		AddObject(pTileBtn, GROUP_TYPE::UI);
+
+		if (iX == TILE_SIZE * 2)
+		{
+			iY += TILE_SIZE;
+		}
+	}
+
+	m_pPanel = pPanelUI;
 }
 
 void GameScene_Tool::Exit()
@@ -64,6 +89,24 @@ void GameScene_Tool::Update()
 	GameScene::Update();
 
 	SetTileIdx();
+
+	const vector<GameUI*>& vecChildUI = m_pPanel->GetChildUI();
+	vector<GameUI*>::const_iterator iter = vecChildUI.begin();
+
+	// 선택 된 타일버튼은 흑백 처리 한다.
+	for (; iter != vecChildUI.end(); ++iter)
+	{
+		if (m_strTileName == (*iter)->GetName())
+		{
+			wstring strTileName = (*iter)->GetName(); // Stage1TileButton0
+
+			(*iter)->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(strTileName + L"Selected", L"texture\\tile\\Stage1_Tile_Button_" + strTileName.substr(16, 1) + L"_Selected.bmp"));
+		}
+		else
+		{
+			(*iter)->SetCurrentTexture(GameResMgr::GetInst()->FindTexture((*iter)->GetName()));
+		}
+	}
 
 	if (KEY_TAP(KEY::CTRL))
 	{

@@ -1,6 +1,8 @@
 #pragma once
 #include "GameScene.h"
 
+class GameUI;
+
 enum class EDIT_MODE
 {
     NONE,
@@ -13,6 +15,8 @@ class GameScene_Tool :
 {
 private:
     EDIT_MODE m_eCurMode;
+    wstring m_strTileName;
+    GameUI* m_pPanel;
 
 public:
     virtual void Enter();
@@ -26,6 +30,10 @@ public:
     void SetCurMode(EDIT_MODE _eMode)
     {
         m_eCurMode = _eMode;
+    }
+    void SetSelectedTexture(wstring _strTileName)
+    {
+        m_strTileName = _strTileName;
     }
 
     GameScene_Tool();

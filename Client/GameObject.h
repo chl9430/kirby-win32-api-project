@@ -70,13 +70,13 @@ public:
 	{
 		m_vPos = _vPos;
 	}
-	void SetCurrentTexture(GameTexture* _pTexture)
-	{
-		m_pCurTexture = _pTexture;
-	}
 	GameTexture* GetCurrentTexture()
 	{
 		return m_pCurTexture;
+	}
+	void SetCurrentTexture(GameTexture* _pTexture)
+	{
+		m_pCurTexture = _pTexture;
 	}
 	GameRigidBody* GetRigidBody()
 	{

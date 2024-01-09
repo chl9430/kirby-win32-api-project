@@ -181,6 +181,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm01.vOffset = Vec2{ 0.f, 0.f };
 		frm01.vSlice = Vec2{ 40.f, 36.f };
 		m_vecFrm.push_back(frm01);
+
+		return;
 	}
 
 	if (_strName == L"WALK_RIGHT" || _strName == L"WALK_LEFT")
@@ -245,6 +247,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm10.vOffset = Vec2{ 0.f, 0.f };
 		frm10.vSlice = Vec2{ 38.f, 34.f };
 		m_vecFrm.push_back(frm10);
+
+		return;
 	}
 
 	if (_strName == L"RUN_RIGHT" || _strName == L"RUN_LEFT")
@@ -304,6 +308,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm08.vOffset = Vec2{ 0.f, 0.f };
 		frm08.vSlice = Vec2{ 38.f, 38.f };
 		m_vecFrm.push_back(frm08);
+
+		return;
 	}
 
 	if (_strName == L"STOP_RIGHT" || _strName == L"STOP_LEFT")
@@ -314,6 +320,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm01.vOffset = Vec2{ 0.f, 0.f };
 		frm01.vSlice = Vec2{ 44.f, 40.f };
 		m_vecFrm.push_back(frm01);
+
+		return;
 	}
 
 	if (_strName == L"JUMP_RIGHT" || _strName == L"JUMP_LEFT")
@@ -324,6 +332,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm01.vOffset = Vec2{ 0.f, 0.f };
 		frm01.vSlice = Vec2{ 40.f, 40.f };
 		m_vecFrm.push_back(frm01);
+
+		return;
 	}
 
 	if (_strName == L"DROP_RIGHT" || _strName == L"DROP_LEFT")
@@ -383,6 +393,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm08.vOffset = Vec2{ 0.f, 0.f };
 		frm08.vSlice = Vec2{ 40.f, 38.f };
 		m_vecFrm.push_back(frm08);
+
+		return;
 	}
 
 	if (_strName == L"FLOAT_START_RIGHT" || _strName == L"FLOAT_START_LEFT")
@@ -414,6 +426,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm04.vOffset = Vec2{ 0.f, 0.f };
 		frm04.vSlice = Vec2{ 40.f, 48.f };
 		m_vecFrm.push_back(frm04);
+
+		return;
 	}
 
 	if (_strName == L"FLOAT_IDLE_RIGHT" || _strName == L"FLOAT_IDLE_LEFT")
@@ -431,6 +445,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm02.vOffset = Vec2{ 0.f, 0.f };
 		frm02.vSlice = Vec2{ 48.f, 48.f };
 		m_vecFrm.push_back(frm02);
+
+		return;
 	}
 
 	if (_strName == L"FLOAT_END_RIGHT" || _strName == L"FLOAT_END_LEFT")
@@ -462,6 +478,8 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm01.vOffset = Vec2{ 0.f, 0.f };
 		frm01.vSlice = Vec2{ 38.f, 40.f };
 		m_vecFrm.push_back(frm01);
+
+		return;
 	}
 
 	if (_strName == L"WADDLE_DEE_WALK_RIGHT" || _strName == L"WADDLE_DEE_WALK_LEFT")
@@ -521,16 +539,9 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm08.vOffset = Vec2{ 0.f, 0.f };
 		frm08.vSlice = Vec2{ 38.f, 38.f };
 		m_vecFrm.push_back(frm08);
+
+		return;
 	}
-
-	/*for (UINT i = 0; i < _iFrameCount; ++i)
-	{
-		frm.fDuration = _fDuration;
-		frm.vSlice = _vSliceSize;
-		frm.vLT = _vLT + _vStep * (float)i;
-
-		m_vecFrm.push_back(frm);
-	}*/
 }
 
 void GameAnimation::Update()
