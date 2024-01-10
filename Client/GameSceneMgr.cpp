@@ -43,7 +43,7 @@ void GameSceneMgr::Init()
 	m_arrScene[(UINT)SCENE_TYPE::TOOL]->SetName(L"Tool Scene");
 
 	m_arrScene[(UINT)SCENE_TYPE::STAGE_01] = new GameScene_Stage;
-	m_arrScene[(UINT)SCENE_TYPE::TOOL]->SetName(L"Stage Scene");
+	m_arrScene[(UINT)SCENE_TYPE::STAGE_01]->SetName(L"Stage Scene");
 
 	// 현재 씬 지정
 	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::TOOL];

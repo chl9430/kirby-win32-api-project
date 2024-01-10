@@ -28,6 +28,7 @@ private:
     wstring m_strParam;
 
 public:
+    virtual void MouseOn();
     virtual void MouseLbtnDown();
     virtual void MouseLbtnUp();
     virtual void MouseLbtnClicked();

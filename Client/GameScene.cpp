@@ -91,28 +91,28 @@ void GameScene::Render(HDC _dc)
 	}
 }
 
-void GameScene::CreateTile(UINT _iXCount, UINT _iYCount)
-{
-	DeleteGroup(GROUP_TYPE::TILE);
-
-	m_iTileX = _iXCount;
-	m_iTileY = _iYCount;
-
-	GameTexture* pTileTex = GameResMgr::GetInst()->LoadTexture(L"Tile", L"texture\\tile\\Stage1_Tile_Set.bmp");
-
-	for (UINT i = 0; i < _iYCount; ++i)
-	{
-		for (UINT j = 0; j < _iXCount; ++j)
-		{
-			GameTile* pTile = new GameTile();
-
-			pTile->SetPos(Vec2{ (float)(j * TILE_SIZE), (float)(i * TILE_SIZE) });
-			pTile->SetTexture(pTileTex);
-
-			AddObject(pTile, GROUP_TYPE::TILE);
-		}
-	}
-}
+//void GameScene::CreateTile(UINT _iXCount, UINT _iYCount)
+//{
+//	DeleteGroup(GROUP_TYPE::TILE);
+//
+//	m_iTileX = _iXCount;
+//	m_iTileY = _iYCount;
+//
+//	GameTexture* pTileTex = GameResMgr::GetInst()->LoadTexture(L"Tile", L"texture\\tile\\Stage1_Tile_Set.bmp");
+//
+//	for (UINT i = 0; i < _iYCount; ++i)
+//	{
+//		for (UINT j = 0; j < _iXCount; ++j)
+//		{
+//			GameTile* pTile = new GameTile();
+//
+//			pTile->SetPos(Vec2{ (float)(j * TILE_SIZE), (float)(i * TILE_SIZE) });
+//			pTile->SetTexture(pTileTex);
+//
+//			AddObject(pTile, GROUP_TYPE::TILE);
+//		}
+//	}
+//}
 
 void GameScene::LoadTile(const wstring& _strRelativePath)
 {
@@ -137,7 +137,7 @@ void GameScene::LoadTile(const wstring& _strRelativePath)
 	fread(&yCount, sizeof(UINT), 1, pFile);
 
 	// 불러온 개수에 맞게 빈 타일 만들기
-	CreateTile(xCount, yCount);
+	/*CreateTile(xCount, yCount);*/
 
 
 	// 만들어진 타일 개별로 필요한 정보를 불러오게함

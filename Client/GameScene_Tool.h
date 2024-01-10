@@ -15,25 +15,29 @@ class GameScene_Tool :
 {
 private:
     EDIT_MODE m_eCurMode;
-    wstring m_strTileName;
+    wstring m_strSelectedTileName;
     GameUI* m_pPanel;
 
 public:
     virtual void Enter();
     virtual void Exit();
     virtual void Update();
+    virtual void Render(HDC _dc);
     
     void SaveTileData();
     void SaveTile(const wstring& _strFilePath);
     void LoadTileData();
-    void SetTileIdx();
     void SetCurMode(EDIT_MODE _eMode)
     {
         m_eCurMode = _eMode;
     }
-    void SetSelectedTexture(wstring _strTileName)
+    void SetSelectedTileName(wstring _strTileName)
     {
-        m_strTileName = _strTileName;
+        m_strSelectedTileName = _strTileName;
+    }
+    wstring& GetSelectedTileName()
+    {
+        return m_strSelectedTileName;
     }
 
     GameScene_Tool();

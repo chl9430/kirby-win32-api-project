@@ -15,9 +15,11 @@
 #include "GameTile.h"
 #include "GameTexture.h"
 
+#include "SelectGDI.h"
+
 GameScene_Tool::GameScene_Tool()
 	: m_eCurMode{ EDIT_MODE::NONE }
-	, m_strTileName{}
+	, m_strSelectedTileName{}
 	, m_pPanel{ nullptr }
 {
 }
@@ -31,12 +33,9 @@ void GameScene_Tool::Enter()
 	// 툴 Scene에서 사용할 메뉴를 붙인다.
 	GameCore::GetInst()->DockMenu();
 
-	// 타일 생성
-	CreateTile(5, 6);
-
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 
-	GameTexture* pTileTex = GameResMgr::GetInst()->FindTexture(L"Tile");
+	GameTexture* pTileTex = GameResMgr::GetInst()->LoadTexture(L"Stage1TileSet", L"texture\\tile\\Stage1_Tile_Set.bmp");
 	UINT iWidth = pTileTex->Width();
 	UINT iHeight = pTileTex->Height();
 
@@ -48,12 +47,37 @@ void GameScene_Tool::Enter()
 
 	AddObject(pPanelUI, GROUP_TYPE::UI);
 
+	// Save 버튼 생성
+	GameBtnUI* pSaveBtn = new GameBtnUI{ false };
+	pSaveBtn->SetName(L"SaveButton");
+	pSaveBtn->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+	pSaveBtn->SetPos(Vec2{ 0, (int)pPanelUI->GetScale().y - TILE_SIZE });
+	pSaveBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"SaveButton", L"texture\\Save_Button.bmp"));
+	pSaveBtn->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"SaveButtonSelected", L"texture\\Save_Button_Selected.bmp"));
+	pSaveBtn->SetMouseUpTexture(GameResMgr::GetInst()->FindTexture(L"SaveButton"));
+	pSaveBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SaveTileData);
+	pPanelUI->AddChild(pSaveBtn);
+	AddObject(pSaveBtn, GROUP_TYPE::UI);
+
+	// Load 버튼 생성
+	GameBtnUI* pLoadBtn = new GameBtnUI{ false };
+	pLoadBtn->SetName(L"LoadButton");
+	pLoadBtn->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+	pLoadBtn->SetPos(Vec2{ TILE_SIZE, (int)pPanelUI->GetScale().y - TILE_SIZE });
+	pLoadBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"LoadButton", L"texture\\Load_Button.bmp"));
+	pLoadBtn->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"LoadButtonSelected", L"texture\\Load_Button_Selected.bmp"));
+	pLoadBtn->SetMouseUpTexture(GameResMgr::GetInst()->FindTexture(L"LoadButton"));
+	pLoadBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::LoadTileData);
+	pPanelUI->AddChild(pLoadBtn);
+	AddObject(pLoadBtn, GROUP_TYPE::UI);
+
 	// 만들 수 있는 Tile의 종류 개수 가져오기
 	UINT iTileCount = (iWidth * iHeight) / (TILE_SIZE * TILE_SIZE);
 
 	UINT iX = 0;
 	UINT iY = TILE_SIZE;
 
+	// 타일 버튼 생성
 	for (UINT i = 0; i < iTileCount; ++i)
 	{
 		iX = i * TILE_SIZE % (UINT)pPanelUI->GetScale().x;
@@ -63,7 +87,7 @@ void GameScene_Tool::Enter()
 		pTileBtn->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
 		pTileBtn->SetPos(Vec2{ (float)iX, (float)iY });
 		pTileBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"Stage1TileButton" + to_wstring(i), L"texture\\tile\\Stage1_Tile_Button_" + to_wstring(i) + L".bmp"));
-		pTileBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTexture, pTileBtn->GetName());
+		pTileBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pTileBtn->GetName());
 
 		pPanelUI->AddChild(pTileBtn);
 		AddObject(pTileBtn, GROUP_TYPE::UI);
@@ -88,35 +112,89 @@ void GameScene_Tool::Update()
 {
 	GameScene::Update();
 
-	SetTileIdx();
-
 	const vector<GameUI*>& vecChildUI = m_pPanel->GetChildUI();
 	vector<GameUI*>::const_iterator iter = vecChildUI.begin();
 
-	// 선택 된 타일버튼은 흑백 처리 한다.
+	// 선택 된 타일 버튼은 흑백 처리 한다.
 	for (; iter != vecChildUI.end(); ++iter)
 	{
-		if (m_strTileName == (*iter)->GetName())
+		// 타일 버튼만 검사한다.
+		if ((*iter)->GetName().find(L"Stage1TileButton") != string::npos)
 		{
-			wstring strTileName = (*iter)->GetName(); // Stage1TileButton0
+			if (m_strSelectedTileName == (*iter)->GetName())
+			{
+				wstring strTileName = (*iter)->GetName();
 
-			(*iter)->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(strTileName + L"Selected", L"texture\\tile\\Stage1_Tile_Button_" + strTileName.substr(16, 1) + L"_Selected.bmp"));
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(strTileName + L"Selected", L"texture\\tile\\Stage1_Tile_Button_" + strTileName.substr(16, 1) + L"_Selected.bmp"));
+			}
+			else
+			{
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->FindTexture((*iter)->GetName()));
+			}
 		}
-		else
+	}
+
+	// 맵 안의 어떤 위치를 가리키고 있는지 체크
+	if (KEY_TAP(KEY::LBTN))
+	{
+		if (MOUSE_POS.x >= m_pPanel->GetPos().x
+			&& MOUSE_POS.x <= m_pPanel->GetPos().x + m_pPanel->GetScale().x
+			&& MOUSE_POS.y >= m_pPanel->GetPos().y
+			&& MOUSE_POS.y <= m_pPanel->GetPos().y + m_pPanel->GetScale().y)
 		{
-			(*iter)->SetCurrentTexture(GameResMgr::GetInst()->FindTexture((*iter)->GetName()));
+			return;
+		}
+
+		if (m_strSelectedTileName == L"")
+		{
+			return;
+		}
+
+		Vec2 vMousePos = MOUSE_POS;
+		vMousePos = GameCamera::GetInst()->GetRealPos(vMousePos);
+
+		int iCol = (int)vMousePos.x / TILE_SIZE;
+		int iRow = (int)vMousePos.y / TILE_SIZE;
+
+		if (vMousePos.x < 0.f || 30 <= iCol
+			|| vMousePos.y < 0.f || 20 <= iRow)
+		{
+			return;
+		}
+
+		// 위치를 기반으로 타일 생성
+		GameTile* pTile = new GameTile();
+
+		pTile->SetPos(Vec2{ (float)(iCol * TILE_SIZE) + TILE_SIZE / 2, (float)(iRow * TILE_SIZE) + TILE_SIZE / 2 });
+		pTile->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+		pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(m_strSelectedTileName));
+		// pTile->SetTexture(GameResMgr::GetInst()->FindTexture(m_strSelectedTileName));
+
+		AddObject(pTile, GROUP_TYPE::TILE);
+
+		// UINT iIdx = iRow * 30 + iCol;
+	}
+
+	/*if (KEY_TAP(KEY::CTRL))
+	{
+		DeleteGroup(GROUP_TYPE::TILE);
+	}*/
+}
+
+void GameScene_Tool::Render(HDC _dc)
+{
+	SelectGDI gdiPen(_dc, PEN_TYPE::GREEN);
+	SelectGDI gdiBrush(_dc, BRUSH_TYPE::BLACK);
+
+	for (int i = 0; i < 30; i++)
+	{
+		for (int j = 0; j < 20; j++)
+		{
+			Rectangle(_dc, i * TILE_SIZE, j * TILE_SIZE, (i + 1) * TILE_SIZE, (j + 1) * TILE_SIZE);
 		}
 	}
 
-	if (KEY_TAP(KEY::CTRL))
-	{
-		LoadTileData();
-	}
-
-	if (KEY_TAP(KEY::LSHIFT))
-	{
-		SaveTileData();
-	}
+	GameScene::Render(_dc);
 }
 
 void GameScene_Tool::SaveTileData()
@@ -159,13 +237,6 @@ void GameScene_Tool::SaveTile(const wstring& _strFilePath)
 
 	assert(pFile);
 
-	// 타일 가로세로 개수 저장
-	UINT xCount = GetTileX();
-	UINT yCount = GetTileY();
-
-	fwrite(&xCount, sizeof(UINT), 1, pFile);
-	fwrite(&yCount, sizeof(UINT), 1, pFile);
-
 	// 모든 타일들을 개별적으로 저장할 데이터를 저장하게 함
 	const vector<GameObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
 
@@ -206,32 +277,6 @@ void GameScene_Tool::LoadTileData()
 	}
 }
 
-void GameScene_Tool::SetTileIdx()
-{
-	if (KEY_TAP(KEY::LBTN))
-	{
-		Vec2 vMousePos = MOUSE_POS;
-		vMousePos = GameCamera::GetInst()->GetRealPos(vMousePos);
-
-		int iTileX = (int)GetTileX();
-		int iTileY = (int)GetTileY();
-
-		int iCol = (int)vMousePos.x / TILE_SIZE;
-		int iRow = (int)vMousePos.y / TILE_SIZE;
-
-		if (vMousePos.x < 0.f || iTileX <= iCol
-			|| vMousePos.y < 0.f || iTileX <= iRow)
-		{
-			return;
-		}
-
-		UINT iIdx = iRow * iTileX + iCol;
-
-		const vector<GameObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
-		((GameTile*)vecTile[iIdx])->AddImgIdx();
-	}
-}
-
 INT_PTR CALLBACK TileCountProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) // CALLBACK(__stdcall) : 함수호출규약
 {
 	UNREFERENCED_PARAMETER(lParam);
@@ -253,7 +298,7 @@ INT_PTR CALLBACK TileCountProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			assert(pToolScene); // 캐스팅에 성공하면, 현재씬은 툴 씬이다.
 
 			pToolScene->DeleteGroup(GROUP_TYPE::TILE);
-			pToolScene->CreateTile(iXCount, iYCount);
+			/*pToolScene->CreateTile(iXCount, iYCount);*/
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return (INT_PTR)TRUE;

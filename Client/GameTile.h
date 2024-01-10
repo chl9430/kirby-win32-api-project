@@ -13,7 +13,7 @@ private:
 
 public:
     virtual void Update();
-    virtual void Render(HDC _dc);
+    /*virtual void Render(HDC _dc);*/
 
     virtual void Save(FILE* _pFile);
     virtual void Load(FILE* _pFile);

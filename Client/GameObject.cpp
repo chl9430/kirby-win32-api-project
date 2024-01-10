@@ -7,6 +7,7 @@
 #include "GameRigidBody.h"
 #include "GameAnimator.h"
 #include "GameGravity.h"
+#include "GameTexture.h"
 
 GameObject::GameObject()
 	: m_strName{}
@@ -55,11 +56,29 @@ void GameObject::Render(HDC _dc)
 {
 	Vec2 vRenderPos = GameCamera::GetInst()->GetRenderPos(m_vPos);
 
-	Rectangle(_dc
-		, (int)(vRenderPos.x - m_vScale.x / 2.f)
-		, (int)(vRenderPos.y - m_vScale.y / 2.f)
-		, (int)(vRenderPos.x + m_vScale.x / 2.f)
-		, (int)(vRenderPos.y + m_vScale.y / 2.f));
+	if (m_pCurTexture)
+	{
+		TransparentBlt(_dc
+			, (int)(vRenderPos.x - m_vScale.x / 2)
+			, (int)(vRenderPos.y - m_vScale.y / 2)
+			, (int)(m_vScale.x)
+			, (int)(m_vScale.y)
+			, m_pCurTexture->GetDC()
+			, 0
+			, 0
+			, (int)(m_vScale.x)
+			, (int)(m_vScale.y)
+			, RGB(255, 0, 255)
+		);
+	}
+	else
+	{
+		Rectangle(_dc
+			, (int)(vRenderPos.x - m_vScale.x / 2.f)
+			, (int)(vRenderPos.y - m_vScale.y / 2.f)
+			, (int)(vRenderPos.x + m_vScale.x / 2.f)
+			, (int)(vRenderPos.y + m_vScale.y / 2.f));
+	}
 
 	ComponentRender(_dc);
 }

@@ -29,10 +29,10 @@ GameUI* GameUIMgr::GetFocusedUI()
 	// 기존 포커싱 된 UI를 받아두고 변경되었는지 확인한다.
 	GameUI* pFocusedUI = m_pFocusedUI;
 
-	if (!bLbtnTap)
+	/*if (!bLbtnTap)
 	{
 		return pFocusedUI;
-	}
+	}*/
 
 	// 왼쪽버튼 클릭이 발생했다면
 	vector<GameObject*>::iterator targetIter = vecUI.end();

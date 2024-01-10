@@ -26,19 +26,36 @@ void GameBtnUI::SetClickedCallBack(GameScene* _pScene, SCENE_MEMFUNC_1 _pSceneFu
 	m_strParam = _str;
 }
 
+void GameBtnUI::MouseOn()
+{
+	if (m_pMouseOnTex)
+	{
+		SetCurrentTexture(m_pMouseOnTex);
+	}
+}
+
 void GameBtnUI::MouseLbtnDown()
 {
-	SetCurrentTexture(m_pMouseDownTex);
+	if (m_pMouseDownTex)
+	{
+		SetCurrentTexture(m_pMouseDownTex);
+	}
 }
 
 void GameBtnUI::MouseLbtnUp()
 {
-	SetCurrentTexture(m_pIdleTexture);
+	if (m_pMouseUpTex)
+	{
+		SetCurrentTexture(m_pMouseUpTex);
+	}
 }
 
 void GameBtnUI::MouseLbtnClicked()
 {
-	SetCurrentTexture(m_pMouseClickedTex);
+	if (m_pMouseClickedTex)
+	{
+		SetCurrentTexture(m_pMouseClickedTex);
+	}
 
 	/*if (nullptr != m_pFunc)
 	{
@@ -54,11 +71,5 @@ void GameBtnUI::MouseLbtnClicked()
 
 void GameBtnUI::SetTexture(GameTexture* _pTexture)
 {
-	m_pIdleTexture = _pTexture;
-	m_pMouseOnTex = _pTexture;
-	m_pMouseDownTex = _pTexture;
-	m_pMouseUpTex = _pTexture;
-	m_pMouseClickedTex = _pTexture;
-
 	SetCurrentTexture(_pTexture);
 }
