@@ -59,20 +59,30 @@ void GameTile::Update()
 void GameTile::Save(FILE* _pFile)
 {
 	// 타일의 위치
-	fprintf(_pFile, "[Tile Pos]\n");
-	fprintf(_pFile, "%d %d\n", (int)GetPos().x, (int)GetPos().y);
-	fprintf(_pFile, "\n");
+	fwprintf(_pFile, L"[Tile Pos]\n");
+	fwprintf(_pFile, L"%d %d\n", (int)GetPos().x, (int)GetPos().y);
+	fwprintf(_pFile, L"\n");
 
 	// 타일의 텍스처
-	fprintf(_pFile, "[Tile Texture Key]\n");
+	fwprintf(_pFile, L"[Tile Texture]\n");
 	fwprintf(_pFile, GetCurrentTexture()->GetKey().c_str());
-	fprintf(_pFile, "\n\n");
+	fwprintf(_pFile, L"\n\n");
 }
 
-void GameTile::Load(FILE* _pFile)
-{
-	fread(&m_iImgIdx, sizeof(int), 1, _pFile);
-}
+//void GameTile::Load(FILE* _pFile)
+//{
+//	// 타일의 위치
+//	wstring str;
+//	wchar_t szBuff[256] = {};
+//
+//	WScanf(szBuff, _pFile);
+//	WScanf(szBuff, _pFile);
+//	str = szBuff;
+//
+//	m_strName = wstring(str.begin(), str.end());
+//
+//	fread(&m_iImgIdx, sizeof(int), 1, _pFile);
+//}
 
 void GameTile::SetTexture(GameTexture* _pTex)
 {

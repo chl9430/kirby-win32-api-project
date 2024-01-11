@@ -16,7 +16,7 @@ public:
     /*virtual void Render(HDC _dc);*/
 
     virtual void Save(FILE* _pFile);
-    virtual void Load(FILE* _pFile);
+    /*virtual void Load(FILE* _pFile);*/
 
     void AddImgIdx()
     {

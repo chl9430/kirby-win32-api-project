@@ -1,12 +1,19 @@
 #include "pch.h"
 #include "func.h"
 
-void FScanf(char* _pOutBuff, FILE* _pFile)
+bool WScanf(wchar_t* _pOutBuff, FILE* _pFile)
 {
 	int i = 0;
+
 	while (true)
 	{
-		char c = (char)getc(_pFile);
+		wchar_t c = getwc(_pFile);
+
+		if (feof(_pFile))
+		{
+			return false;
+		}
+
 		if (c == '\n')
 		{
 			_pOutBuff[i++] = '\0'; // 마지막에 NULL문자를 넣어준다.
@@ -15,4 +22,6 @@ void FScanf(char* _pOutBuff, FILE* _pFile)
 
 		_pOutBuff[i++] = c;
 	}
+
+	return true;
 }

@@ -129,23 +129,40 @@ void GameScene::LoadTile(const wstring& _strRelativePath)
 
 	assert(pFile);
 
-	// 타일 가로 세로 불러오기
-	UINT xCount = 0;
-	UINT yCount = 0;
+	wchar_t szBuff[256] = {};
 
-	fread(&xCount, sizeof(UINT), 1, pFile);
-	fread(&yCount, sizeof(UINT), 1, pFile);
+	wstring str = {};
 
-	// 불러온 개수에 맞게 빈 타일 만들기
-	/*CreateTile(xCount, yCount);*/
+	Vec2 vTilePos = {};
+	wstring strTileTexKey = {};
 
-
-	// 만들어진 타일 개별로 필요한 정보를 불러오게함
-	const vector<GameObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
-
-	for (size_t i = 0; i < vecTile.size(); ++i)
+	while (WScanf(szBuff, pFile))
 	{
-		((GameTile*)vecTile[i])->Load(pFile);
+		if (wcscmp(L"[Tile Pos]", str.c_str()) == 0)
+		{
+			str = szBuff;
+			int iX = stoi(str.substr(0, 2));
+			int iY = stoi(str.substr(3, 2));
+
+			vTilePos = { POINT{ iX, iY } };
+		}
+
+		if (wcscmp(L"[Tile Texture]", str.c_str()) == 0)
+		{
+			str = szBuff;
+
+			strTileTexKey = str;
+
+			GameTile* pTile = new GameTile();
+
+			pTile->SetPos(vTilePos);
+			pTile->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+			pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(strTileTexKey));
+
+			AddObject(pTile, GROUP_TYPE::TILE);
+		}
+
+		str = szBuff;
 	}
 
 	fclose(pFile); // 파일(스트림)을 닫아준다.

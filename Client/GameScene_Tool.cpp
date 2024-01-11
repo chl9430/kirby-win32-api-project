@@ -168,11 +168,8 @@ void GameScene_Tool::Update()
 		pTile->SetPos(Vec2{ (float)(iCol * TILE_SIZE) + TILE_SIZE / 2, (float)(iRow * TILE_SIZE) + TILE_SIZE / 2 });
 		pTile->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
 		pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(m_strSelectedTileName));
-		// pTile->SetTexture(GameResMgr::GetInst()->FindTexture(m_strSelectedTileName));
 
 		AddObject(pTile, GROUP_TYPE::TILE);
-
-		// UINT iIdx = iRow * 30 + iCol;
 	}
 
 	/*if (KEY_TAP(KEY::CTRL))
