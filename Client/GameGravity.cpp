@@ -23,11 +23,17 @@ void GameGravity::FinalUpdate()
 		|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_IDLE
 		|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_END)
 	{
-		m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 400.f });
+		if (!m_bGround)
+		{
+			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 400.f });
+		}
 	}
 	else
 	{
-		m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 800.f });
+		if (!m_bGround)
+		{
+			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 800.f });
+		}
 	}
 }
 

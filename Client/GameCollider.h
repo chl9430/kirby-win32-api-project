@@ -39,6 +39,10 @@ public:
 	{
 		return m_vFinalPos;
 	}
+	void SetFinalPos(const Vec2& _vPos)
+	{
+		m_vFinalPos = _vPos;
+	}
 	Vec2 GetScale()
 	{
 		return m_vScale;
