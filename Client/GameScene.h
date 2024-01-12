@@ -19,7 +19,7 @@ public:
 	virtual void Render(HDC _dc);
 
 	/*void CreateTile(UINT _iXCount, UINT _iYCount);*/
-	void LoadTile(const wstring& _strRelativePath);
+	virtual void LoadTile(const wstring& _strRelativePath);
 	void DeleteAll();
 	void DeleteGroup(GROUP_TYPE _eTarget);
 

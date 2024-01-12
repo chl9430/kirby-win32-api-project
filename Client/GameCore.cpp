@@ -65,6 +65,7 @@ int GameCore::Init(HWND _hWnd, POINT _ptResolution)
 	GameTimeMgr::GetInst()->Init();
 	GameKeyMgr::GetInst()->Init();
 	GameCamera::GetInst()->Init();
+	GameResMgr::GetInst()->Init();
 	GameSceneMgr::GetInst()->Init();
 
 	return S_OK;

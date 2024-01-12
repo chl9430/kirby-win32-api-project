@@ -15,6 +15,21 @@ GameResMgr::~GameResMgr()
 	Safe_Delete_Map(m_mapTex);
 }
 
+void GameResMgr::Init()
+{
+	GameTexture* pTex = LoadTexture(L"Stage1TileSet", L"texture\\tile\\Stage1_Tile_Set.bmp");
+
+	UINT iWidth = pTex->Width();
+	UINT iHeight = pTex->Height();
+
+	UINT iTileCount = (iWidth * iHeight) / (TILE_SIZE * TILE_SIZE);
+
+	for (UINT i = 0; i < iTileCount; ++i)
+	{
+		LoadTexture(L"Stage1TileButton" + to_wstring(i), L"texture\\tile\\Stage1_Tile_Button_" + to_wstring(i) + L".bmp");
+	}
+}
+
 GameTexture* GameResMgr::LoadTexture(const wstring& _strKey, const wstring& _strRelativePath)
 {
 	GameTexture* pTex = FindTexture(_strKey);

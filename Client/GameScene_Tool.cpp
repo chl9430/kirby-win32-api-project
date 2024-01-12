@@ -35,7 +35,7 @@ void GameScene_Tool::Enter()
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 
-	GameTexture* pTileTex = GameResMgr::GetInst()->LoadTexture(L"Stage1TileSet", L"texture\\tile\\Stage1_Tile_Set.bmp");
+	GameTexture* pTileTex = GameResMgr::GetInst()->FindTexture(L"Stage1TileSet");
 	UINT iWidth = pTileTex->Width();
 	UINT iHeight = pTileTex->Height();
 
@@ -86,7 +86,7 @@ void GameScene_Tool::Enter()
 		pTileBtn->SetName(L"Stage1TileButton" + to_wstring(i));
 		pTileBtn->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
 		pTileBtn->SetPos(Vec2{ (float)iX, (float)iY });
-		pTileBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"Stage1TileButton" + to_wstring(i), L"texture\\tile\\Stage1_Tile_Button_" + to_wstring(i) + L".bmp"));
+		pTileBtn->SetTexture(GameResMgr::GetInst()->FindTexture(L"Stage1TileButton" + to_wstring(i)));
 		pTileBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pTileBtn->GetName());
 
 		pPanelUI->AddChild(pTileBtn);

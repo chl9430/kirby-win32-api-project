@@ -46,7 +46,7 @@ void GameSceneMgr::Init()
 	m_arrScene[(UINT)SCENE_TYPE::STAGE_01]->SetName(L"Stage Scene");
 
 	// ÇöÀç ¾À ÁöÁ¤
-	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::TOOL];
+	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::STAGE_01];
 	m_pCurScene->Enter();
 }
 

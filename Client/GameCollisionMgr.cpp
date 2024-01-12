@@ -32,11 +32,11 @@ void GameCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRigh
 
 		for (size_t j = 0; j < vecRight.size(); ++j)
 		{
-			if (nullptr == vecRight[j]->GetCollider() || vecLeft[i] == vecRight[i])
+			if (nullptr == vecRight[j]->GetCollider() || vecLeft[i] == vecRight[j])
 				continue;
 
 			GameCollider* pLeftCol = vecLeft[i]->GetCollider();
-			GameCollider* pRightCol = vecRight[i]->GetCollider();
+			GameCollider* pRightCol = vecRight[j]->GetCollider();
 
 			COLLIDER_ID ID;
 			ID.Left_id = pLeftCol->GetID();

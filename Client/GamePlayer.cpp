@@ -24,7 +24,7 @@ GamePlayer::GamePlayer()
 {
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
-	GetCollider()->SetScale(Vec2{ 40.f, 36.f });
+	GetCollider()->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
 
 	CreateRigidBody();
 
