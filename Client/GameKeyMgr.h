@@ -14,15 +14,18 @@ enum class KEY
 	RIGHT,
 	UP,
 	DOWN,
-	Q,
-	E,
-	W,
-	A,
-	S,
-	D,
-	CTRL,
-	LSHIFT,
-	SPACE,
+	Q, // L
+	E, // R
+	W, // X
+	A, // Y
+	S, // B
+	D, // A
+	LSHIFT, // SELECT
+	SPACE, // START
+	J,
+	L,
+	I,
+	K,
 	LBTN,
 	LAST
 };

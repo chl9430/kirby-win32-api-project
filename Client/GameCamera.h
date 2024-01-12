@@ -35,4 +35,12 @@ public:
 	{
 		m_pTargetObj = _pObj;
 	}
+	const Vec2& GetDiff()
+	{
+		return m_vDiff;
+	}
+	void SetDiff(const Vec2& _vDiff)
+	{
+		m_vDiff = _vDiff;
+	}
 };

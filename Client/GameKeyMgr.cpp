@@ -15,9 +15,12 @@ int g_arrVK[(int)KEY::LAST] =
 	'A',
 	'S',
 	'D',
-	VK_CONTROL,
 	VK_LSHIFT,
 	VK_SPACE,
+	'J',
+	'L',
+	'I',
+	'K',
 	VK_LBUTTON,
 	// LAST
 };

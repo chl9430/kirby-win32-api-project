@@ -172,6 +172,30 @@ void GameScene_Tool::Update()
 		AddObject(pTile, GROUP_TYPE::TILE);
 	}
 
+	// 카메라 이동 제한
+	float fLimitX = (float)((30 * TILE_SIZE) - GameCore::GetInst()->GetResolution().x);
+	float fLimitY = (float)((20 * TILE_SIZE) - GameCore::GetInst()->GetResolution().y);
+
+	if (GameCamera::GetInst()->GetDiff().x <= 0.f)
+	{
+		GameCamera::GetInst()->SetDiff(Vec2{ 0.f, GameCamera::GetInst()->GetDiff().y });
+	}
+
+	if (GameCamera::GetInst()->GetDiff().x >= fLimitX)
+	{
+		GameCamera::GetInst()->SetDiff(Vec2{ fLimitX, GameCamera::GetInst()->GetDiff().y });
+	}
+
+	if (GameCamera::GetInst()->GetDiff().y <= 0.f)
+	{
+		GameCamera::GetInst()->SetDiff(Vec2{ GameCamera::GetInst()->GetDiff().x, 0.f });
+	}
+
+	if (GameCamera::GetInst()->GetDiff().y >= fLimitY)
+	{
+		GameCamera::GetInst()->SetDiff(Vec2{ GameCamera::GetInst()->GetDiff().x, fLimitY });
+	}
+
 	/*if (KEY_TAP(KEY::CTRL))
 	{
 		DeleteGroup(GROUP_TYPE::TILE);
@@ -187,7 +211,14 @@ void GameScene_Tool::Render(HDC _dc)
 	{
 		for (int j = 0; j < 20; j++)
 		{
-			Rectangle(_dc, i * TILE_SIZE, j * TILE_SIZE, (i + 1) * TILE_SIZE, (j + 1) * TILE_SIZE);
+			Vec2 vPos = GameCamera::GetInst()->GetRenderPos(Vec2{ i * TILE_SIZE, j * TILE_SIZE });
+
+			Rectangle(_dc
+				, (int)vPos.x
+				, (int)vPos.y
+				, (int)(vPos.x + TILE_SIZE)
+				, (int)(vPos.y + TILE_SIZE)
+			);
 		}
 	}
 

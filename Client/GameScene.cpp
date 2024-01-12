@@ -138,11 +138,12 @@ void GameScene::LoadTile(const wstring& _strRelativePath)
 
 	while (WScanf(szBuff, pFile))
 	{
-		if (wcscmp(L"[Tile Pos]", str.c_str()) == 0)
+		if (wcscmp(L"[Tile Pos]", szBuff) == 0)
 		{
-			str = szBuff;
-			int iX = stoi(str.substr(0, 2));
-			int iY = stoi(str.substr(3, 2));
+			int iX = 0;
+			int iY = 0;
+
+			fwscanf_s(pFile, L"%d %d", &iX, &iY);
 
 			vTilePos = { POINT{ iX, iY } };
 		}

@@ -76,22 +76,25 @@ void GameCamera::Update()
 		}
 	}
 
-	/*if (KEY_HOLD(KEY::UP))
+	if (KEY_HOLD(KEY::I))
 	{
-		m_vLookAt.y -= 500.f * fDT;
+		m_vDiff.y -= 500.f * fDT;
 	}
-	else if (KEY_HOLD(KEY::DOWN))
+
+	if (KEY_HOLD(KEY::K))
 	{
-		m_vLookAt.y += 500.f * fDT;
+		m_vDiff.y += 500.f * fDT;
 	}
-	else if (KEY_HOLD(KEY::LEFT))
+
+	if (KEY_HOLD(KEY::J))
 	{
-		m_vLookAt.x -= 500.f * fDT;
+		m_vDiff.x -= 500.f * fDT;
 	}
-	else if (KEY_HOLD(KEY::RIGHT))
+
+	if (KEY_HOLD(KEY::L))
 	{
-		m_vLookAt.x += 500.f * fDT;
-	}*/
+		m_vDiff.x += 500.f * fDT;
+	}
 
 	// 화면 중앙좌표와 카메라 LookAt 좌표간의 차이값 계산
 	 CalDiff();
