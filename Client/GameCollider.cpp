@@ -36,7 +36,9 @@ void GameCollider::Render(HDC _dc)
 	PEN_TYPE ePen = PEN_TYPE::GREEN;
 
 	if (m_iCol)
+	{
 		ePen = PEN_TYPE::RED;
+	}
 
 	SelectGDI p{ _dc, ePen };
 	SelectGDI b{ _dc, BRUSH_TYPE::HOLLOW };

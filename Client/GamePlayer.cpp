@@ -119,185 +119,199 @@ void GamePlayer::OnCollisionEnter(GameCollider* _pOther)
 
 void GamePlayer::UpdateState()
 {
-	// 걷기 준비 자세에서 보통상태로 자유롭게 전환
-	if (m_eCurState == PLAYER_STATE::WALK_READY && GetRigidBody()->GetVelocity().Length() == 0.f)
-	{
-		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
-		{
-			m_eCurState = PLAYER_STATE::WALK;
-		}
-		else
-		{
-			m_eCurState = PLAYER_STATE::IDLE;
-		}
-	}
+	//// 걷기 준비 자세에서 보통상태로 자유롭게 전환
+	//if (m_eCurState == PLAYER_STATE::WALK_READY && GetRigidBody()->GetVelocity().Length() == 0.f)
+	//{
+	//	if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
+	//	{
+	//		m_eCurState = PLAYER_STATE::WALK;
+	//	}
+	//	else
+	//	{
+	//		m_eCurState = PLAYER_STATE::IDLE;
+	//	}
+	//}
 
-	// 떠다니기 진입시 애니메이션을 자연스럽게 전환
-	if (m_eCurState == PLAYER_STATE::FLOAT_START)
-	{
-		if (GetAnimator()->GetCurrentAnim()->IsFinish())
-		{
-			m_eCurState = PLAYER_STATE::FLOAT_IDLE;
-		}
-	}
+	//// 떠다니기 진입시 애니메이션을 자연스럽게 전환
+	//if (m_eCurState == PLAYER_STATE::FLOAT_START)
+	//{
+	//	if (GetAnimator()->GetCurrentAnim()->IsFinish())
+	//	{
+	//		m_eCurState = PLAYER_STATE::FLOAT_IDLE;
+	//	}
+	//}
 
-	// 떠다니기 탈출시 애니메이션을 자연스럽게 전환
-	if (m_eCurState == PLAYER_STATE::FLOAT_END)
-	{
-		if (GetAnimator()->GetCurrentAnim()->IsFinish())
-		{
-			if (GetGravity()->IsOnTheGround())
-			{
-				m_eCurState = PLAYER_STATE::IDLE;
-			}
-			else
-			{
-				m_eCurState = PLAYER_STATE::DROP;
-			}
-		}
-	}
+	//// 떠다니기 탈출시 애니메이션을 자연스럽게 전환
+	//if (m_eCurState == PLAYER_STATE::FLOAT_END)
+	//{
+	//	if (GetAnimator()->GetCurrentAnim()->IsFinish())
+	//	{
+	//		if (GetGravity()->IsOnTheGround())
+	//		{
+	//			m_eCurState = PLAYER_STATE::IDLE;
+	//		}
+	//		else
+	//		{
+	//			m_eCurState = PLAYER_STATE::DROP;
+	//		}
+	//	}
+	//}
 
-	// 떠다니기 상태에서 S를 누르면 떠다니기 상태에서 탈출
-	if (m_eCurState == PLAYER_STATE::FLOAT_IDLE)
-	{
-		if (KEY_TAP(KEY::S))
-		{
-			m_eCurState = PLAYER_STATE::FLOAT_END;
-		}
-	}
+	//// 떠다니기 상태에서 S를 누르면 떠다니기 상태에서 탈출
+	//if (m_eCurState == PLAYER_STATE::FLOAT_IDLE)
+	//{
+	//	if (KEY_TAP(KEY::S))
+	//	{
+	//		m_eCurState = PLAYER_STATE::FLOAT_END;
+	//	}
+	//}
 
-	// 점프나 드롭상태에서 한번 더 점프하면 떠다니기 모드로 전환
-	if (m_eCurState == PLAYER_STATE::JUMP || m_eCurState == PLAYER_STATE::DROP)
-	{
-		if (KEY_TAP(KEY::D))
-		{
-			m_eCurState = PLAYER_STATE::FLOAT_START;
-		}
-	}
+	//// 점프나 드롭상태에서 한번 더 점프하면 떠다니기 모드로 전환
+	//if (m_eCurState == PLAYER_STATE::JUMP || m_eCurState == PLAYER_STATE::DROP)
+	//{
+	//	if (KEY_TAP(KEY::D))
+	//	{
+	//		m_eCurState = PLAYER_STATE::FLOAT_START;
+	//	}
+	//}
 
-	// 점프하다가 떨어질때 드롭으로 상태변경
-	if (m_eCurState == PLAYER_STATE::JUMP)
-	{
-		if (GetRigidBody()->GetVelocity().y >= 0.f)
-		{
-			if (!(m_eCurState == PLAYER_STATE::FLOAT_START || m_eCurState == PLAYER_STATE::FLOAT_IDLE))
-			{
-				m_eCurState = PLAYER_STATE::DROP;
-			}
-		}
-	}
+	//// 점프하다가 떨어질때 드롭으로 상태변경
+	//if (m_eCurState == PLAYER_STATE::JUMP)
+	//{
+	//	if (GetRigidBody()->GetVelocity().y >= 0.f)
+	//	{
+	//		if (!(m_eCurState == PLAYER_STATE::FLOAT_START || m_eCurState == PLAYER_STATE::FLOAT_IDLE))
+	//		{
+	//			m_eCurState = PLAYER_STATE::DROP;
+	//		}
+	//	}
+	//}
 
-	if (m_eCurState == PLAYER_STATE::IDLE)
-	{
-		// 떨어진 시점에 키를 누르고 있으면 걷고, 그렇지 않다면 천천히 걸은 후 일반 모드로 진입
-		if (m_ePrevState == PLAYER_STATE::DROP)
-		{
-			if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
-			{
-				m_eCurState = PLAYER_STATE::WALK;
-			}
-			else
-			{
-				if (GetRigidBody()->GetVelocity().x != 0.f)
-				{
-					m_eCurState = PLAYER_STATE::WALK_READY;
-				}
-				else
-				{
-					m_eCurState = PLAYER_STATE::IDLE;
-				}
-			}
-		}
+	//if (m_eCurState == PLAYER_STATE::IDLE)
+	//{
+	//	// 떨어진 시점에 키를 누르고 있으면 걷고, 그렇지 않다면 천천히 걸은 후 일반 모드로 진입
+	//	if (m_ePrevState == PLAYER_STATE::DROP)
+	//	{
+	//		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
+	//		{
+	//			m_eCurState = PLAYER_STATE::WALK;
+	//		}
+	//		else
+	//		{
+	//			if (GetRigidBody()->GetVelocity().x != 0.f)
+	//			{
+	//				m_eCurState = PLAYER_STATE::WALK_READY;
+	//			}
+	//			else
+	//			{
+	//				m_eCurState = PLAYER_STATE::IDLE;
+	//			}
+	//		}
+	//	}
 
-		if (m_ePrevState == PLAYER_STATE::FLOAT_END)
-		{
-			if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
-			{
-				m_eCurState = PLAYER_STATE::WALK;
-			}
-			else
-			{
-				if (GetRigidBody()->GetVelocity().x != 0.f)
-				{
-					m_eCurState = PLAYER_STATE::WALK_READY;
-				}
-				else
-				{
-					m_eCurState = PLAYER_STATE::IDLE;
-				}
-			}
-		}
-	}
+	//	if (m_ePrevState == PLAYER_STATE::FLOAT_END)
+	//	{
+	//		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
+	//		{
+	//			m_eCurState = PLAYER_STATE::WALK;
+	//		}
+	//		else
+	//		{
+	//			if (GetRigidBody()->GetVelocity().x != 0.f)
+	//			{
+	//				m_eCurState = PLAYER_STATE::WALK_READY;
+	//			}
+	//			else
+	//			{
+	//				m_eCurState = PLAYER_STATE::IDLE;
+	//			}
+	//		}
+	//	}
+	//}
 
-	if (KEY_TAP(KEY::LEFT))
-	{
-		m_iDir = -1;
+	//if (KEY_TAP(KEY::LEFT))
+	//{
+	//	m_iDir = -1;
 
 
-		if (m_eCurState == PLAYER_STATE::IDLE)
-		{
-			m_eCurState = PLAYER_STATE::WALK;
-		}
-	}
+	//	if (m_eCurState == PLAYER_STATE::IDLE)
+	//	{
+	//		m_eCurState = PLAYER_STATE::WALK;
+	//	}
+	//}
 
-	if (KEY_TAP(KEY::RIGHT))
-	{
-		m_iDir = 1;
+	//if (KEY_TAP(KEY::RIGHT))
+	//{
+	//	m_iDir = 1;
 
-		if (m_eCurState == PLAYER_STATE::IDLE)
-		{
-			m_eCurState = PLAYER_STATE::WALK;
-		}
-	}
+	//	if (m_eCurState == PLAYER_STATE::IDLE)
+	//	{
+	//		m_eCurState = PLAYER_STATE::WALK;
+	//	}
+	//}
 
-	if (KEY_AWAY(KEY::LEFT))
-	{
-		if (m_eCurState == PLAYER_STATE::WALK)
-		{
-			if (!(KEY_HOLD(KEY::RIGHT)))
-			{
-				m_eCurState = PLAYER_STATE::WALK_READY;
-			}
-		}
-	}
+	//if (KEY_AWAY(KEY::LEFT))
+	//{
+	//	if (m_eCurState == PLAYER_STATE::WALK)
+	//	{
+	//		if (!(KEY_HOLD(KEY::RIGHT)))
+	//		{
+	//			m_eCurState = PLAYER_STATE::WALK_READY;
+	//		}
+	//	}
+	//}
 
-	if (KEY_AWAY(KEY::RIGHT))
-	{
-		if (m_eCurState == PLAYER_STATE::WALK)
-		{
-			if (!(KEY_HOLD(KEY::LEFT)))
-			{
-				m_eCurState = PLAYER_STATE::WALK_READY;
-			}
-		}
-	}
+	//if (KEY_AWAY(KEY::RIGHT))
+	//{
+	//	if (m_eCurState == PLAYER_STATE::WALK)
+	//	{
+	//		if (!(KEY_HOLD(KEY::LEFT)))
+	//		{
+	//			m_eCurState = PLAYER_STATE::WALK_READY;
+	//		}
+	//	}
+	//}
 
-	if (KEY_TAP(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
-	{
-		m_iDir = -1;
-	}
+	//if (KEY_TAP(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
+	//{
+	//	m_iDir = -1;
+	//}
 
-	if (KEY_TAP(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
-	{
-		m_iDir = 1;
-	}
+	//if (KEY_TAP(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
+	//{
+	//	m_iDir = 1;
+	//}
 
-	if (KEY_AWAY(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
-	{
-		m_iDir = 1;
-	}
+	//if (KEY_AWAY(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
+	//{
+	//	m_iDir = 1;
+	//}
 
-	if (KEY_AWAY(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
-	{
-		m_iDir = -1;
-	}
+	//if (KEY_AWAY(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
+	//{
+	//	m_iDir = -1;
+	//}
 }
 
 void GamePlayer::UpdateMove()
 {
 	GameRigidBody* pRigid = GetRigidBody();
 
-	if (m_eCurState == PLAYER_STATE::WALK)
+	if (KEY_HOLD(KEY::RIGHT))
+	{
+		pRigid->SetVelocity(Vec2{ 70.f, GetRigidBody()->GetVelocity().y });
+	}
+
+	if (KEY_HOLD(KEY::LEFT))
+	{
+		pRigid->SetVelocity(Vec2{ -70.f, GetRigidBody()->GetVelocity().y });
+	}
+
+	if (KEY_HOLD(KEY::D))
+	{
+		GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, -200.f });
+	}
+	/*if (m_eCurState == PLAYER_STATE::WALK)
 	{
 		isRunning = false;
 		pRigid->AddForce(Vec2{ 125.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
@@ -336,7 +350,7 @@ void GamePlayer::UpdateMove()
 		{
 			pRigid->AddForce(Vec2{ 150.f * (float)m_iDir, GetRigidBody()->GetVelocity().y });
 		}
-	}
+	}*/
 }
 
 void GamePlayer::UpdateAnimation()

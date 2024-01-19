@@ -51,6 +51,10 @@ public:
 	{
 		return m_fFricCoeff;
 	}
+	GameObject* GetObj()
+	{
+		return m_pOwner;
+	}
 
 	GameRigidBody();
 	~GameRigidBody();

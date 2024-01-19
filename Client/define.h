@@ -26,10 +26,10 @@
 enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
 {
 	DEFAULT,
-	TILE,
 	GROUND,
 	MONSTER,
 	PLAYER,
+	TILE,
 	PROJ_PLAYER,
 	PROJ_MONSTER,
 

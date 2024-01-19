@@ -17,6 +17,8 @@ public:
 	virtual void OnCollision(GameCollider* _pOther);
 	virtual void OnCollisionExit(GameCollider* _pOther);
 
+	void FixObjPos(GameCollider* _pOther);
+
 	GameTile();
 	~GameTile();
 };

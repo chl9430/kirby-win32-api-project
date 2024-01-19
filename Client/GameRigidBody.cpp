@@ -109,7 +109,7 @@ void GameRigidBody::Move()
 	if (0.f != fSpeed)
 	{
 		Vec2 vPos = m_pOwner->GetPos();
-
+		
 		vPos += m_vVelocity * fDT;
 
 		m_pOwner->SetPos(vPos);

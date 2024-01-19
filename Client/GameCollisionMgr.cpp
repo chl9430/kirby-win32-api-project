@@ -98,8 +98,9 @@ bool GameCollisionMgr::IsCollision(GameCollider* _pLeftCol, GameCollider* _pRigh
 	Vec2 vRightPos = _pRightCol->GetFinalPos();
 	Vec2 vRightScale = _pRightCol->GetScale();
 
-	if (abs(vRightPos.x - vLeftPos.x) <= (vLeftScale.x + vRightScale.x) / 2.f
-		&& abs(vRightPos.y - vLeftPos.y) <= (vLeftScale.y + vRightScale.y) / 2.f)
+	// 사각형의 모서리를 없앤 후 고려한 충돌 로직
+	if ((abs(vRightPos.x - vLeftPos.x) <= (vLeftScale.x + vRightScale.x) / 2.f - 3 && abs(vRightPos.y - vLeftPos.y) <= (vLeftScale.y + vRightScale.y) / 2.f - 1)
+		|| (abs(vRightPos.x - vLeftPos.x) <= (vLeftScale.x + vRightScale.x) / 2.f - 1 && abs(vRightPos.y - vLeftPos.y) <= (vLeftScale.y + vRightScale.y) / 2.f - 3))
 	{
 		return true;
 	}

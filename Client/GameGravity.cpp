@@ -27,12 +27,20 @@ void GameGravity::FinalUpdate()
 		{
 			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 400.f });
 		}
+		else
+		{
+			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 0.f });
+		}
 	}
 	else
 	{
 		if (!m_bGround)
 		{
 			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 800.f });
+		}
+		else
+		{
+			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 0.f });
 		}
 	}
 }
