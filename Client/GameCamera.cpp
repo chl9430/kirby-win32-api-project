@@ -29,9 +29,13 @@ void GameCamera::CalDiff()
 {
 	if (m_pTargetObj)
 	{
-		Vec2 vCenterPos = Vec2{ (float)GameCore::GetInst()->GetResolution().x / 2, m_pTargetObj->GetPos().y };
+		Vec2 vCenterPos = Vec2{ (float)GameCore::GetInst()->GetResolution().x / 2, (float)GameCore::GetInst()->GetResolution().y / 2 };
 		m_vDiff = m_pTargetObj->GetPos() - vCenterPos;
 	}
+
+	// 카메라 이동 제한
+	FixDiff(m_vDiff);
+
 	/*m_fAccTime += fDT;
 
 	if (m_fTime <= m_fAccTime)
@@ -76,26 +80,32 @@ void GameCamera::Update()
 		}
 	}
 
-	if (KEY_HOLD(KEY::I))
-	{
-		m_vDiff.y -= 500.f * fDT;
-	}
-
-	if (KEY_HOLD(KEY::K))
-	{
-		m_vDiff.y += 500.f * fDT;
-	}
-
-	if (KEY_HOLD(KEY::J))
-	{
-		m_vDiff.x -= 500.f * fDT;
-	}
-
-	if (KEY_HOLD(KEY::L))
-	{
-		m_vDiff.x += 500.f * fDT;
-	}
-
 	// 화면 중앙좌표와 카메라 LookAt 좌표간의 차이값 계산
 	 CalDiff();
+}
+
+void GameCamera::FixDiff(Vec2& _vDiff)
+{
+	float fLimitX = (float)((30 * TILE_SIZE) - GameCore::GetInst()->GetResolution().x);
+	float fLimitY = (float)((20 * TILE_SIZE) - GameCore::GetInst()->GetResolution().y);
+
+	if (_vDiff.x <= 0.f)
+	{
+		_vDiff.x = 0.f;
+	}
+
+	if (_vDiff.x >= fLimitX)
+	{
+		_vDiff.x = fLimitX;
+	}
+
+	if (_vDiff.y <= 0.f)
+	{
+		_vDiff.y = 0.f;
+	}
+
+	if (_vDiff.y >= fLimitY)
+	{
+		_vDiff.y = fLimitY;
+	}
 }

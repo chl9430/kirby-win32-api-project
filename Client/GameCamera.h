@@ -23,6 +23,8 @@ public:
 	void Init();
 	void Update();
 
+	void FixDiff(Vec2& _vDiff);
+
 	Vec2 GetRenderPos(Vec2 _vObjPos)
 	{
 		return _vObjPos - m_vDiff;

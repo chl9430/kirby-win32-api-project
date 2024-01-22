@@ -18,11 +18,6 @@ GameScene_Stage::~GameScene_Stage()
 {
 }
 
-void GameScene_Stage::Render(HDC _dc)
-{
-	GameScene::Render(_dc);
-}
-
 void GameScene_Stage::Enter()
 {
 	LoadTile(L"tile\\1-1");

@@ -8,6 +8,7 @@
 #include "GameCamera.h"
 #include "GamePathMgr.h"
 #include "GameResMgr.h"
+#include "GameTimeMgr.h"
 
 #include "GameUI.h"
 #include "GamePanelUI.h"
@@ -172,57 +173,37 @@ void GameScene_Tool::Update()
 		AddObject(pTile, GROUP_TYPE::TILE);
 	}
 
-	// 카메라 이동 제한
-	float fLimitX = (float)((30 * TILE_SIZE) - GameCore::GetInst()->GetResolution().x);
-	float fLimitY = (float)((20 * TILE_SIZE) - GameCore::GetInst()->GetResolution().y);
+	// 카메라 이동
+	Vec2 vDiff = GameCamera::GetInst()->GetDiff();
 
-	if (GameCamera::GetInst()->GetDiff().x <= 0.f)
+	if (KEY_HOLD(KEY::I))
 	{
-		GameCamera::GetInst()->SetDiff(Vec2{ 0.f, GameCamera::GetInst()->GetDiff().y });
+		vDiff.y -= 500.f * fDT;
 	}
 
-	if (GameCamera::GetInst()->GetDiff().x >= fLimitX)
+	if (KEY_HOLD(KEY::K))
 	{
-		GameCamera::GetInst()->SetDiff(Vec2{ fLimitX, GameCamera::GetInst()->GetDiff().y });
+		vDiff.y += 500.f * fDT;
 	}
 
-	if (GameCamera::GetInst()->GetDiff().y <= 0.f)
+	if (KEY_HOLD(KEY::J))
 	{
-		GameCamera::GetInst()->SetDiff(Vec2{ GameCamera::GetInst()->GetDiff().x, 0.f });
+		vDiff.x -= 500.f * fDT;
 	}
 
-	if (GameCamera::GetInst()->GetDiff().y >= fLimitY)
+	if (KEY_HOLD(KEY::L))
 	{
-		GameCamera::GetInst()->SetDiff(Vec2{ GameCamera::GetInst()->GetDiff().x, fLimitY });
+		vDiff.x += 500.f * fDT;
 	}
+
+	GameCamera::GetInst()->FixDiff(vDiff);
+
+	GameCamera::GetInst()->SetDiff(vDiff);
 
 	/*if (KEY_TAP(KEY::CTRL))
 	{
 		DeleteGroup(GROUP_TYPE::TILE);
 	}*/
-}
-
-void GameScene_Tool::Render(HDC _dc)
-{
-	SelectGDI gdiPen(_dc, PEN_TYPE::GREEN);
-	SelectGDI gdiBrush(_dc, BRUSH_TYPE::BLACK);
-
-	for (int i = 0; i < 30; i++)
-	{
-		for (int j = 0; j < 20; j++)
-		{
-			Vec2 vPos = GameCamera::GetInst()->GetRenderPos(Vec2{ i * TILE_SIZE, j * TILE_SIZE });
-
-			Rectangle(_dc
-				, (int)vPos.x
-				, (int)vPos.y
-				, (int)(vPos.x + TILE_SIZE)
-				, (int)(vPos.y + TILE_SIZE)
-			);
-		}
-	}
-
-	GameScene::Render(_dc);
 }
 
 void GameScene_Tool::SaveTileData()

@@ -83,7 +83,7 @@ void GamePlayer::Update()
 	UpdateMove();
 	UpdateAnimation();
 
-	if (GetPos().x >= (float)GameCore::GetInst()->GetResolution().x / 2)
+	if (GetPos().y >= (float)GameCore::GetInst()->GetResolution().y / 2 || GetPos().x >= (float)GameCore::GetInst()->GetResolution().x / 2)
 	{
 		GameCamera::GetInst()->SetTargetObj(this);
 	}

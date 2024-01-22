@@ -7,8 +7,6 @@ class GameScene_Stage :
 private:
 
 public:
-	virtual void Render(HDC _dc);
-
 	virtual void Enter();
 	virtual void Exit();
 
