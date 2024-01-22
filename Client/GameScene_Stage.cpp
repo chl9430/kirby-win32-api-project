@@ -30,9 +30,9 @@ void GameScene_Stage::Enter()
 
 	RegisterPlayer(pObj);
 
-	/*GameMonster* pMon = GameMonsterFactory::CreateMonster(MON_TYPE::NORMAL, Vec2{ 300.f, 320.f });
+	GameMonster* pMon = GameMonsterFactory::CreateMonster(MON_TYPE::NORMAL, Vec2{ 300.f, 80.f });
 	pMon->SetName(L"Monster");
-	AddObject(pMon, GROUP_TYPE::MONSTER);*/
+	AddObject(pMon, GROUP_TYPE::MONSTER);
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 

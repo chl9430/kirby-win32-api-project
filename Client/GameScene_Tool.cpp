@@ -246,7 +246,10 @@ void GameScene_Tool::SaveTile(const wstring& _strFilePath)
 
 	assert(pFile);
 
-	// 모든 타일들을 개별적으로 저장할 데이터를 저장하게 함
+	// 제작한 타일들의 벡터를 정렬
+	SortObjectGroup(GROUP_TYPE::TILE);
+
+	// 모든 타일들을 개별적으로 저장할 데터를 저장하게 함
 	const vector<GameObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
 
 	for (size_t i = 0; i < vecTile.size(); ++i)

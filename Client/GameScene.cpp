@@ -111,29 +111,6 @@ void GameScene::Render(HDC _dc)
 	}
 }
 
-//void GameScene::CreateTile(UINT _iXCount, UINT _iYCount)
-//{
-//	DeleteGroup(GROUP_TYPE::TILE);
-//
-//	m_iTileX = _iXCount;
-//	m_iTileY = _iYCount;
-//
-//	GameTexture* pTileTex = GameResMgr::GetInst()->LoadTexture(L"Tile", L"texture\\tile\\Stage1_Tile_Set.bmp");
-//
-//	for (UINT i = 0; i < _iYCount; ++i)
-//	{
-//		for (UINT j = 0; j < _iXCount; ++j)
-//		{
-//			GameTile* pTile = new GameTile();
-//
-//			pTile->SetPos(Vec2{ (float)(j * TILE_SIZE), (float)(i * TILE_SIZE) });
-//			pTile->SetTexture(pTileTex);
-//
-//			AddObject(pTile, GROUP_TYPE::TILE);
-//		}
-//	}
-//}
-
 void GameScene::LoadTile(const wstring& _strRelativePath)
 {
 	wstring strFilePath = GamePathMgr::GetInst()->GetContentPath();
@@ -200,4 +177,28 @@ void GameScene::DeleteAll()
 void GameScene::DeleteGroup(GROUP_TYPE _eTarget)
 {
 	Safe_Delete_Vec<GameObject*>(m_arrObj[(UINT)_eTarget]);
+}
+
+void GameScene::SortObjectGroup(GROUP_TYPE _eType)
+{
+	sort(m_arrObj[(UINT)_eType].begin(), m_arrObj[(UINT)_eType].end()
+		, [](GameObject* _pLeftTile, GameObject* _pRightTile)
+		{
+			Vec2 vLeftTilePos = _pLeftTile->GetPos();
+			Vec2 vRightTilePos = _pRightTile->GetPos();
+
+			if (vLeftTilePos.y < vRightTilePos.y)
+			{
+				return true;
+			}
+			else if (vLeftTilePos.y == vRightTilePos.y)
+			{
+				return vLeftTilePos.x < vRightTilePos.x;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	);
 }

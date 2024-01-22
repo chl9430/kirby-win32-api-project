@@ -18,7 +18,6 @@ public:
 	virtual void FinalUpdate();
 	virtual void Render(HDC _dc);
 
-	/*void CreateTile(UINT _iXCount, UINT _iYCount);*/
 	virtual void LoadTile(const wstring& _strRelativePath);
 	void DeleteAll();
 	void DeleteGroup(GROUP_TYPE _eTarget);
@@ -46,6 +45,7 @@ public:
 	{ 
 		return m_arrObj[(UINT)GROUP_TYPE::UI]; 
 	}
+	void SortObjectGroup(GROUP_TYPE _eType);
 	UINT GetTileX()
 	{
 		return m_iTileX;

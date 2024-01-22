@@ -21,6 +21,7 @@ using namespace std;
 
 #include <math.h>
 #include <assert.h>
+#include <algorithm>
 
 // 라이브러리 참조 CPlayer.cpp 내에 TransparentBlt함수 구현부 참조
 # pragma comment(lib, "Msimg32.lib")
