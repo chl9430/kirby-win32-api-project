@@ -17,6 +17,10 @@ public:
 	{
 		return m_eState;
 	}
+	AI* GetAI()
+	{
+		return m_pAI;
+	}
 
 	GameState(MON_STATE _eState);
 	~GameState();

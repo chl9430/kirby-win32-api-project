@@ -14,6 +14,6 @@ public:
     virtual void MouseLbtnDown();
     virtual void MouseLbtnUp();
 
-    GamePanelUI(bool _bCamAff);
+    GamePanelUI(bool _bCamAff, wstring _strName, Vec2 _vPos, Vec2 _vScale);
     ~GamePanelUI();
 };

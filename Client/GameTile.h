@@ -19,6 +19,6 @@ public:
 
 	void FixObjPos(GameCollider* _pOther);
 
-	GameTile();
-	~GameTile();
+	GameTile(wstring _strName, Vec2 _vPos, Vec2 _vScale);
+	virtual ~GameTile();
 };

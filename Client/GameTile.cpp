@@ -9,7 +9,8 @@
 #include "GameGravity.h"
 #include "GameRigidBody.h"
 
-GameTile::GameTile()
+GameTile::GameTile(wstring _strName, Vec2 _vPos, Vec2 _vScale)
+	: GameObject{ _strName, _vPos, _vScale }
 {
 }
 
@@ -48,7 +49,7 @@ void GameTile::OnCollision(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster")
+	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"LeftSight" || pOtherObj->GetName() == L"RightSight")
 	{
 		FixObjPos(_pOther);
 	}
@@ -58,9 +59,12 @@ void GameTile::OnCollisionExit(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster")
+	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"LeftSight" || pOtherObj->GetName() == L"RightSight")
 	{
-		pOtherObj->GetGravity()->SetGround(false);
+		pOtherObj->SetTouchBottom(false);
+		pOtherObj->SetTouchTop(false);
+		pOtherObj->SetTouchLeft(false);
+		pOtherObj->SetTouchRight(false);
 	}
 }
 
@@ -88,11 +92,12 @@ void GameTile::FixObjPos(GameCollider* _pOther)
 	{
 		if (fDiffY >= 0) // 캐릭터가 위에서 부딫힌 경우
 		{
-			pOtherObj->GetGravity()->SetGround(true);
+			pOtherObj->SetTouchBottom(true);
 			fDir = 1.f;
 		}
 		else // 캐릭터가 아래에서 부딫힌 경우
 		{
+			pOtherObj->SetTouchTop(true);
 			fDir = -1.f;
 		}
 
@@ -107,10 +112,12 @@ void GameTile::FixObjPos(GameCollider* _pOther)
 	{
 		if (fDiffX >= 0) // 캐릭터가 왼쪽에서 부딫힌 경우
 		{
+			pOtherObj->SetTouchRight(true);
 			fDir = 1.f;
 		}
 		else // 캐릭터가 오른쪽에서 부딫힌 경우
 		{
+			pOtherObj->SetTouchLeft(true);
 			fDir = -1.f;
 		}
 

@@ -6,12 +6,11 @@
 #include "GameState.h"
 #include "GameAnimator.h"
 
-GameMonster::GameMonster()
-	: m_tInfo{}
+GameMonster::GameMonster(wstring _strName, Vec2 _vPos, Vec2 _vScale)
+	: GameObject(_strName, _vPos, _vScale)
+	, m_tInfo{}
 	, m_pAI{ nullptr }
 {
-	CreateCollider();
-	GetCollider()->SetScale(Vec2{ 40.f, 40.f });
 }
 
 GameMonster::~GameMonster()

@@ -44,6 +44,6 @@ public:
         return m_eCurState;
     }
 
-    GamePlayer();
+    GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale);
     virtual ~GamePlayer();
 };

@@ -3,12 +3,17 @@
 
 #include "GameResMgr.h"
 
+#include "GameTexture.h"
+
 #include "GameMonster.h"
+#include "GameSight.h"
+
 #include "GameRigidBody.h"
+#include "GameCollider.h"
+#include "GameAnimator.h"
+
 #include "AI.h"
 #include "GameIdleState.h"
-#include "GameTexture.h"
-#include "GameAnimator.h"
 
 GameMonsterFactory::GameMonsterFactory()
 {
@@ -26,18 +31,19 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 	{
 	case MON_TYPE::NORMAL:
 	{
-		pMon = new GameMonster;
-		pMon->SetPos(_vPos);
-		pMon->SetName(L"Monster");
+		pMon = new GameMonster{ L"Monster", _vPos, Vec2{  TILE_SIZE, TILE_SIZE } };
 
 		tMonInfo info = {};
 		info.fAtt = 10.f;
 		info.fAttRange = 50.f;
 		info.fRecogRange = 50.f;
 		info.fHP = 100.f;
-		info.fSpeed = 150.f;
+		info.fSpeed = 25.f;
 
 		pMon->SetMonInfo(info);
+
+		pMon->CreateCollider();
+		pMon->GetCollider()->SetScale(Vec2{ 40.f, 40.f });
 
 		pMon->CreateRigidBody();
 		pMon->GetRigidBody()->SetMass(1.f);

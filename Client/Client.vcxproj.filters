@@ -90,9 +90,6 @@
     <Filter Include="Engine\03. Manager\EventMgr">
       <UniqueIdentifier>{69e9824f-d077-4aa8-b6be-9ebe7804d520}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\06. Object\Ground">
-      <UniqueIdentifier>{f23f80a4-a9a4-467f-8610-4c6e7535de41}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\06. Object\Monster">
       <UniqueIdentifier>{1709a970-0456-43e8-b829-33ab22a8abde}</UniqueIdentifier>
     </Filter>
@@ -125,6 +122,9 @@
     </Filter>
     <Filter Include="Engine\03. Manager\UIMgr">
       <UniqueIdentifier>{ad879dde-fe1e-495e-8f05-3e3dc6d81fe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\06. Object\Sight">
+      <UniqueIdentifier>{3ad68d11-8e11-4774-b281-d2d0233f524a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -219,9 +219,6 @@
     <ClInclude Include="GameEventMgr.h">
       <Filter>Engine\03. Manager\EventMgr</Filter>
     </ClInclude>
-    <ClInclude Include="GameGround.h">
-      <Filter>Engine\06. Object\Ground</Filter>
-    </ClInclude>
     <ClInclude Include="GameMonster.h">
       <Filter>Engine\06. Object\Monster</Filter>
     </ClInclude>
@@ -251,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="GameUIMgr.h">
       <Filter>Engine\03. Manager\UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSight.h">
+      <Filter>Engine\06. Object\Sight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -327,9 +327,6 @@
     <ClCompile Include="GameEventMgr.cpp">
       <Filter>Engine\03. Manager\EventMgr</Filter>
     </ClCompile>
-    <ClCompile Include="GameGround.cpp">
-      <Filter>Engine\06. Object\Ground</Filter>
-    </ClCompile>
     <ClCompile Include="GameMonster.cpp">
       <Filter>Engine\06. Object\Monster</Filter>
     </ClCompile>
@@ -359,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="GameUIMgr.cpp">
       <Filter>Engine\03. Manager\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSight.cpp">
+      <Filter>Engine\06. Object\Sight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

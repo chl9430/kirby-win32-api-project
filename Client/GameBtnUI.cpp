@@ -3,8 +3,8 @@
 
 #include "GameTexture.h"
 
-GameBtnUI::GameBtnUI(bool _bCamAff)
-	: GameUI{ _bCamAff }
+GameBtnUI::GameBtnUI(bool _bCamAff, wstring _strName, Vec2 _vPos, Vec2 _vScale)
+	: GameUI{ _bCamAff, _strName, _vPos, _vScale }
 	, m_pSceneFunc{ nullptr }
 	, m_pSceneInst{ nullptr }
 	, m_pIdleTexture { nullptr }

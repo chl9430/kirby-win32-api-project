@@ -58,7 +58,7 @@ public:
         return m_bCamAffected;
     }
 
-    GameUI(bool _bCamAff);
+    GameUI(bool _bCamAff, wstring _strName, Vec2 _vPos, Vec2 _vScale);
     ~GameUI();
 
     friend class GameUIMgr;

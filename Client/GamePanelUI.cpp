@@ -3,8 +3,8 @@
 
 #include "GameKeyMgr.h"
 
-GamePanelUI::GamePanelUI(bool _bCamAff)
-	: GameUI{ _bCamAff }
+GamePanelUI::GamePanelUI(bool _bCamAff, wstring _strName, Vec2 _vPos, Vec2 _vScale)
+	: GameUI{ _bCamAff, _strName, _vPos, _vScale }
 	, m_vDragStart{}
 {
 }

@@ -32,7 +32,7 @@ enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
 	TILE,
 	PROJ_PLAYER,
 	PROJ_MONSTER,
-
+	SIGHT,
 	UI = 31,
 	END = 32
 };

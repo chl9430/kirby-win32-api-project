@@ -41,18 +41,12 @@ void GameScene_Tool::Enter()
 	UINT iHeight = pTileTex->Height();
 
 	// Panel 생성
-	GameUI* pPanelUI = new GamePanelUI{ false };
-	pPanelUI->SetName(L"ParentUI");
-	pPanelUI->SetScale(Vec2{ (float)iWidth, (float)iHeight + TILE_SIZE * 2 });
-	pPanelUI->SetPos(Vec2{ vResolution.x - pPanelUI->GetScale().x, 0.f });
+	GameUI* pPanelUI = new GamePanelUI{ false, L"ParentUI", Vec2{ vResolution.x - iWidth, 0.f }, Vec2{ (float)iWidth, (float)iHeight + TILE_SIZE * 2 } };
 
 	AddObject(pPanelUI, GROUP_TYPE::UI);
 
 	// Save 버튼 생성
-	GameBtnUI* pSaveBtn = new GameBtnUI{ false };
-	pSaveBtn->SetName(L"SaveButton");
-	pSaveBtn->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
-	pSaveBtn->SetPos(Vec2{ 0, (int)pPanelUI->GetScale().y - TILE_SIZE });
+	GameBtnUI* pSaveBtn = new GameBtnUI{ false, L"SaveButton", Vec2{ 0, (int)pPanelUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
 	pSaveBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"SaveButton", L"texture\\Save_Button.bmp"));
 	pSaveBtn->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"SaveButtonSelected", L"texture\\Save_Button_Selected.bmp"));
 	pSaveBtn->SetMouseUpTexture(GameResMgr::GetInst()->FindTexture(L"SaveButton"));
@@ -61,10 +55,7 @@ void GameScene_Tool::Enter()
 	AddObject(pSaveBtn, GROUP_TYPE::UI);
 
 	// Load 버튼 생성
-	GameBtnUI* pLoadBtn = new GameBtnUI{ false };
-	pLoadBtn->SetName(L"LoadButton");
-	pLoadBtn->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
-	pLoadBtn->SetPos(Vec2{ TILE_SIZE, (int)pPanelUI->GetScale().y - TILE_SIZE });
+	GameBtnUI* pLoadBtn = new GameBtnUI{ false, L"LoadButton", Vec2{ TILE_SIZE, (int)pPanelUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
 	pLoadBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"LoadButton", L"texture\\Load_Button.bmp"));
 	pLoadBtn->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"LoadButtonSelected", L"texture\\Load_Button_Selected.bmp"));
 	pLoadBtn->SetMouseUpTexture(GameResMgr::GetInst()->FindTexture(L"LoadButton"));
@@ -83,10 +74,7 @@ void GameScene_Tool::Enter()
 	{
 		iX = i * TILE_SIZE % (UINT)pPanelUI->GetScale().x;
 
-		GameBtnUI* pTileBtn = new GameBtnUI{ false };
-		pTileBtn->SetName(L"Stage1TileButton" + to_wstring(i));
-		pTileBtn->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
-		pTileBtn->SetPos(Vec2{ (float)iX, (float)iY });
+		GameBtnUI* pTileBtn = new GameBtnUI{ false, L"Stage1TileButton" + to_wstring(i), Vec2{ (float)iX, (float)iY }, Vec2{ TILE_SIZE, TILE_SIZE } };
 		pTileBtn->SetTexture(GameResMgr::GetInst()->FindTexture(L"Stage1TileButton" + to_wstring(i)));
 		pTileBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pTileBtn->GetName());
 
@@ -164,10 +152,7 @@ void GameScene_Tool::Update()
 		}
 
 		// 위치를 기반으로 타일 생성
-		GameTile* pTile = new GameTile();
-
-		pTile->SetPos(Vec2{ (float)(iCol * TILE_SIZE) + TILE_SIZE / 2, (float)(iRow * TILE_SIZE) + TILE_SIZE / 2 });
-		pTile->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+		GameTile* pTile = new GameTile( L"Tile", Vec2{ (float)(iCol * TILE_SIZE) + TILE_SIZE / 2, (float)(iRow * TILE_SIZE) + TILE_SIZE / 2 }, Vec2{ TILE_SIZE, TILE_SIZE });
 		pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(m_strSelectedTileName));
 
 		AddObject(pTile, GROUP_TYPE::TILE);

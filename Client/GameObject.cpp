@@ -3,22 +3,30 @@
 
 #include "GameCamera.h"
 
+#include "GameSight.h"
 #include "GameCollider.h"
 #include "GameRigidBody.h"
 #include "GameAnimator.h"
 #include "GameGravity.h"
 #include "GameTexture.h"
 
-GameObject::GameObject()
-	: m_strName{}
-	, m_vPos{}
-	, m_vScale{}
+GameObject::GameObject(wstring _strName, Vec2 _vPos, Vec2 _vScale)
+	: m_strName{ _strName }
+	, m_vPos{ _vPos }
+	, m_vScale{ _vScale }
 	, m_bAlive{ true }
+	, m_iDir{ 1 }
+	, m_pLeftSight{ nullptr }
+	, m_pRightSight{ nullptr }
 	, m_pCurTexture{ nullptr }
 	, m_pCollider{ nullptr }
 	, m_pRigidBody{ nullptr }
 	, m_pAnimator{ nullptr }
 	, m_pGravity{ nullptr }
+	, m_isTouchBottom{ false }
+	, m_isTouchLeft{ false }
+	, m_isTouchRight{ false }
+	, m_isTouchTop{ false }
 {
 }
 
@@ -96,6 +104,15 @@ void GameObject::ComponentRender(HDC _dc)
 	}
 }
 
+void GameObject::CreateSight()
+{
+	m_pLeftSight = new GameSight{ L"LeftSight", Vec2{ (float)TILE_SIZE * -1, 0.f }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	m_pLeftSight->m_pOwner = this;
+
+	m_pRightSight = new GameSight{ L"RightSight", Vec2{ (float)TILE_SIZE, 0.f }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	m_pRightSight->m_pOwner = this;
+}
+
 void GameObject::CreateCollider()
 {
 	m_pCollider = new GameCollider;
@@ -118,4 +135,15 @@ void GameObject::CreateGravity()
 {
 	m_pGravity = new GameGravity;
 	m_pGravity->m_pOwner = this;
+}
+
+void GameObject::SetTouchBottom(bool _b)
+{
+	m_isTouchBottom = _b;
+
+	if (m_isTouchBottom && m_pRigidBody)
+	{
+		Vec2 vV = GetRigidBody()->GetVelocity();
+		GetRigidBody()->SetVelocity(Vec2{ vV.x, 0.f });
+	}
 }

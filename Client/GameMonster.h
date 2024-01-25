@@ -31,8 +31,12 @@ public:
 	void UpdateAnimation();
 
 	void SetAI(AI* _pAI);
+	tMonInfo& GetMonInfo()
+	{
+		return m_tInfo;
+	}
 
-	GameMonster();
+	GameMonster(wstring _strName, Vec2 _vPos, Vec2 _vScale);
 	~GameMonster();
 
 	friend class GameMonsterFactory;

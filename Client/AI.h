@@ -20,6 +20,10 @@ public:
 	{
 		return m_pCurState;
 	}
+	GameMonster* GetObj()
+	{
+		return m_pOwner;
+	}
 
 	AI();
 	~AI();

@@ -56,6 +56,6 @@ public:
         m_pMouseClickedTex = _pTex;
     }
 
-    GameBtnUI(bool _bCamAff);
+    GameBtnUI(bool _bCamAff, wstring _strName, Vec2 _vPos, Vec2 _vScale);
     ~GameBtnUI();
 };

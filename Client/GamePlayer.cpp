@@ -15,8 +15,9 @@
 #include "GameCollider.h"
 #include "GameGravity.h"
 
-GamePlayer::GamePlayer()
-	: m_eCurState{ PLAYER_STATE::IDLE }
+GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
+	: GameObject{ _strName, _vPos, _vScale }
+	, m_eCurState{ PLAYER_STATE::IDLE }
 	, m_ePrevState{ PLAYER_STATE::WALK }
 	, m_iDir{ 1 }
 	, m_iPrevDir{ 1 }

@@ -7,7 +7,6 @@
 
 GameGravity::GameGravity()
 	: m_pOwner{ nullptr }
-	, m_bGround{ false }
 {
 }
 
@@ -23,7 +22,7 @@ void GameGravity::FinalUpdate()
 		|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_IDLE
 		|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_END)
 	{
-		if (!m_bGround)
+		if (!pPlayer->GetTouchBottom())
 		{
 			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 400.f });
 		}
@@ -34,7 +33,7 @@ void GameGravity::FinalUpdate()
 	}
 	else
 	{
-		if (!m_bGround)
+		if (!pPlayer->GetTouchBottom())
 		{
 			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 800.f });
 		}
@@ -42,16 +41,5 @@ void GameGravity::FinalUpdate()
 		{
 			m_pOwner->GetRigidBody()->SetAccelAlpha(Vec2{ 0.f, 0.f });
 		}
-	}
-}
-
-void GameGravity::SetGround(bool _b)
-{
-	m_bGround = _b;
-
-	if (m_bGround)
-	{
-		Vec2 vV = m_pOwner->GetRigidBody()->GetVelocity();
-		m_pOwner->GetRigidBody()->SetVelocity(Vec2{ vV.x, 0.f });
 	}
 }

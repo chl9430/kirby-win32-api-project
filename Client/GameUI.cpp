@@ -7,8 +7,9 @@
 #include "SelectGDI.h"
 #include "GameTexture.h"
 
-GameUI::GameUI(bool _bCamAff)
-	: m_vecChildUI{}
+GameUI::GameUI(bool _bCamAff, wstring _strName, Vec2 _vPos, Vec2 _vScale)
+	: GameObject{ _strName, _vPos, _vScale }
+	, m_vecChildUI{}
 	, m_pParentUI{ nullptr }
 	, m_vFinalPos{}
 	, m_bCamAffected{ _bCamAff }

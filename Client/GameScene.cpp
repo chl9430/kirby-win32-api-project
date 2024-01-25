@@ -151,10 +151,7 @@ void GameScene::LoadTile(const wstring& _strRelativePath)
 
 			strTileTexKey = str;
 
-			GameTile* pTile = new GameTile();
-
-			pTile->SetPos(vTilePos);
-			pTile->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+			GameTile* pTile = new GameTile{ L"Tile", vTilePos, Vec2{ TILE_SIZE, TILE_SIZE } };
 			pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(strTileTexKey));
 
 			AddObject(pTile, GROUP_TYPE::TILE);

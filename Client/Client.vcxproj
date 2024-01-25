@@ -155,7 +155,6 @@
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameEventMgr.h" />
     <ClInclude Include="GameGravity.h" />
-    <ClInclude Include="GameGround.h" />
     <ClInclude Include="GameIdleState.h" />
     <ClInclude Include="GameKeyMgr.h" />
     <ClInclude Include="GameMonster.h" />
@@ -172,6 +171,7 @@
     <ClInclude Include="GameScene_Stage.h" />
     <ClInclude Include="GameScene_Title.h" />
     <ClInclude Include="GameScene_Tool.h" />
+    <ClInclude Include="GameSight.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameTexture.h" />
     <ClInclude Include="GameTile.h" />
@@ -196,7 +196,6 @@
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameEventMgr.cpp" />
     <ClCompile Include="GameGravity.cpp" />
-    <ClCompile Include="GameGround.cpp" />
     <ClCompile Include="GameIdleState.cpp" />
     <ClCompile Include="GameKeyMgr.cpp" />
     <ClCompile Include="GameMonster.cpp" />
@@ -213,6 +212,7 @@
     <ClCompile Include="GameScene_Stage.cpp" />
     <ClCompile Include="GameScene_Title.cpp" />
     <ClCompile Include="GameScene_Tool.cpp" />
+    <ClCompile Include="GameSight.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameTexture.cpp" />
     <ClCompile Include="GameTile.cpp" />

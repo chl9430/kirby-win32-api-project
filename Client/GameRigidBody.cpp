@@ -62,7 +62,7 @@ void GameRigidBody::FinalUpdate()
 				|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_IDLE
 				|| pPlayer->GetPlayerState() == PLAYER_STATE::FLOAT_END)
 			{
-				if (m_pOwner->GetGravity()->IsOnTheGround())
+				if (m_pOwner->GetTouchBottom())
 				{
 					vFriction = vFricDir * 60.f * fDT;
 				}
