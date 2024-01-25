@@ -49,7 +49,7 @@ void GameTile::OnCollision(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"LeftSight" || pOtherObj->GetName() == L"RightSight")
+	if (pOtherObj->GetName() != L"Tile")
 	{
 		FixObjPos(_pOther);
 	}
@@ -59,7 +59,7 @@ void GameTile::OnCollisionExit(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Player" || pOtherObj->GetName() == L"Monster" || pOtherObj->GetName() == L"LeftSight" || pOtherObj->GetName() == L"RightSight")
+	if (pOtherObj->GetName() != L"Tile")
 	{
 		pOtherObj->SetTouchBottom(false);
 		pOtherObj->SetTouchTop(false);

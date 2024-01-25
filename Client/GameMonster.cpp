@@ -38,9 +38,14 @@ void GameMonster::UpdateAnimation()
 
 	switch (eCurMonState)
 	{
-	case MON_STATE::IDLE:
+	case MON_STATE::WALK:
 	{
 		GetAnimator()->Play(L"WADDLE_DEE_WALK_LEFT", true);
+	}
+	break;
+	case MON_STATE::FLOAT_IDLE:
+	{
+		GetAnimator()->Play(L"SCARFY_IDLE_LEFT", true);
 	}
 	break;
 	}

@@ -154,6 +154,7 @@
     <ClInclude Include="GameCollisionMgr.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameEventMgr.h" />
+    <ClInclude Include="GameFloatIdleState.h" />
     <ClInclude Include="GameGravity.h" />
     <ClInclude Include="GameIdleState.h" />
     <ClInclude Include="GameKeyMgr.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="GameTimeMgr.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="GameUIMgr.h" />
+    <ClInclude Include="GameWalkState.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SelectGDI.h" />
@@ -195,6 +197,7 @@
     <ClCompile Include="GameCollisionMgr.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameEventMgr.cpp" />
+    <ClCompile Include="GameFloatIdleState.cpp" />
     <ClCompile Include="GameGravity.cpp" />
     <ClCompile Include="GameIdleState.cpp" />
     <ClCompile Include="GameKeyMgr.cpp" />
@@ -219,6 +222,7 @@
     <ClCompile Include="GameTimeMgr.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GameUIMgr.cpp" />
+    <ClCompile Include="GameWalkState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
   </ItemGroup>

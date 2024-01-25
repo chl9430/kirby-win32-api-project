@@ -13,7 +13,8 @@
 #include "GameAnimator.h"
 
 #include "AI.h"
-#include "GameIdleState.h"
+#include "GameWalkState.h"
+#include "GameFloatIdleState.h"
 
 GameMonsterFactory::GameMonsterFactory()
 {
@@ -29,9 +30,9 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 
 	switch (_eType)
 	{
-	case MON_TYPE::NORMAL:
+	case MON_TYPE::WADDLE_DEE:
 	{
-		pMon = new GameMonster{ L"Monster", _vPos, Vec2{  TILE_SIZE, TILE_SIZE } };
+		pMon = new GameMonster{ L"Waddle_Dee", _vPos, Vec2{  TILE_SIZE, TILE_SIZE } };
 
 		tMonInfo info = {};
 		info.fAtt = 10.f;
@@ -43,7 +44,7 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		pMon->SetMonInfo(info);
 
 		pMon->CreateCollider();
-		pMon->GetCollider()->SetScale(Vec2{ 40.f, 40.f });
+		pMon->GetCollider()->SetScale(Vec2{ pMon->GetScale().x, pMon->GetScale().y });
 
 		pMon->CreateRigidBody();
 		pMon->GetRigidBody()->SetMass(1.f);
@@ -59,16 +60,46 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_LEFT", pWalkLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.2f, 4);
 
 		AI* pAI = new AI;
-		pAI->AddState(new GameIdleState);
-		// pAI->AddState(new GameTraceState);
-		pAI->SetCurState(MON_STATE::IDLE);
+		pAI->AddState(new GameWalkState);
+		pAI->SetCurState(MON_STATE::WALK);
 
 		pMon->SetAI(pAI);
 	}
 	break;
-	case MON_TYPE::RANGE:
+	case MON_TYPE::SCARFY:
 	{
+		pMon = new GameMonster{ L"Scarfy", _vPos, Vec2{  TILE_SIZE, TILE_SIZE } };
 
+		tMonInfo info = {};
+		info.fAtt = 10.f;
+		info.fAttRange = 50.f;
+		info.fRecogRange = 50.f;
+		info.fHP = 100.f;
+		info.fSpeed = 25.f;
+
+		pMon->SetMonInfo(info);
+
+		pMon->CreateCollider();
+		pMon->GetCollider()->SetScale(Vec2{ pMon->GetScale().x, pMon->GetScale().y });
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(1.f);
+
+		GameTexture* pIdleRightTex = GameResMgr::GetInst()->LoadTexture(L"ScarfyIdleRight", L"texture\\Scarfy_Idle_Right.bmp");
+		GameTexture* pIdleLeftTex = GameResMgr::GetInst()->LoadTexture(L"ScarfyIdleLeft", L"texture\\Scarfy_Idle_Left.bmp");
+
+		pMon->CreateAnimator();
+
+		pMon->GetAnimator()->CreateAnimation(L"SCARFY_IDLE_RIGHT", pIdleRightTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.15f, 4);
+		pMon->GetAnimator()->CreateAnimation(L"SCARFY_IDLE_LEFT", pIdleLeftTex, Vec2{ 0.f, 0.f }, Vec2{ 20.f, 19.f }, Vec2{ 10.f, 0.f }, 0.2f, 4);
+
+		 AI* pAI = new AI;
+		 pAI->AddState(new GameFloatIdleState{ pMon->GetPos() });
+		 pAI->SetCurState(MON_STATE::FLOAT_IDLE);
+		 GameFloatIdleState* pFloatIdleState = (GameFloatIdleState*)pAI->GetCurState();
+		 pFloatIdleState->SetFloatingRange(5);
+
+		 pMon->SetAI(pAI);
 	}
 	break;
 	}

@@ -105,9 +105,6 @@
     <Filter Include="Engine\08. Module\AI\State">
       <UniqueIdentifier>{207d2d76-6631-45c4-9b8a-fa4574a736c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\08. Module\AI\State\Idle">
-      <UniqueIdentifier>{1851b1db-50f6-49d2-b5bc-9f71ee8d7814}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\06. Object\Tile">
       <UniqueIdentifier>{fb106c6d-75c0-49d3-bd15-f17d9d904809}</UniqueIdentifier>
     </Filter>
@@ -125,6 +122,12 @@
     </Filter>
     <Filter Include="Engine\06. Object\Sight">
       <UniqueIdentifier>{3ad68d11-8e11-4774-b281-d2d0233f524a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08. Module\AI\State\Float">
+      <UniqueIdentifier>{63724f6a-26eb-437e-8fc4-81a273adee31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08. Module\AI\State\Ground">
+      <UniqueIdentifier>{1851b1db-50f6-49d2-b5bc-9f71ee8d7814}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -232,7 +235,7 @@
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClInclude>
     <ClInclude Include="GameIdleState.h">
-      <Filter>Engine\08. Module\AI\State\Idle</Filter>
+      <Filter>Engine\08. Module\AI\State\Ground</Filter>
     </ClInclude>
     <ClInclude Include="GameTile.h">
       <Filter>Engine\06. Object\Tile</Filter>
@@ -251,6 +254,12 @@
     </ClInclude>
     <ClInclude Include="GameSight.h">
       <Filter>Engine\06. Object\Sight</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFloatIdleState.h">
+      <Filter>Engine\08. Module\AI\State\Float</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWalkState.h">
+      <Filter>Engine\08. Module\AI\State\Ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -340,7 +349,7 @@
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClCompile>
     <ClCompile Include="GameIdleState.cpp">
-      <Filter>Engine\08. Module\AI\State\Idle</Filter>
+      <Filter>Engine\08. Module\AI\State\Ground</Filter>
     </ClCompile>
     <ClCompile Include="GameTile.cpp">
       <Filter>Engine\06. Object\Tile</Filter>
@@ -359,6 +368,12 @@
     </ClCompile>
     <ClCompile Include="GameSight.cpp">
       <Filter>Engine\06. Object\Sight</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFloatIdleState.cpp">
+      <Filter>Engine\08. Module\AI\State\Float</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWalkState.cpp">
+      <Filter>Engine\08. Module\AI\State\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

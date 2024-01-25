@@ -28,8 +28,11 @@ void GameScene_Stage::Enter()
 
 	RegisterPlayer(pObj);
 
-	GameMonster* pMon = GameMonsterFactory::CreateMonster(MON_TYPE::NORMAL, Vec2{ 500.f, 80.f });
-	AddObject(pMon, GROUP_TYPE::MONSTER);
+	GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 500.f, 80.f });
+	AddObject(pWaddleDee, GROUP_TYPE::MONSTER);
+
+	GameMonster* pScarfy = GameMonsterFactory::CreateMonster(MON_TYPE::SCARFY, Vec2{ 140.f, 100.f });
+	AddObject(pScarfy, GROUP_TYPE::MONSTER);
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 

@@ -73,6 +73,8 @@ enum class EVENT_TYPE
 enum class MON_STATE
 {
 	IDLE,
+	WALK,
+	FLOAT_IDLE,
 	PATROL,
 	TRACE,
 	ATT,

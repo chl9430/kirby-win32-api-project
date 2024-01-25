@@ -4,8 +4,8 @@ class GameMonster;
 
 enum class MON_TYPE
 {
-	NORMAL,
-	RANGE,
+	WADDLE_DEE,
+	SCARFY,
 };
 
 class GameMonsterFactory
