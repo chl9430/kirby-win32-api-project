@@ -28,7 +28,7 @@ void GameAnimator::Play(const wstring& _strName, bool _bRepeat)
 	m_bRepeat = _bRepeat;
 }
 
-void GameAnimator::CreateAnimation(const wstring& _strName, GameTexture* _pTex, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vStep, float _fDuration, UINT _iFrameCount)
+void GameAnimator::CreateAnimation(const wstring& _strName, GameTexture* _pTex, float _fDuration)
 {
 	GameAnimation* pAnim = FindAnimation(_strName);
 
@@ -37,7 +37,7 @@ void GameAnimator::CreateAnimation(const wstring& _strName, GameTexture* _pTex, 
 	pAnim = new GameAnimation;
 	pAnim->SetName(_strName);
 	pAnim->m_pAnimator = this;
-	pAnim->Create(_strName, _pTex, _vLT, _vSliceSize, _vStep, _fDuration, _iFrameCount);
+	pAnim->Create(_strName, _pTex, _fDuration);
 
 	m_mapAnim.insert(make_pair(_strName, pAnim));
 }

@@ -34,6 +34,9 @@ void GameScene_Stage::Enter()
 	GameMonster* pScarfy = GameMonsterFactory::CreateMonster(MON_TYPE::SCARFY, Vec2{ 140.f, 100.f });
 	AddObject(pScarfy, GROUP_TYPE::MONSTER);
 
+	GameMonster* pPengy = GameMonsterFactory::CreateMonster(MON_TYPE::PENGY, Vec2{ 740.f, 80.f });
+	AddObject(pPengy, GROUP_TYPE::MONSTER);
+
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 
 	Start();

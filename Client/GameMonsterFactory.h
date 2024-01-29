@@ -6,6 +6,7 @@ enum class MON_TYPE
 {
 	WADDLE_DEE,
 	SCARFY,
+	PENGY
 };
 
 class GameMonsterFactory

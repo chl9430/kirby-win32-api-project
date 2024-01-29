@@ -30,7 +30,7 @@ private:
 public:
 	void Save(const wstring& _strRelativePath);
 	void Load(const wstring& _strRelativePath);
-	void Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vStep, float _fDuration, UINT _iFrameCount);
+	void Create(const wstring& _strName, GameTexture* _pTex, float _fDuration);
 
 	void Update();
 	void Render(HDC _dc);

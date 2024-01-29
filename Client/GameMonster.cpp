@@ -48,6 +48,11 @@ void GameMonster::UpdateAnimation()
 		GetAnimator()->Play(L"SCARFY_IDLE_LEFT", true);
 	}
 	break;
+	case MON_STATE::IDLE:
+	{
+		GetAnimator()->Play(L"PENGY_IDLE_LEFT", true);
+	}
+	break;
 	}
 }
 

@@ -169,7 +169,7 @@ void GameAnimation::Load(const wstring& _strRelativePath)
 	//fclose(pFile);
 }
 
-void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vStep, float _fDuration, UINT _iFrameCount)
+void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, float _fDuration)
 {
 	m_pTex = _pTex;
 
@@ -482,6 +482,44 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		return;
 	}
 
+	if (_strName == L"INHALE_RIGHT" || _strName == L"INHALE_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 2.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 46.f, 42.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 52.f, 0.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 44.f, 44.f };
+		m_vecFrm.push_back(frm02);
+
+		return;
+	}
+
+	if (_strName == L"POWER_INHALE_RIGHT" || _strName == L"POWER_INHALE_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 2.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 46.f, 42.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 50.f, 0.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 44.f, 44.f };
+		m_vecFrm.push_back(frm02);
+
+		return;
+	}
+
 	if (_strName == L"WADDLE_DEE_WALK_RIGHT" || _strName == L"WADDLE_DEE_WALK_LEFT")
 	{
 		tAnimFrm frm01 = {};
@@ -565,6 +603,18 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, Vec2 _vL
 		frm03.vOffset = Vec2{ 0.f, 0.f };
 		frm03.vSlice = Vec2{ 36.f, 36.f };
 		m_vecFrm.push_back(frm03);
+
+		return;
+	}
+
+	if (_strName == L"PENGY_IDLE_RIGHT" || _strName == L"PENGY_IDLE_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 40.f, 40.f };
+		m_vecFrm.push_back(frm01);
 
 		return;
 	}

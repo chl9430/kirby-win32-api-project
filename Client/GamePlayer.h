@@ -8,8 +8,8 @@ enum class PLAYER_STATE
     WALK,
     RUN_READY,
     RUN,
-    DOWN,
     INHALE,
+    POWER_INHALE,
     JUMP,
     FLOAT_START,
     FLOAT_IDLE,
@@ -26,18 +26,21 @@ private:
     PLAYER_STATE m_ePrevState;
     int m_iDir; // 플레이어의 방향정보
     int m_iPrevDir;
-    bool isRunning;
+    float m_fInhaleTime;
+    float m_fPowerInhaleTime;
+    float m_fJumpPower;
+    float m_fFloatJumpPower;
+    float m_fWalkSpeed;
+    float m_fFloatMoveSpeed;
 
 public:
     virtual void Update();
     virtual void Render(HDC _dc);
 
-    virtual void OnCollisionEnter(GameCollider* _pOther);
-
+    void UpdateDir();
     void UpdateState();
     void UpdateMove();
     void UpdateAnimation();
-    void UpdateGravity();
 
     PLAYER_STATE GetPlayerState()
     {
