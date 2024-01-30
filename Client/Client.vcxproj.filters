@@ -120,14 +120,14 @@
     <Filter Include="Engine\03. Manager\UIMgr">
       <UniqueIdentifier>{ad879dde-fe1e-495e-8f05-3e3dc6d81fe6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\06. Object\Sight">
-      <UniqueIdentifier>{3ad68d11-8e11-4774-b281-d2d0233f524a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\08. Module\AI\State\Float">
       <UniqueIdentifier>{63724f6a-26eb-437e-8fc4-81a273adee31}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\08. Module\AI\State\Ground">
       <UniqueIdentifier>{1851b1db-50f6-49d2-b5bc-9f71ee8d7814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\06. Object\Attack">
+      <UniqueIdentifier>{3ad68d11-8e11-4774-b281-d2d0233f524a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -253,13 +253,19 @@
       <Filter>Engine\03. Manager\UIMgr</Filter>
     </ClInclude>
     <ClInclude Include="GameSight.h">
-      <Filter>Engine\06. Object\Sight</Filter>
+      <Filter>Engine\06. Object\Attack</Filter>
     </ClInclude>
     <ClInclude Include="GameFloatIdleState.h">
       <Filter>Engine\08. Module\AI\State\Float</Filter>
     </ClInclude>
     <ClInclude Include="GameWalkState.h">
       <Filter>Engine\08. Module\AI\State\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAttack.h">
+      <Filter>Engine\06. Object\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDrawnState.h">
+      <Filter>Engine\08. Module\AI\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -367,13 +373,19 @@
       <Filter>Engine\03. Manager\UIMgr</Filter>
     </ClCompile>
     <ClCompile Include="GameSight.cpp">
-      <Filter>Engine\06. Object\Sight</Filter>
+      <Filter>Engine\06. Object\Attack</Filter>
     </ClCompile>
     <ClCompile Include="GameFloatIdleState.cpp">
       <Filter>Engine\08. Module\AI\State\Float</Filter>
     </ClCompile>
     <ClCompile Include="GameWalkState.cpp">
       <Filter>Engine\08. Module\AI\State\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="GameAttack.cpp">
+      <Filter>Engine\06. Object\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDrawnState.cpp">
+      <Filter>Engine\08. Module\AI\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

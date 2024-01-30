@@ -16,9 +16,9 @@ GameObject::GameObject(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_vScale{ _vScale }
 	, m_bAlive{ true }
 	, m_iDir{ 1 }
-	, m_pLeftSight{ nullptr }
-	, m_pRightSight{ nullptr }
+	, m_iPrevDir{ 1 }
 	, m_pCurTexture{ nullptr }
+	, m_pObjScene{ nullptr }
 	, m_pCollider{ nullptr }
 	, m_pRigidBody{ nullptr }
 	, m_pAnimator{ nullptr }
@@ -102,15 +102,6 @@ void GameObject::ComponentRender(HDC _dc)
 	{
 		m_pCollider->Render(_dc);
 	}
-}
-
-void GameObject::CreateSight()
-{
-	m_pLeftSight = new GameSight{ L"LeftSight", Vec2{ (float)TILE_SIZE * -1, 0.f }, Vec2{ TILE_SIZE, TILE_SIZE } };
-	m_pLeftSight->m_pOwner = this;
-
-	m_pRightSight = new GameSight{ L"RightSight", Vec2{ (float)TILE_SIZE, 0.f }, Vec2{ TILE_SIZE, TILE_SIZE } };
-	m_pRightSight->m_pOwner = this;
 }
 
 void GameObject::CreateCollider()

@@ -7,11 +7,17 @@
 #include "GameResMgr.h"
 #include "GameTimeMgr.h"
 #include "GameCamera.h"
+#include "GameCollisionMgr.h"
 
 #include "GameTexture.h"
-#include "GameRigidBody.h"
+
+#include "GameScene.h"
+
+#include "GameAttack.h"
+
 #include "GameAnimator.h"
 #include "GameAnimation.h"
+#include "GameRigidBody.h"
 #include "GameCollider.h"
 #include "GameGravity.h"
 
@@ -21,10 +27,10 @@
 
 GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	: GameObject{ _strName, _vPos, _vScale }
+	, m_pInhale{ nullptr }
+	, m_pPowerInhale{ nullptr }
 	, m_eCurState{ PLAYER_STATE::IDLE }
 	, m_ePrevState{ PLAYER_STATE::WALK }
-	, m_iDir{ 1 }
-	, m_iPrevDir{ 1 }
 	, m_fInhaleTime{ 0.f }
 	, m_fPowerInhaleTime{ 0.f }
 	, m_fJumpPower{ -300.f }
@@ -115,7 +121,7 @@ void GamePlayer::Update()
 	}
 
 	m_ePrevState = m_eCurState;
-	m_iPrevDir = m_iDir;
+	SetPrevDir(GetObjDir());
 }
 
 void GamePlayer::Render(HDC _dc)
@@ -123,36 +129,57 @@ void GamePlayer::Render(HDC _dc)
 	ComponentRender(_dc);
 }
 
+void GamePlayer::CreateAttack()
+{
+	m_pInhale = new GameAttack{ L"Inhale", Vec2{ GetPos().x + TILE_SIZE * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	m_pInhale->CreateCollider();
+	m_pInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
+	m_pInhale->GetCollider()->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+	m_pInhale->m_pOwner = this;
+	m_pInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (m_pInhale->GetScale().x / 2.f), 0.f };
+	GetObjScene()->AddObject(m_pInhale, GROUP_TYPE::ATTACK);
+
+	m_pPowerInhale = new GameAttack{ L"Power_Inhale", Vec2{ GetPos().x + TILE_SIZE * 2 * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE * 2, TILE_SIZE * 2 } };
+	m_pPowerInhale->CreateCollider();
+	m_pPowerInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
+	m_pPowerInhale->GetCollider()->SetScale(Vec2{ TILE_SIZE * 2, TILE_SIZE * 2 });
+	m_pPowerInhale->m_pOwner = this;
+	m_pPowerInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (m_pPowerInhale->GetScale().x / 2.f), 0.f };
+	GetObjScene()->AddObject(m_pPowerInhale, GROUP_TYPE::ATTACK);
+
+	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::ATTACK, GROUP_TYPE::MONSTER);
+}
+
 void GamePlayer::UpdateDir()
 {
 	if (KEY_TAP(KEY::LEFT))
 	{
-		m_iDir = -1;
+		SetObjDir(-1);
 	}
 
 	if (KEY_TAP(KEY::RIGHT))
 	{
-		m_iDir = 1;
+		SetObjDir(1);
 	}
 
 	if (KEY_TAP(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
 	{
-		m_iDir = -1;
+		SetObjDir(-1);
 	}
 
 	if (KEY_TAP(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
 	{
-		m_iDir = 1;
+		SetObjDir(1);
 	}
 
 	if (KEY_AWAY(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
 	{
-		m_iDir = 1;
+		SetObjDir(1);
 	}
 
 	if (KEY_AWAY(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
 	{
-		m_iDir = -1;
+		SetObjDir(-1);
 	}
 }
 
@@ -415,14 +442,14 @@ void GamePlayer::UpdateMove()
 
 	if (m_eCurState == PLAYER_STATE::WALK)
 	{
-		pRigid->AddForce(Vec2{ m_fWalkSpeed * (float)m_iDir, 0.f });
+		pRigid->AddForce(Vec2{ m_fWalkSpeed * (float)GetObjDir(), 0.f});
 	}
 
 	if (m_eCurState == PLAYER_STATE::JUMP || m_eCurState == PLAYER_STATE::DROP)
 	{
 		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 		{
-			pRigid->AddForce(Vec2{ m_fWalkSpeed * (float)m_iDir, 0.f });
+			pRigid->AddForce(Vec2{ m_fWalkSpeed * (float)GetObjDir(), 0.f });
 		}
 	}
 
@@ -430,21 +457,21 @@ void GamePlayer::UpdateMove()
 	{
 		if (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 		{
-			pRigid->AddForce(Vec2{ m_fFloatMoveSpeed * (float)m_iDir, 0.f });
+			pRigid->AddForce(Vec2{ m_fFloatMoveSpeed * (float)GetObjDir(), 0.f });
 		}
 	}
 }
 
 void GamePlayer::UpdateAnimation()
 {
-	if (m_ePrevState == m_eCurState && m_iPrevDir == m_iDir)
+	if (m_ePrevState == m_eCurState && GetPrevDir() == GetObjDir())
 		return;
 
 	switch (m_eCurState)
 	{
 	case PLAYER_STATE::IDLE:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"IDLE_LEFT", true);
 		else
 			GetAnimator()->Play(L"IDLE_RIGHT", true);
@@ -452,7 +479,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::WALK_READY:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"WALK_LEFT", true);
 		else
 			GetAnimator()->Play(L"WALK_RIGHT", true);
@@ -460,7 +487,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::WALK:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"WALK_LEFT", true);
 		else
 			GetAnimator()->Play(L"WALK_RIGHT", true);
@@ -468,7 +495,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::RUN_READY:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"WALK_LEFT", true);
 		else
 			GetAnimator()->Play(L"WALK_RIGHT", true);
@@ -476,7 +503,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::RUN:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"RUN_LEFT", true);
 		else
 			GetAnimator()->Play(L"RUN_RIGHT", true);
@@ -484,7 +511,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::JUMP:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"JUMP_LEFT", true);
 		else
 			GetAnimator()->Play(L"JUMP_RIGHT", true);
@@ -492,7 +519,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::FLOAT_START:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"FLOAT_START_LEFT", false);
 		else
 			GetAnimator()->Play(L"FLOAT_START_RIGHT", false);
@@ -500,7 +527,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::FLOAT_IDLE:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"FLOAT_IDLE_LEFT", true);
 		else
 			GetAnimator()->Play(L"FLOAT_IDLE_RIGHT", true);
@@ -508,7 +535,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::FLOAT_END:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"FLOAT_END_LEFT", false);
 		else
 			GetAnimator()->Play(L"FLOAT_END_RIGHT", false);
@@ -516,7 +543,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::DROP:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"DROP_LEFT", false);
 		else
 			GetAnimator()->Play(L"DROP_RIGHT", false);
@@ -524,7 +551,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::INHALE:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"INHALE_LEFT", true);
 		else
 			GetAnimator()->Play(L"INHALE_RIGHT", true);
@@ -532,7 +559,7 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::POWER_INHALE:
 	{
-		if (m_iDir == -1)
+		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"POWER_INHALE_LEFT", true);
 		else
 			GetAnimator()->Play(L"POWER_INHALE_RIGHT", true);

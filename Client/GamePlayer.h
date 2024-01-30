@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+class GameAttack;
+
 enum class PLAYER_STATE
 {
     IDLE,
@@ -22,10 +24,11 @@ class GamePlayer :
     public GameObject
 {
 private:
+    GameAttack* m_pInhale;
+    GameAttack* m_pPowerInhale;
+
     PLAYER_STATE m_eCurState;
     PLAYER_STATE m_ePrevState;
-    int m_iDir; // 플레이어의 방향정보
-    int m_iPrevDir;
     float m_fInhaleTime;
     float m_fPowerInhaleTime;
     float m_fJumpPower;
@@ -36,6 +39,8 @@ private:
 public:
     virtual void Update();
     virtual void Render(HDC _dc);
+
+    void CreateAttack();
 
     void UpdateDir();
     void UpdateState();

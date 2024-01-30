@@ -4,6 +4,7 @@
 #include "GameCore.h"
 
 #include "GameCollisionMgr.h"
+#include "GameResMgr.h"
 
 #include "GamePlayer.h"
 #include "GameMonster.h"
@@ -11,6 +12,7 @@
 #include "GameCollider.h"
 
 #include "GameMonsterFactory.h"
+
 GameScene_Stage::GameScene_Stage()
 {
 }
@@ -23,19 +25,21 @@ void GameScene_Stage::Enter()
 {
 	LoadTile(L"tile\\1-1");
 
-	GameObject* pObj = new GamePlayer{ L"Player", Vec2{ 600.f, 100.f }, Vec2{ TILE_SIZE, TILE_SIZE } }; // 부모 클래스에서 삭제 담당
+	GamePlayer* pObj = new GamePlayer{ L"Player", Vec2{ 600.f, 100.f }, Vec2{ TILE_SIZE, TILE_SIZE } }; // 부모 클래스에서 삭제 담당
+	pObj->SetObjScene(this);
+	pObj->CreateAttack();
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
 	RegisterPlayer(pObj);
 
-	GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 500.f, 80.f });
+	GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 140.f, 80.f });
 	AddObject(pWaddleDee, GROUP_TYPE::MONSTER);
 
-	GameMonster* pScarfy = GameMonsterFactory::CreateMonster(MON_TYPE::SCARFY, Vec2{ 140.f, 100.f });
+	/*GameMonster* pScarfy = GameMonsterFactory::CreateMonster(MON_TYPE::SCARFY, Vec2{ 140.f, 100.f });
 	AddObject(pScarfy, GROUP_TYPE::MONSTER);
 
 	GameMonster* pPengy = GameMonsterFactory::CreateMonster(MON_TYPE::PENGY, Vec2{ 740.f, 80.f });
-	AddObject(pPengy, GROUP_TYPE::MONSTER);
+	AddObject(pPengy, GROUP_TYPE::MONSTER);*/
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 

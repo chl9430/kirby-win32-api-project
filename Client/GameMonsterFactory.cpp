@@ -14,6 +14,7 @@
 
 #include "AI.h"
 #include "GameWalkState.h"
+#include "GameDrawnState.h"
 #include "GameFloatIdleState.h"
 #include "GameIdleState.h"
 
@@ -54,14 +55,22 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 
 		GameTexture* pWalkRightTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeWalkRight", L"texture\\Waddle_Dee_Walk_Right.bmp");
 		GameTexture* pWalkLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeWalkLeft", L"texture\\Waddle_Dee_Walk_Left.bmp");
+		GameTexture* pDrawnRightTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeDrawnRight", L"texture\\Waddle_Dee_Drawn_Right.bmp");
+		GameTexture* pDrawnLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeDrawnLeft", L"texture\\Waddle_Dee_Drawn_Left.bmp");
 
 		pMon->CreateAnimator();
 
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_RIGHT", pWalkRightTex, 0.15f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_LEFT", pWalkLeftTex, 0.2f);
+		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_RIGHT", pDrawnRightTex, 0.15f);
+		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_LEFT", pDrawnLeftTex, 0.2f);
+
+		pMon->SetWalkAnimationKey(L"WADDLE_DEE_WALK_RIGHT", L"WADDLE_DEE_WALK_LEFT");
+		pMon->SetDrawnAnimationKey(L"WADDLE_DEE_DRAWN_RIGHT", L"WADDLE_DEE_DRAWN_LEFT");
 
 		AI* pAI = new AI;
 		pAI->AddState(new GameWalkState);
+		pAI->AddState(new GameDrawnState);
 		pAI->SetCurState(MON_STATE::WALK);
 
 		pMon->SetAI(pAI);

@@ -1,10 +1,12 @@
 #pragma once
 
-class GameSight;
 class GameTexture;
+
+class GameScene;
+
+class GameAnimator;
 class GameCollider;
 class GameRigidBody;
-class GameAnimator;
 class GameGravity;
 
 class GameObject
@@ -15,19 +17,20 @@ private:
 	Vec2 m_vScale;
 	bool m_bAlive;
 	int m_iDir; // 방향정보
-
-	GameSight* m_pLeftSight;
-	GameSight* m_pRightSight;
-	GameTexture* m_pCurTexture;
-	GameCollider* m_pCollider;
-	GameRigidBody* m_pRigidBody;
-	GameAnimator* m_pAnimator;
-	GameGravity* m_pGravity;
-
+	int m_iPrevDir;
 	bool m_isTouchBottom;
 	bool m_isTouchLeft;
 	bool m_isTouchRight;
 	bool m_isTouchTop;
+
+	GameTexture* m_pCurTexture;
+
+	GameScene* m_pObjScene;
+
+	GameAnimator* m_pAnimator;
+	GameCollider* m_pCollider;
+	GameRigidBody* m_pRigidBody;
+	GameGravity* m_pGravity;
 
 	void SetDead()
 	{
@@ -46,7 +49,6 @@ public:
 
 	void ComponentRender(HDC _dc);
 
-	void CreateSight();
 	void CreateCollider();
 	void CreateRigidBody();
 	void CreateAnimator();
@@ -80,6 +82,14 @@ public:
 	{
 		return m_iDir;
 	}
+	void SetPrevDir(int _iDir)
+	{
+		m_iPrevDir = _iDir;
+	}
+	int GetPrevDir()
+	{
+		return m_iPrevDir;
+	}
 	Vec2 GetPos()
 	{
 		return m_vPos;
@@ -87,38 +97,6 @@ public:
 	void SetPos(Vec2 _vPos)
 	{
 		m_vPos = _vPos;
-	}
-	GameSight* GetObjLeftSight()
-	{
-		return m_pLeftSight;
-	}
-	GameSight* GetObjRightSight()
-	{
-		return m_pRightSight;
-	}
-	GameTexture* GetCurrentTexture()
-	{
-		return m_pCurTexture;
-	}
-	void SetCurrentTexture(GameTexture* _pTexture)
-	{
-		m_pCurTexture = _pTexture;
-	}
-	GameRigidBody* GetRigidBody()
-	{
-		return m_pRigidBody;
-	}
-	GameAnimator* GetAnimator()
-	{
-		return m_pAnimator;
-	}
-	GameCollider* GetCollider()
-	{
-		return m_pCollider;
-	}
-	GameGravity* GetGravity()
-	{
-		return m_pGravity;
 	}
 	void SetTouchBottom(bool _b);
 	bool GetTouchBottom()
@@ -148,6 +126,41 @@ public:
 	bool GetTouchLeft()
 	{
 		return m_isTouchLeft;
+	}
+
+	GameTexture* GetCurrentTexture()
+	{
+		return m_pCurTexture;
+	}
+	void SetCurrentTexture(GameTexture* _pTexture)
+	{
+		m_pCurTexture = _pTexture;
+	}
+
+	void SetObjScene(GameScene* _pScene)
+	{
+		m_pObjScene = _pScene;
+	}
+	GameScene* GetObjScene()
+	{
+		return m_pObjScene;
+	}
+
+	GameAnimator* GetAnimator()
+	{
+		return m_pAnimator;
+	}
+	GameRigidBody* GetRigidBody()
+	{
+		return m_pRigidBody;
+	}
+	GameCollider* GetCollider()
+	{
+		return m_pCollider;
+	}
+	GameGravity* GetGravity()
+	{
+		return m_pGravity;
 	}
 
 	GameObject(wstring _strName, Vec2 _vPos, Vec2 _vScale);

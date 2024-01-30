@@ -148,11 +148,13 @@
     <ClInclude Include="func.h" />
     <ClInclude Include="GameAnimation.h" />
     <ClInclude Include="GameAnimator.h" />
+    <ClInclude Include="GameAttack.h" />
     <ClInclude Include="GameBtnUI.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameCollider.h" />
     <ClInclude Include="GameCollisionMgr.h" />
     <ClInclude Include="GameCore.h" />
+    <ClInclude Include="GameDrawnState.h" />
     <ClInclude Include="GameEventMgr.h" />
     <ClInclude Include="GameFloatIdleState.h" />
     <ClInclude Include="GameGravity.h" />
@@ -191,11 +193,13 @@
     <ClCompile Include="func.cpp" />
     <ClCompile Include="GameAnimation.cpp" />
     <ClCompile Include="GameAnimator.cpp" />
+    <ClCompile Include="GameAttack.cpp" />
     <ClCompile Include="GameBtnUI.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameCollider.cpp" />
     <ClCompile Include="GameCollisionMgr.cpp" />
     <ClCompile Include="GameCore.cpp" />
+    <ClCompile Include="GameDrawnState.cpp" />
     <ClCompile Include="GameEventMgr.cpp" />
     <ClCompile Include="GameFloatIdleState.cpp" />
     <ClCompile Include="GameGravity.cpp" />
