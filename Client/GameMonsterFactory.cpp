@@ -17,6 +17,7 @@
 #include "GameDrawnState.h"
 #include "GameFloatIdleState.h"
 #include "GameIdleState.h"
+#include "GameEatenState.h"
 
 GameMonsterFactory::GameMonsterFactory()
 {
@@ -67,6 +68,7 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		pMon->SetDrawnAnimationKey(L"WADDLE_DEE_DRAWN_RIGHT", L"WADDLE_DEE_DRAWN_LEFT");
 
 		AI* pAI = new AI;
+		pAI->AddState(new GameEatenState);
 		pAI->AddState(new GameWalkState);
 		pAI->AddState(new GameDrawnState);
 		pAI->SetCurState(MON_STATE::WALK);

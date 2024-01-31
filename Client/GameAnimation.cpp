@@ -520,6 +520,218 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, float _f
 		return;
 	}
 
+	if (_strName == L"KEEP_START_RIGHT" || _strName == L"KEEP_START_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 46.f, 44.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 50.f, 0.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 50.f, 44.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 104.f, 0.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 50.f, 44.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 158.f, 0.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 50.f, 44.f };
+		m_vecFrm.push_back(frm04);
+
+		return;
+	}
+
+	if (_strName == L"KEEP_IDLE_RIGHT" || _strName == L"KEEP_IDLE_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 50.f, 44.f };
+		m_vecFrm.push_back(frm01);
+
+		return;
+	}
+
+	if (_strName == L"KEEP_WALK_RIGHT" || _strName == L"KEEP_WALK_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 48.f, 48.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 52.f, 2.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 48.f, 46.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 104.f, 2.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 46.f, 46.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 154.f, 4.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 46.f, 44.f };
+		m_vecFrm.push_back(frm04);
+
+		tAnimFrm frm05 = {};
+		frm05.fDuration = _fDuration;
+		frm05.vLT = Vec2{ 204.f, 6.f };
+		frm05.vOffset = Vec2{ 0.f, 0.f };
+		frm05.vSlice = Vec2{ 48.f, 42.f };
+		m_vecFrm.push_back(frm05);
+
+		tAnimFrm frm06 = {};
+		frm06.fDuration = _fDuration;
+		frm06.vLT = Vec2{ 256.f, 2.f };
+		frm06.vOffset = Vec2{ 0.f, 0.f };
+		frm06.vSlice = Vec2{ 48.f, 46.f };
+		m_vecFrm.push_back(frm06);
+
+		tAnimFrm frm07 = {};
+		frm07.fDuration = _fDuration;
+		frm07.vLT = Vec2{ 308.f, 2.f };
+		frm07.vOffset = Vec2{ 0.f, 0.f };
+		frm07.vSlice = Vec2{ 44.f, 46.f };
+		m_vecFrm.push_back(frm07);
+
+		tAnimFrm frm08 = {};
+		frm08.fDuration = _fDuration;
+		frm08.vLT = Vec2{ 356.f, 0.f };
+		frm08.vOffset = Vec2{ 0.f, 0.f };
+		frm08.vSlice = Vec2{ 48.f, 48.f };
+		m_vecFrm.push_back(frm08);
+
+		tAnimFrm frm09 = {};
+		frm09.fDuration = _fDuration;
+		frm09.vLT = Vec2{ 408.f, 0.f };
+		frm09.vOffset = Vec2{ 0.f, 0.f };
+		frm09.vSlice = Vec2{ 48.f, 48.f };
+		m_vecFrm.push_back(frm09);
+
+		tAnimFrm frm10 = {};
+		frm10.fDuration = _fDuration;
+		frm10.vLT = Vec2{ 460.f, 2.f };
+		frm10.vOffset = Vec2{ 0.f, 0.f };
+		frm10.vSlice = Vec2{ 48.f, 46.f };
+		m_vecFrm.push_back(frm10);
+
+		tAnimFrm frm11 = {};
+		frm11.fDuration = _fDuration;
+		frm11.vLT = Vec2{ 512.f, 2.f };
+		frm11.vOffset = Vec2{ 0.f, 0.f };
+		frm11.vSlice = Vec2{ 48.f, 46.f };
+		m_vecFrm.push_back(frm11);
+
+		tAnimFrm frm12 = {};
+		frm12.fDuration = _fDuration;
+		frm12.vLT = Vec2{ 564.f, 2.f };
+		frm12.vOffset = Vec2{ 0.f, 0.f };
+		frm12.vSlice = Vec2{ 46.f, 46.f };
+		m_vecFrm.push_back(frm12);
+
+		tAnimFrm frm13 = {};
+		frm13.fDuration = _fDuration;
+		frm13.vLT = Vec2{ 614.f, 4.f };
+		frm13.vOffset = Vec2{ 0.f, 0.f };
+		frm13.vSlice = Vec2{ 44.f, 44.f };
+		m_vecFrm.push_back(frm13);
+
+		tAnimFrm frm14 = {};
+		frm14.fDuration = _fDuration;
+		frm14.vLT = Vec2{ 662.f, 6.f };
+		frm14.vOffset = Vec2{ 0.f, 0.f };
+		frm14.vSlice = Vec2{ 48.f, 42.f };
+		m_vecFrm.push_back(frm14);
+
+		tAnimFrm frm15 = {};
+		frm15.fDuration = _fDuration;
+		frm15.vLT = Vec2{ 714.f, 2.f };
+		frm15.vOffset = Vec2{ 0.f, 0.f };
+		frm15.vSlice = Vec2{ 48.f, 46.f };
+		m_vecFrm.push_back(frm15);
+
+		return;
+	}
+
+	if (_strName == L"KEEP_JUMP_RIGHT" || _strName == L"KEEP_JUMP_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 46.f, 46.f };
+		m_vecFrm.push_back(frm01);
+
+		return;
+	}
+
+	if (_strName == L"KEEP_DROP_START_RIGHT" || _strName == L"KEEP_DROP_START_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 46.f, 48.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 50.f, 0.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 48.f, 48.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 102.f, 2.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 48.f, 46.f };
+		m_vecFrm.push_back(frm03);
+
+		return;
+	}
+
+	if (_strName == L"KEEP_DROP_RIGHT" || _strName == L"KEEP_DROP_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 52.f, 46.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 56.f, 0.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 50.f, 46.f };
+		m_vecFrm.push_back(frm02);
+
+		return;
+	}
+
 	if (_strName == L"WADDLE_DEE_WALK_RIGHT" || _strName == L"WADDLE_DEE_WALK_LEFT")
 	{
 		tAnimFrm frm01 = {};

@@ -25,8 +25,6 @@ private:
 	wstring m_strDrawnLeftAnimKey;
 	wstring m_strStarAnimKey;
 
-	bool m_bIsStar;
-
 	void SetMonInfo(const tMonInfo& _info)
 	{
 		m_tInfo = _info;

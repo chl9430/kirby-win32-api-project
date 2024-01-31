@@ -267,6 +267,9 @@
     <ClInclude Include="GameMonster.h">
       <Filter>Engine\06. Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="GameEatenState.h">
+      <Filter>Engine\08. Module\AI\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -385,6 +388,9 @@
       <Filter>Engine\06. Object\Attack</Filter>
     </ClCompile>
     <ClCompile Include="GameDrawnState.cpp">
+      <Filter>Engine\08. Module\AI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEatenState.cpp">
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClCompile>
   </ItemGroup>

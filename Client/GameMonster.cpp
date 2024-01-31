@@ -12,6 +12,7 @@
 #include "AI.h"
 #include "GameState.h"
 #include "GameDrawnState.h"
+#include "GameEatenState.h"
 
 GameMonster::GameMonster(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	: GameObject(_strName, _vPos, _vScale)
@@ -22,7 +23,6 @@ GameMonster::GameMonster(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_strDrawnRightAnimKey{}
 	, m_strDrawnLeftAnimKey{}
 	, m_strStarAnimKey{}
-	, m_bIsStar{ false }
 {
 	CreateAnimator();
 
@@ -49,17 +49,14 @@ void GameMonster::Update()
 
 void GameMonster::Render(HDC _dc)
 {
-	ComponentRender(_dc);
+	if (m_pAI->GetCurState()->GetType() != MON_STATE::EATEN)
+	{
+		ComponentRender(_dc);
+	}
 }
 
 void GameMonster::UpdateAnimation()
 {
-	if (m_bIsStar)
-	{
-		GetAnimator()->Play(m_strStarAnimKey, true);
-		return;
-	}
-
 	MON_STATE eCurMonState = m_pAI->GetCurState()->GetType();
 
 	switch (eCurMonState)
@@ -90,6 +87,11 @@ void GameMonster::UpdateAnimation()
 			GetAnimator()->Play(m_strDrawnLeftAnimKey, true);
 	}
 	break;
+	default:
+	{
+		GetAnimator()->Play(m_strStarAnimKey, true);
+	}
+	break;
 	}
 }
 
@@ -108,7 +110,9 @@ void GameMonster::OnCollisionEnter(GameCollider* _pOther)
 		if (((GamePlayer*)pOtherObj)->GetPlayerState() == PLAYER_STATE::INHALE
 			|| ((GamePlayer*)pOtherObj)->GetPlayerState() == PLAYER_STATE::POWER_INHALE)
 		{
-			m_bIsStar = true;
+			m_pAI->SetCurState(MON_STATE::EATEN);
+
+			((GameEatenState*)m_pAI->GetCurState())->RegisterPlayer(pOtherObj);
 		}
 	}
 }
@@ -123,9 +127,12 @@ void GameMonster::OnCollision(GameCollider* _pOther)
 
 		if (pPlayer->GetPlayerState() == PLAYER_STATE::INHALE)
 		{
-			m_pAI->SetCurState(MON_STATE::DRAWN);
+			if (m_pAI->GetCurState()->GetType() != MON_STATE::EATEN)
+			{
+				m_pAI->SetCurState(MON_STATE::DRAWN);
 
-			((GameDrawnState*)m_pAI->GetCurState())->SetDestPos(pPlayer->GetPos());
+				((GameDrawnState*)m_pAI->GetCurState())->SetDestPos(pPlayer->GetPos());
+			}
 		}
 	}
 	else if (_pOther->GetObj()->GetName() == L"Power_Inhale")
@@ -134,9 +141,12 @@ void GameMonster::OnCollision(GameCollider* _pOther)
 
 		if (pPlayer->GetPlayerState() == PLAYER_STATE::POWER_INHALE)
 		{
-			m_pAI->SetCurState(MON_STATE::DRAWN);
+			if (m_pAI->GetCurState()->GetType() != MON_STATE::EATEN)
+			{
+				m_pAI->SetCurState(MON_STATE::DRAWN);
 
-			((GameDrawnState*)m_pAI->GetCurState())->SetDestPos(pPlayer->GetPos());
+				((GameDrawnState*)m_pAI->GetCurState())->SetDestPos(pPlayer->GetPos());
+			}
 		}
 	}
 }
@@ -146,6 +156,9 @@ void GameMonster::OnCollisionExit(GameCollider* _pOther)
 	if (_pOther->GetObj()->GetName() == L"Inhale"
 		|| _pOther->GetObj()->GetName() == L"Power_Inhale")
 	{
-		m_pAI->SetCurState(MON_STATE::WALK);
+		if (m_pAI->GetCurState()->GetType() != MON_STATE::EATEN)
+		{
+			m_pAI->SetCurState(MON_STATE::WALK);
+		}
 	}
 }

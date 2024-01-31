@@ -13,10 +13,17 @@ enum class PLAYER_STATE
     INHALE,
     POWER_INHALE,
     JUMP,
+    DROP,
     FLOAT_START,
     FLOAT_IDLE,
     FLOAT_END,
-    DROP,
+    KEEP_START,
+    KEEP_IDLE,
+    KEEP_WALK_READY,
+    KEEP_WALK,
+    KEEP_JUMP,
+    KEEP_DROP_START,
+    KEEP_DROP,
     EXHALE
 };
 
@@ -46,6 +53,8 @@ public:
     void UpdateState();
     void UpdateMove();
     void UpdateAnimation();
+
+    virtual void OnCollisionEnter(GameCollider* _pOther);
 
     PLAYER_STATE GetPlayerState()
     {

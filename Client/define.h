@@ -76,6 +76,7 @@ enum class MON_STATE
 	WALK,
 	FLOAT_IDLE,
 	DRAWN,
+	EATEN,
 	PATROL,
 	TRACE,
 	ATT,

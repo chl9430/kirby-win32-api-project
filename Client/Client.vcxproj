@@ -155,6 +155,7 @@
     <ClInclude Include="GameCollisionMgr.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameDrawnState.h" />
+    <ClInclude Include="GameEatenState.h" />
     <ClInclude Include="GameEventMgr.h" />
     <ClInclude Include="GameFloatIdleState.h" />
     <ClInclude Include="GameGravity.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="GameCollisionMgr.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameDrawnState.cpp" />
+    <ClCompile Include="GameEatenState.cpp" />
     <ClCompile Include="GameEventMgr.cpp" />
     <ClCompile Include="GameFloatIdleState.cpp" />
     <ClCompile Include="GameGravity.cpp" />
