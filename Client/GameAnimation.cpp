@@ -630,6 +630,18 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, float _f
 
 		return;
 	}
+
+	if (_strName == L"STAR")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 46.f, 48.f };
+		m_vecFrm.push_back(frm01);
+
+		return;
+	}
 }
 
 void GameAnimation::Update()

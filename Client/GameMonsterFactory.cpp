@@ -58,8 +58,6 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		GameTexture* pDrawnRightTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeDrawnRight", L"texture\\Waddle_Dee_Drawn_Right.bmp");
 		GameTexture* pDrawnLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeDrawnLeft", L"texture\\Waddle_Dee_Drawn_Left.bmp");
 
-		pMon->CreateAnimator();
-
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_RIGHT", pWalkRightTex, 0.15f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_LEFT", pWalkLeftTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_RIGHT", pDrawnRightTex, 0.15f);
@@ -98,8 +96,6 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		GameTexture* pIdleRightTex = GameResMgr::GetInst()->LoadTexture(L"ScarfyIdleRight", L"texture\\Scarfy_Idle_Right.bmp");
 		GameTexture* pIdleLeftTex = GameResMgr::GetInst()->LoadTexture(L"ScarfyIdleLeft", L"texture\\Scarfy_Idle_Left.bmp");
 
-		pMon->CreateAnimator();
-
 		pMon->GetAnimator()->CreateAnimation(L"SCARFY_IDLE_RIGHT", pIdleRightTex, 0.15f);
 		pMon->GetAnimator()->CreateAnimation(L"SCARFY_IDLE_LEFT", pIdleLeftTex, 0.2f);
 
@@ -135,8 +131,6 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 
 		GameTexture* pIdleRightTex = GameResMgr::GetInst()->LoadTexture(L"PengyIdleRight", L"texture\\Pengy_Idle_Right.bmp");
 		GameTexture* pIdleLeftTex = GameResMgr::GetInst()->LoadTexture(L"PengyIdleLeft", L"texture\\Pengy_Idle_Left.bmp");
-
-		pMon->CreateAnimator();
 
 		pMon->GetAnimator()->CreateAnimation(L"PENGY_IDLE_RIGHT", pIdleRightTex, 0.15f);
 		pMon->GetAnimator()->CreateAnimation(L"PENGY_IDLE_LEFT", pIdleLeftTex, 0.2f);

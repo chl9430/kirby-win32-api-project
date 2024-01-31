@@ -23,9 +23,9 @@ private:
 	wstring m_strWalkLeftAnimKey;
 	wstring m_strDrawnRightAnimKey;
 	wstring m_strDrawnLeftAnimKey;
+	wstring m_strStarAnimKey;
 
-	GameObject* m_pInhale;
-	GameObject* m_pPowerInhale;
+	bool m_bIsStar;
 
 	void SetMonInfo(const tMonInfo& _info)
 	{
@@ -55,6 +55,7 @@ public:
 	}
 
 	virtual void OnCollisionEnter(GameCollider* _pOther);
+	virtual void OnCollision(GameCollider* _pOther);
 	virtual void OnCollisionExit(GameCollider* _pOther);
 
 	GameMonster(wstring _strName, Vec2 _vPos, Vec2 _vScale);

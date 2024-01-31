@@ -75,11 +75,11 @@ enum class MON_STATE
 	IDLE,
 	WALK,
 	FLOAT_IDLE,
+	DRAWN,
 	PATROL,
 	TRACE,
 	ATT,
 	RUN,
-	DRAWN,
 	DEAD,
 	END
 };

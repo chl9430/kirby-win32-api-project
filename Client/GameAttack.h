@@ -8,8 +8,6 @@ private:
 	GameObject* m_pOwner;
 	Vec2 m_vOffset;
 
-	vector<GameObject*> m_vecCollisionMonGroup;
-
 public:
 	virtual void Update();
 

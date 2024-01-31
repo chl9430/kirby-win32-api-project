@@ -222,9 +222,6 @@
     <ClInclude Include="GameEventMgr.h">
       <Filter>Engine\03. Manager\EventMgr</Filter>
     </ClInclude>
-    <ClInclude Include="GameMonster.h">
-      <Filter>Engine\06. Object\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="GameMonsterFactory.h">
       <Filter>Engine\09. Factory\MonFactory</Filter>
     </ClInclude>
@@ -266,6 +263,9 @@
     </ClInclude>
     <ClInclude Include="GameDrawnState.h">
       <Filter>Engine\08. Module\AI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMonster.h">
+      <Filter>Engine\06. Object\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
