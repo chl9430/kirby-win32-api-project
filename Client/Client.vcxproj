@@ -161,6 +161,7 @@
     <ClInclude Include="GameGravity.h" />
     <ClInclude Include="GameIdleState.h" />
     <ClInclude Include="GameKeyMgr.h" />
+    <ClInclude Include="GameLaunchedState.h" />
     <ClInclude Include="GameMonster.h" />
     <ClInclude Include="GameMonsterFactory.h" />
     <ClInclude Include="GameObject.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="GameGravity.cpp" />
     <ClCompile Include="GameIdleState.cpp" />
     <ClCompile Include="GameKeyMgr.cpp" />
+    <ClCompile Include="GameLaunchedState.cpp" />
     <ClCompile Include="GameMonster.cpp" />
     <ClCompile Include="GameMonsterFactory.cpp" />
     <ClCompile Include="GameObject.cpp" />

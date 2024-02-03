@@ -18,6 +18,7 @@
 #include "GameFloatIdleState.h"
 #include "GameIdleState.h"
 #include "GameEatenState.h"
+#include "GameLaunchedState.h"
 
 GameMonsterFactory::GameMonsterFactory()
 {
@@ -51,6 +52,7 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 
 		pMon->CreateRigidBody();
 		pMon->GetRigidBody()->SetMass(1.f);
+		pMon->GetRigidBody()->SetMaxVelocity(Vec2{ 1000.f, pMon->GetRigidBody()->GetMaxVelocity().y });
 
 		pMon->CreateGravity();
 
@@ -71,6 +73,7 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		pAI->AddState(new GameEatenState);
 		pAI->AddState(new GameWalkState);
 		pAI->AddState(new GameDrawnState);
+		pAI->AddState(new GameLaunchedState);
 		pAI->SetCurState(MON_STATE::WALK);
 
 		pMon->SetAI(pAI);

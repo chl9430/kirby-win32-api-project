@@ -27,13 +27,16 @@ void GameScene_Stage::Enter()
 
 	GamePlayer* pObj = new GamePlayer{ L"Player", Vec2{ 600.f, 100.f }, Vec2{ TILE_SIZE, TILE_SIZE } }; // 부모 클래스에서 삭제 담당
 	pObj->SetObjScene(this);
-	pObj->CreateAttack();
+	pObj->CreateInhale();
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
 	RegisterPlayer(pObj);
 
 	GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 140.f, 80.f });
 	AddObject(pWaddleDee, GROUP_TYPE::MONSTER);
+
+	/*GameMonster* pWaddleDee2 = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 100.f, 80.f });
+	AddObject(pWaddleDee2, GROUP_TYPE::MONSTER);*/
 
 	/*GameMonster* pScarfy = GameMonsterFactory::CreateMonster(MON_TYPE::SCARFY, Vec2{ 140.f, 100.f });
 	AddObject(pScarfy, GROUP_TYPE::MONSTER);

@@ -18,10 +18,14 @@ private:
 	bool m_bAlive;
 	int m_iDir; // 방향정보
 	int m_iPrevDir;
+	float m_fInvincibleCount;
+	float m_fInvincibleTime;
+
 	bool m_isTouchBottom;
 	bool m_isTouchLeft;
 	bool m_isTouchRight;
 	bool m_isTouchTop;
+	bool m_bIsInvincible;
 
 	GameTexture* m_pCurTexture;
 
@@ -49,6 +53,7 @@ public:
 
 	void ComponentRender(HDC _dc);
 
+	void CountInvincibleState();
 	void CreateCollider();
 	void CreateRigidBody();
 	void CreateAnimator();
@@ -126,6 +131,14 @@ public:
 	bool GetTouchLeft()
 	{
 		return m_isTouchLeft;
+	}
+	void SetIsInvincible(bool _b)
+	{
+		m_bIsInvincible = _b;
+	}
+	bool GetIsInvincible()
+	{
+		return m_bIsInvincible;
 	}
 
 	GameTexture* GetCurrentTexture()

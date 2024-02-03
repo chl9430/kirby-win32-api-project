@@ -73,3 +73,8 @@ void GameEventMgr::Update()
 	}
 	m_vecEvent.clear();
 }
+
+void GameEventMgr::AddEvent(tEvent _tEve)
+{
+	m_vecEvent.push_back(_tEve);
+}

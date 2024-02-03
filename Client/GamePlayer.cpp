@@ -8,12 +8,14 @@
 #include "GameTimeMgr.h"
 #include "GameCamera.h"
 #include "GameCollisionMgr.h"
+#include "GameEventMgr.h"
 
 #include "GameTexture.h"
 
 #include "GameScene.h"
 
 #include "GameAttack.h"
+#include "GameMonster.h"
 
 #include "GameAnimator.h"
 #include "GameAnimation.h"
@@ -21,14 +23,17 @@
 #include "GameCollider.h"
 #include "GameGravity.h"
 
-#define IS_KIRBY_MOVING GetTouchBottom() && (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
+#include "AI.h"
+#include "GameState.h"
+#include "GameEatenState.h"
+
+#define IS_KIRBY_WALKING GetTouchBottom() && (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
+#define IS_KIRBY_WALK_READYING GetTouchBottom() && (GetRigidBody()->GetVelocity().x != 0.f)
 #define IS_KIRBY_FALLING !GetTouchBottom() && (GetRigidBody()->GetVelocity().y > 0.f)
 #define IS_KIRBY_IDLING GetTouchBottom() && (GetRigidBody()->GetVelocity().x == 0.f)
 
 GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	: GameObject{ _strName, _vPos, _vScale }
-	, m_pInhale{ nullptr }
-	, m_pPowerInhale{ nullptr }
 	, m_eCurState{ PLAYER_STATE::IDLE }
 	, m_ePrevState{ PLAYER_STATE::WALK }
 	, m_fInhaleTime{ 0.f }
@@ -37,7 +42,7 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_fFloatJumpPower{ -150.f }
 	, m_fWalkSpeed{ 120.f }
 	, m_fFloatMoveSpeed{ 60.f }
-
+	, m_pEatenMon{ nullptr }
 {
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
@@ -84,6 +89,18 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 
 	GameTexture* pKeepDropRightTex = GameResMgr::GetInst()->LoadTexture(L"KeepDropRight", L"texture\\Kirby_Keep_Drop_Right.bmp");
 	GameTexture* pKeepDropLeftTex = GameResMgr::GetInst()->LoadTexture(L"KeepDropLeft", L"texture\\Kirby_Keep_Drop_Left.bmp");
+
+	GameTexture* pKeepHitRightTex = GameResMgr::GetInst()->LoadTexture(L"KeepHitRight", L"texture\\Kirby_Keep_Hit_Right.bmp");
+	GameTexture* pKeepHitLeftTex = GameResMgr::GetInst()->LoadTexture(L"KeepHitLeft", L"texture\\Kirby_Keep_Hit_Left.bmp");
+
+	GameTexture* pExhaleRightTex = GameResMgr::GetInst()->LoadTexture(L"ExhaleRight", L"texture\\Kirby_Exhale_Right.bmp");
+	GameTexture* pExhaleLeftTex = GameResMgr::GetInst()->LoadTexture(L"ExhaleLeft", L"texture\\Kirby_Exhale_Left.bmp");
+
+	GameTexture* pSwallowRightTex = GameResMgr::GetInst()->LoadTexture(L"SwallowRight", L"texture\\Kirby_Swallow_Right.bmp");
+	GameTexture* pSwallowLeftTex = GameResMgr::GetInst()->LoadTexture(L"SwallowLeft", L"texture\\Kirby_Swallow_Left.bmp");
+
+	GameTexture* pHitRightTex = GameResMgr::GetInst()->LoadTexture(L"HitRight", L"texture\\Kirby_Hit_Right.bmp");
+	GameTexture* pHitLeftTex = GameResMgr::GetInst()->LoadTexture(L"HitLeft", L"texture\\Kirby_Hit_Left.bmp");
 
 	CreateAnimator();
 
@@ -132,6 +149,18 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	GetAnimator()->CreateAnimation(L"KEEP_DROP_RIGHT", pKeepDropRightTex, 0.05f);
 	GetAnimator()->CreateAnimation(L"KEEP_DROP_LEFT", pKeepDropLeftTex, 0.05f);
 
+	GetAnimator()->CreateAnimation(L"KEEP_HIT_RIGHT", pKeepHitRightTex, 0.07f);
+	GetAnimator()->CreateAnimation(L"KEEP_HIT_LEFT", pKeepHitLeftTex, 0.07f);
+
+	GetAnimator()->CreateAnimation(L"EXHALE_RIGHT", pExhaleRightTex, 0.03f);
+	GetAnimator()->CreateAnimation(L"EXHALE_LEFT", pExhaleLeftTex, 0.03f);
+
+	GetAnimator()->CreateAnimation(L"SWALLOW_RIGHT", pSwallowRightTex, 0.03f);
+	GetAnimator()->CreateAnimation(L"SWALLOW_LEFT", pSwallowLeftTex, 0.03f);
+
+	GetAnimator()->CreateAnimation(L"HIT_RIGHT", pHitRightTex, 0.07f);
+	GetAnimator()->CreateAnimation(L"HIT_LEFT", pHitLeftTex, 0.07f);
+
 	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
 
@@ -144,6 +173,8 @@ GamePlayer::~GamePlayer()
 
 void GamePlayer::Update()
 {
+	CountInvincibleState();
+
 	UpdateDir();
 	UpdateState();
 	UpdateMove();
@@ -163,57 +194,60 @@ void GamePlayer::Render(HDC _dc)
 	ComponentRender(_dc);
 }
 
-void GamePlayer::CreateAttack()
+void GamePlayer::CreateInhale()
 {
-	m_pInhale = new GameAttack{ L"Inhale", Vec2{ GetPos().x + TILE_SIZE * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE, TILE_SIZE } };
-	m_pInhale->CreateCollider();
-	m_pInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
-	m_pInhale->GetCollider()->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
-	m_pInhale->m_pOwner = this;
-	m_pInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (m_pInhale->GetScale().x / 2.f), 0.f };
-	GetObjScene()->AddObject(m_pInhale, GROUP_TYPE::ATTACK);
+	GameAttack* pInhale = new GameAttack{ L"Inhale", Vec2{ GetPos().x + TILE_SIZE * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	pInhale->CreateCollider();
+	pInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
+	pInhale->GetCollider()->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+	pInhale->m_pOwner = this;
+	pInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (pInhale->GetScale().x / 2.f), 0.f };
+	GetObjScene()->AddObject(pInhale, GROUP_TYPE::ATTACK);
 
-	m_pPowerInhale = new GameAttack{ L"Power_Inhale", Vec2{ GetPos().x + TILE_SIZE * 2 * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE * 2, TILE_SIZE * 2 } };
-	m_pPowerInhale->CreateCollider();
-	m_pPowerInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
-	m_pPowerInhale->GetCollider()->SetScale(Vec2{ TILE_SIZE * 2, TILE_SIZE * 2 });
-	m_pPowerInhale->m_pOwner = this;
-	m_pPowerInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (m_pPowerInhale->GetScale().x / 2.f), 0.f };
-	GetObjScene()->AddObject(m_pPowerInhale, GROUP_TYPE::ATTACK);
+	GameAttack* pPowerInhale = new GameAttack{ L"Power_Inhale", Vec2{ GetPos().x + TILE_SIZE * 2 * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE * 2, TILE_SIZE * 2 } };
+	pPowerInhale->CreateCollider();
+	pPowerInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
+	pPowerInhale->GetCollider()->SetScale(Vec2{ TILE_SIZE * 2, TILE_SIZE * 2 });
+	pPowerInhale->m_pOwner = this;
+	pPowerInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (pPowerInhale->GetScale().x / 2.f), 0.f };
+	GetObjScene()->AddObject(pPowerInhale, GROUP_TYPE::ATTACK);
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::ATTACK, GROUP_TYPE::MONSTER);
 }
 
 void GamePlayer::UpdateDir()
 {
-	if (KEY_TAP(KEY::LEFT))
+	if (m_eCurState != PLAYER_STATE::HIT && m_eCurState != PLAYER_STATE::KEEP_HIT)
 	{
-		SetObjDir(-1);
-	}
+		if (KEY_TAP(KEY::LEFT))
+		{
+			SetObjDir(-1);
+		}
 
-	if (KEY_TAP(KEY::RIGHT))
-	{
-		SetObjDir(1);
-	}
+		if (KEY_TAP(KEY::RIGHT))
+		{
+			SetObjDir(1);
+		}
 
-	if (KEY_TAP(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
-	{
-		SetObjDir(-1);
-	}
+		if (KEY_TAP(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
+		{
+			SetObjDir(-1);
+		}
 
-	if (KEY_TAP(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
-	{
-		SetObjDir(1);
-	}
+		if (KEY_TAP(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
+		{
+			SetObjDir(1);
+		}
 
-	if (KEY_AWAY(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
-	{
-		SetObjDir(1);
-	}
+		if (KEY_AWAY(KEY::LEFT) && KEY_HOLD(KEY::RIGHT))
+		{
+			SetObjDir(1);
+		}
 
-	if (KEY_AWAY(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
-	{
-		SetObjDir(-1);
+		if (KEY_AWAY(KEY::RIGHT) && KEY_HOLD(KEY::LEFT))
+		{
+			SetObjDir(-1);
+		}
 	}
 }
 
@@ -223,8 +257,7 @@ void GamePlayer::UpdateState()
 	{
 		if (KEY_TAP(KEY::D))
 		{
-			m_eCurState = PLAYER_STATE::JUMP;
-			GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+			JumpKirby();
 		}
 
 		if (KEY_TAP(KEY::S))
@@ -232,7 +265,7 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::INHALE;
 		}
 
-		if (IS_KIRBY_MOVING)
+		if (IS_KIRBY_WALKING)
 		{
 			m_eCurState = PLAYER_STATE::WALK;
 		}
@@ -252,7 +285,7 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::IDLE;
 		}
 
-		if (IS_KIRBY_MOVING)
+		if (IS_KIRBY_WALKING)
 		{
 			m_eCurState = PLAYER_STATE::WALK;
 		}
@@ -264,8 +297,7 @@ void GamePlayer::UpdateState()
 
 		if (KEY_TAP(KEY::D))
 		{
-			m_eCurState = PLAYER_STATE::JUMP;
-			GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+			JumpKirby();
 		}
 
 		if (IS_KIRBY_FALLING)
@@ -290,8 +322,7 @@ void GamePlayer::UpdateState()
 
 		if (KEY_TAP(KEY::D))
 		{
-			m_eCurState = PLAYER_STATE::JUMP;
-			GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+			JumpKirby();
 		}
 
 		if (IS_KIRBY_FALLING)
@@ -310,7 +341,7 @@ void GamePlayer::UpdateState()
 		{
 			m_eCurState = PLAYER_STATE::IDLE;
 
-			if (IS_KIRBY_MOVING)
+			if (IS_KIRBY_WALKING)
 			{
 				m_eCurState = PLAYER_STATE::WALK;
 			}
@@ -322,11 +353,15 @@ void GamePlayer::UpdateState()
 
 			if (KEY_TAP(KEY::D))
 			{
-				m_eCurState = PLAYER_STATE::JUMP;
-				GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+				JumpKirby();
 			}
 
 			m_fInhaleTime = 0.f;
+		}
+
+		if (m_pEatenMon)
+		{
+			m_eCurState = PLAYER_STATE::KEEP_START;
 		}
 
 		return;
@@ -340,18 +375,22 @@ void GamePlayer::UpdateState()
 		{
 			m_eCurState = PLAYER_STATE::IDLE;
 
-			if (IS_KIRBY_MOVING)
+			if (IS_KIRBY_WALKING)
 			{
 				m_eCurState = PLAYER_STATE::WALK;
 			}
 
 			if (KEY_TAP(KEY::D))
 			{
-				m_eCurState = PLAYER_STATE::JUMP;
-				GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+				JumpKirby();
 			}
 
 			m_fPowerInhaleTime = 0.f;
+		}
+
+		if (m_pEatenMon)
+		{
+			m_eCurState = PLAYER_STATE::KEEP_START;
 		}
 
 		return;
@@ -419,12 +458,12 @@ void GamePlayer::UpdateState()
 				m_eCurState = PLAYER_STATE::IDLE;
 			}
 
-			if (GetTouchBottom() && (GetRigidBody()->GetVelocity().x != 0.f))
+			if (IS_KIRBY_WALK_READYING)
 			{
 				m_eCurState = PLAYER_STATE::WALK_READY;
 			}
 
-			if (IS_KIRBY_MOVING)
+			if (IS_KIRBY_WALKING)
 			{
 				m_eCurState = PLAYER_STATE::WALK;
 			}
@@ -445,12 +484,12 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::IDLE;
 		}
 
-		if (GetTouchBottom() && (GetRigidBody()->GetVelocity().x != 0.f))
+		if (IS_KIRBY_WALK_READYING)
 		{
 			m_eCurState = PLAYER_STATE::WALK_READY;
 		}
 
-		if (IS_KIRBY_MOVING)
+		if (IS_KIRBY_WALKING)
 		{
 			m_eCurState = PLAYER_STATE::WALK;
 		}
@@ -483,23 +522,32 @@ void GamePlayer::UpdateState()
 	{
 		if (KEY_TAP(KEY::D))
 		{
-			m_eCurState = PLAYER_STATE::KEEP_JUMP;
-			GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+			JumpKirby();
 		}
 
 		if (KEY_TAP(KEY::S))
 		{
-			// ³»¹ñ±â
+			LaunchMon();
 		}
 
-		if (IS_KIRBY_MOVING)
+		if (IS_KIRBY_WALKING)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_WALK;
+		}
+
+		if (IS_KIRBY_WALK_READYING)
+		{
+			m_eCurState = PLAYER_STATE::KEEP_WALK_READY;
 		}
 
 		if (IS_KIRBY_FALLING)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_DROP;
+		}
+
+		if (KEY_TAP(KEY::DOWN))
+		{
+			SwallowMon();
 		}
 
 		return;
@@ -512,25 +560,29 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::KEEP_IDLE;
 		}
 
-		if (IS_KIRBY_MOVING)
+		if (IS_KIRBY_WALKING)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_WALK;
 		}
 
 		if (KEY_TAP(KEY::S))
 		{
-			// ³»¹ñ±â
+			LaunchMon();
 		}
 
 		if (KEY_TAP(KEY::D))
 		{
-			m_eCurState = PLAYER_STATE::KEEP_JUMP;
-			GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+			JumpKirby();
 		}
 
 		if (IS_KIRBY_FALLING)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_DROP;
+		}
+
+		if (KEY_TAP(KEY::DOWN))
+		{
+			SwallowMon();
 		}
 
 		return;
@@ -545,18 +597,22 @@ void GamePlayer::UpdateState()
 
 		if (KEY_TAP(KEY::S))
 		{
-			// ³»¹ñ±â
+			LaunchMon();
 		}
 
 		if (KEY_TAP(KEY::D))
 		{
-			m_eCurState = PLAYER_STATE::KEEP_JUMP;
-			GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+			JumpKirby();
 		}
 
 		if (IS_KIRBY_FALLING)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_DROP;
+		}
+
+		if (KEY_TAP(KEY::DOWN))
+		{
+			SwallowMon();
 		}
 
 		return;
@@ -566,7 +622,7 @@ void GamePlayer::UpdateState()
 	{
 		if (KEY_TAP(KEY::S))
 		{
-			// ³»¹ñ±â
+			LaunchMon();
 		}
 
 		if (IS_KIRBY_FALLING)
@@ -594,19 +650,177 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::KEEP_IDLE;
 		}
 
-		if (GetTouchBottom() && (GetRigidBody()->GetVelocity().x != 0.f))
+		if (IS_KIRBY_WALK_READYING)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_WALK_READY;
 		}
 
-		if (IS_KIRBY_MOVING)
+		if (IS_KIRBY_WALKING)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_WALK;
 		}
 
 		if (KEY_TAP(KEY::S))
 		{
-			// ³»¹ñ±â
+			LaunchMon();
+		}
+
+		return;
+	}
+
+	if (m_eCurState == PLAYER_STATE::KEEP_HIT)
+	{
+		if (GetAnimator()->GetCurrentAnim()->IsFinish())
+		{
+			if (GetAnimator()->GetCurrentAnim()->GetName() == L"KEEP_HIT_LEFT")
+			{
+				if (KEY_HOLD(KEY::RIGHT))
+				{
+					SetObjDir(1);
+				}
+				else if (KEY_HOLD(KEY::LEFT))
+				{
+					SetObjDir(-1);
+				}
+			}
+			else if (GetAnimator()->GetCurrentAnim()->GetName() == L"KEEP_HIT_RIGHT")
+			{
+				if (KEY_HOLD(KEY::LEFT))
+				{
+					SetObjDir(-1);
+				}
+				else if (KEY_HOLD(KEY::RIGHT))
+				{
+					SetObjDir(1);
+				}
+			}
+
+			if (IS_KIRBY_IDLING)
+			{
+				m_eCurState = PLAYER_STATE::KEEP_IDLE;
+			}
+
+			if (IS_KIRBY_WALKING)
+			{
+				m_eCurState = PLAYER_STATE::KEEP_WALK;
+			}
+
+			if (IS_KIRBY_WALK_READYING)
+			{
+				m_eCurState = PLAYER_STATE::KEEP_WALK_READY;
+			}
+
+			if (IS_KIRBY_FALLING)
+			{
+				m_eCurState = PLAYER_STATE::KEEP_DROP;
+			}
+		}
+
+		return;
+	}
+
+	if (m_eCurState == PLAYER_STATE::EXHALE)
+	{
+		if (GetAnimator()->GetCurrentAnim()->IsFinish())
+		{
+			if (!GetTouchBottom() && (GetRigidBody()->GetVelocity().y < 0.f))
+			{
+				m_eCurState = PLAYER_STATE::JUMP;
+			}
+
+			if (IS_KIRBY_FALLING)
+			{
+				m_eCurState = PLAYER_STATE::DROP;
+			}
+
+			if (IS_KIRBY_IDLING)
+			{
+				m_eCurState = PLAYER_STATE::IDLE;
+			}
+
+			if (IS_KIRBY_WALKING)
+			{
+				m_eCurState = PLAYER_STATE::WALK;
+			}
+
+			if (IS_KIRBY_WALK_READYING)
+			{
+				m_eCurState = PLAYER_STATE::WALK_READY;
+			}
+		}
+
+		return;
+	}
+
+	if (m_eCurState == PLAYER_STATE::SWALLOW)
+	{
+		if (GetAnimator()->GetCurrentAnim()->IsFinish())
+		{
+			if (IS_KIRBY_IDLING)
+			{
+				m_eCurState = PLAYER_STATE::IDLE;
+			}
+
+			if (IS_KIRBY_WALKING)
+			{
+				m_eCurState = PLAYER_STATE::WALK;
+			}
+
+			if (IS_KIRBY_WALK_READYING)
+			{
+				m_eCurState = PLAYER_STATE::WALK_READY;
+			}
+		}
+
+		return;
+	}
+
+	if (m_eCurState == PLAYER_STATE::HIT)
+	{
+		if (GetAnimator()->GetCurrentAnim()->IsFinish())
+		{
+			if (GetAnimator()->GetCurrentAnim()->GetName() == L"HIT_LEFT")
+			{
+				if (KEY_HOLD(KEY::RIGHT))
+				{
+					SetObjDir(1);
+				}
+				else if (KEY_HOLD(KEY::LEFT))
+				{
+					SetObjDir(-1);
+				}
+			}
+			else if (GetAnimator()->GetCurrentAnim()->GetName() == L"HIT_RIGHT")
+			{
+				if (KEY_HOLD(KEY::LEFT))
+				{
+					SetObjDir(-1);
+				}
+				else if (KEY_HOLD(KEY::RIGHT))
+				{
+					SetObjDir(1);
+				}
+			}
+
+			if (IS_KIRBY_IDLING)
+			{
+				m_eCurState = PLAYER_STATE::IDLE;
+			}
+
+			if (IS_KIRBY_WALKING)
+			{
+				m_eCurState = PLAYER_STATE::WALK;
+			}
+
+			if (IS_KIRBY_WALK_READYING)
+			{
+				m_eCurState = PLAYER_STATE::WALK_READY;
+			}
+
+			if (IS_KIRBY_FALLING)
+			{
+				m_eCurState = PLAYER_STATE::DROP;
+			}
 		}
 
 		return;
@@ -799,7 +1013,63 @@ void GamePlayer::UpdateAnimation()
 			GetAnimator()->Play(L"KEEP_DROP_RIGHT", false);
 	}
 	break;
+	case PLAYER_STATE::EXHALE:
+	{
+		if (GetObjDir() == -1)
+			GetAnimator()->Play(L"EXHALE_LEFT", false);
+		else
+			GetAnimator()->Play(L"EXHALE_RIGHT", false);
 	}
+	break;
+	case PLAYER_STATE::SWALLOW:
+	{
+		if (GetObjDir() == -1)
+			GetAnimator()->Play(L"SWALLOW_LEFT", false);
+		else
+			GetAnimator()->Play(L"SWALLOW_RIGHT", false);
+	}
+	break;
+	}
+}
+
+void GamePlayer::JumpKirby()
+{
+
+	if (m_eCurState >= PLAYER_STATE::KEEP_IDLE)
+	{
+		m_eCurState = PLAYER_STATE::KEEP_JUMP;
+	}
+	else
+	{
+		m_eCurState = PLAYER_STATE::JUMP;
+	}
+
+	GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
+}
+
+void GamePlayer::SwallowMon()
+{
+	m_eCurState = PLAYER_STATE::SWALLOW;
+
+	//if () // Ä¿ºñÀÇ ´É·Â º¯È­
+	//{
+
+	//}
+
+	((GameMonster*)m_pEatenMon)->DestroyMon();
+	m_pEatenMon = nullptr;
+}
+
+void GamePlayer::LaunchMon()
+{
+	m_eCurState = PLAYER_STATE::EXHALE;
+
+	if (m_pEatenMon != nullptr)
+	{
+		((GameMonster*)m_pEatenMon)->GetAI()->SetCurState(MON_STATE::LAUNCHED);
+	}
+
+	m_pEatenMon = nullptr;
 }
 
 void GamePlayer::OnCollisionEnter(GameCollider* _pOther)
@@ -810,7 +1080,59 @@ void GamePlayer::OnCollisionEnter(GameCollider* _pOther)
 	{
 		if (pOtherObj->GetName() == L"Waddle_Dee")
 		{
-			m_eCurState = PLAYER_STATE::KEEP_START;
+			GameMonster* pMon = (GameMonster*)pOtherObj;
+
+			m_pEatenMon = pMon;
+			pMon->SetIsMonStar(true);
+			pMon->GetAI()->SetCurState(MON_STATE::EATEN);
+			((GameEatenState*)pMon->GetAI()->GetCurState())->RegisterPlayer(this);
 		}
 	}
+}
+
+void GamePlayer::OnCollision(GameCollider* _pOther)
+{
+	GameObject* pOtherObj = _pOther->GetObj();
+
+	if (pOtherObj->GetName() == L"Waddle_Dee")
+	{
+		if (!GetIsInvincible() && !((GameMonster*)pOtherObj)->IsMonStar())
+		{
+			SetIsInvincible(true);
+
+			if (pOtherObj->GetPos().x < GetPos().x)
+			{
+				SetObjDir(-1);
+				GetRigidBody()->SetVelocity(Vec2{ 100.f * -GetObjDir(), GetRigidBody()->GetVelocity().y });
+			}
+			else
+			{
+				SetObjDir(1);
+				GetRigidBody()->SetVelocity(Vec2{ 100.f * -GetObjDir(), GetRigidBody()->GetVelocity().y });
+			}
+
+			if ((int)m_eCurState >= 12 && (int)m_eCurState <= 18)
+			{
+				m_eCurState = PLAYER_STATE::KEEP_HIT;
+
+				if (GetObjDir() == -1)
+					GetAnimator()->Play(L"KEEP_HIT_LEFT", false);
+				else
+					GetAnimator()->Play(L"KEEP_HIT_RIGHT", false);
+			}
+			else
+			{
+				m_eCurState = PLAYER_STATE::HIT;
+
+				if (GetObjDir() == -1)
+					GetAnimator()->Play(L"HIT_LEFT", false);
+				else
+					GetAnimator()->Play(L"HIT_RIGHT", false);
+			}
+		}
+	}
+}
+
+void GamePlayer::OnCollisionExit(GameCollider* _pOther)
+{
 }

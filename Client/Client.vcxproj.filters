@@ -270,6 +270,9 @@
     <ClInclude Include="GameEatenState.h">
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClInclude>
+    <ClInclude Include="GameLaunchedState.h">
+      <Filter>Engine\08. Module\AI\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -391,6 +394,9 @@
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClCompile>
     <ClCompile Include="GameEatenState.cpp">
+      <Filter>Engine\08. Module\AI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLaunchedState.cpp">
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClCompile>
   </ItemGroup>

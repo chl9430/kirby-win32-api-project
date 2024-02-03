@@ -24,6 +24,10 @@ private:
 	wstring m_strDrawnRightAnimKey;
 	wstring m_strDrawnLeftAnimKey;
 	wstring m_strStarAnimKey;
+	wstring m_strStarDestroyAnimKey;
+
+	bool m_bIsStar;
+	bool m_bIsDestroying;
 
 	void SetMonInfo(const tMonInfo& _info)
 	{
@@ -36,7 +40,13 @@ public:
 
 	void UpdateAnimation();
 
+	void DestroyMon();
+
 	void SetAI(AI* _pAI);
+	AI* GetAI()
+	{
+		return m_pAI;
+	}
 	tMonInfo& GetMonInfo()
 	{
 		return m_tInfo;
@@ -50,6 +60,14 @@ public:
 	{
 		m_strDrawnRightAnimKey = _pRightAnimKey;
 		m_strDrawnLeftAnimKey = _pLeftAnimKey;
+	}
+	void SetIsMonStar(bool _b)
+	{
+		m_bIsStar = _b;
+	}
+	bool IsMonStar()
+	{
+		return m_bIsStar;
 	}
 
 	virtual void OnCollisionEnter(GameCollider* _pOther);

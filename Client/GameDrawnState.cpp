@@ -23,7 +23,7 @@ void GameDrawnState::Update()
 	Vec2 vDiff = m_vDestPos - vPos;
 	vDiff.Normalize();
 
-	vPos += (vDiff * 150.f * fDT);
+	vPos += (vDiff * 300.f * fDT);
 
 	GetAI()->GetObj()->SetPos(vPos);
 }

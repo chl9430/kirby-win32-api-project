@@ -1,6 +1,8 @@
 #pragma once
 #include "GameState.h"
 
+class GameObject;
+
 class GameEatenState :
     public GameState
 {

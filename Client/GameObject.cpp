@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 #include "GameCamera.h"
+#include "GameTimeMgr.h"
 
 #include "GameSight.h"
 #include "GameCollider.h"
@@ -27,6 +28,9 @@ GameObject::GameObject(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_isTouchLeft{ false }
 	, m_isTouchRight{ false }
 	, m_isTouchTop{ false }
+	, m_bIsInvincible{ false }
+	, m_fInvincibleCount{ 0.f }
+	, m_fInvincibleTime{ 2.f }
 {
 }
 
@@ -101,6 +105,20 @@ void GameObject::ComponentRender(HDC _dc)
 	if (nullptr != m_pCollider)
 	{
 		m_pCollider->Render(_dc);
+	}
+}
+
+void GameObject::CountInvincibleState()
+{
+	if (m_bIsInvincible)
+	{
+		m_fInvincibleCount += fDT;
+
+		if (m_fInvincibleCount >= m_fInvincibleTime)
+		{
+			m_bIsInvincible = false;
+			m_fInvincibleCount = 0.f;
+		}
 	}
 }
 

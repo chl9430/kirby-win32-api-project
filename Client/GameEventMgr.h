@@ -21,4 +21,5 @@ private:
 public:
 	void Update();
 
+	void AddEvent(tEvent _tEve);
 };

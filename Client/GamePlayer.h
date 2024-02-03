@@ -1,8 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-class GameAttack;
-
 enum class PLAYER_STATE
 {
     IDLE,
@@ -17,6 +15,9 @@ enum class PLAYER_STATE
     FLOAT_START,
     FLOAT_IDLE,
     FLOAT_END,
+    EXHALE,
+    SWALLOW,
+    HIT,
     KEEP_START,
     KEEP_IDLE,
     KEEP_WALK_READY,
@@ -24,18 +25,16 @@ enum class PLAYER_STATE
     KEEP_JUMP,
     KEEP_DROP_START,
     KEEP_DROP,
-    EXHALE
+    KEEP_HIT,
 };
 
 class GamePlayer :
     public GameObject
 {
 private:
-    GameAttack* m_pInhale;
-    GameAttack* m_pPowerInhale;
-
     PLAYER_STATE m_eCurState;
     PLAYER_STATE m_ePrevState;
+
     float m_fInhaleTime;
     float m_fPowerInhaleTime;
     float m_fJumpPower;
@@ -43,18 +42,26 @@ private:
     float m_fWalkSpeed;
     float m_fFloatMoveSpeed;
 
+    GameObject* m_pEatenMon;
+
 public:
     virtual void Update();
     virtual void Render(HDC _dc);
 
-    void CreateAttack();
+    void CreateInhale();
 
     void UpdateDir();
     void UpdateState();
     void UpdateMove();
     void UpdateAnimation();
 
+    void JumpKirby();
+    void SwallowMon();
+    void LaunchMon();
+
     virtual void OnCollisionEnter(GameCollider* _pOther);
+    virtual void OnCollision(GameCollider* _pOther);
+    virtual void OnCollisionExit(GameCollider* _pOther);
 
     PLAYER_STATE GetPlayerState()
     {

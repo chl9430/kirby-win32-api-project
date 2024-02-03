@@ -51,6 +51,14 @@ public:
 	{
 		return m_fFricCoeff;
 	}
+	void SetMaxVelocity(Vec2 _v)
+	{
+		m_vMaxVelocity = _v;
+	}
+	Vec2 GetMaxVelocity()
+	{
+		return m_vMaxVelocity;
+	}
 	GameObject* GetObj()
 	{
 		return m_pOwner;

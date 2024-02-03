@@ -732,6 +732,173 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, float _f
 		return;
 	}
 
+	if (_strName == L"KEEP_HIT_RIGHT" || _strName == L"KEEP_HIT_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 52.f, 48.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 56.f, 4.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 48.f, 44.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 108.f, 2.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 50.f, 46.f };
+		m_vecFrm.push_back(frm03);
+
+		return;
+	}
+
+	if (_strName == L"EXHALE_RIGHT" || _strName == L"EXHALE_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 48.f, 44.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 52.f, 0.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 48.f, 44.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 104.f, 2.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 42.f, 42.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 150.f, 4.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 44.f, 40.f };
+		m_vecFrm.push_back(frm04);
+
+		tAnimFrm frm05 = {};
+		frm05.fDuration = _fDuration;
+		frm05.vLT = Vec2{ 198.f, 6.f };
+		frm05.vOffset = Vec2{ 0.f, 0.f };
+		frm05.vSlice = Vec2{ 42.f, 38.f };
+		m_vecFrm.push_back(frm05);
+
+		return;
+	}
+
+	if (_strName == L"SWALLOW_RIGHT" || _strName == L"SWALLOW_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 16.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 60.f, 28.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 64.f, 16.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 52.f, 28.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 120.f, 0.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 36.f, 44.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 160.f, 10.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 44.f, 34.f };
+		m_vecFrm.push_back(frm04);
+
+		return;
+	}
+
+	if (_strName == L"HIT_RIGHT" || _strName == L"HIT_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 44.f, 44.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 48.f, 10.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 44.f, 34.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 96.f, 8.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 42.f, 36.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 144.f, 4.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 34.f, 40.f };
+		m_vecFrm.push_back(frm04);
+
+		tAnimFrm frm05 = {};
+		frm05.fDuration = _fDuration;
+		frm05.vLT = Vec2{ 184.f, 8.f };
+		frm05.vOffset = Vec2{ 0.f, 0.f };
+		frm05.vSlice = Vec2{ 40.f, 36.f };
+		m_vecFrm.push_back(frm05);
+
+		tAnimFrm frm06 = {};
+		frm06.fDuration = _fDuration;
+		frm06.vLT = Vec2{ 230.f, 10.f };
+		frm06.vOffset = Vec2{ 0.f, 0.f };
+		frm06.vSlice = Vec2{ 44.f, 34.f };
+		m_vecFrm.push_back(frm06);
+
+		tAnimFrm frm07 = {};
+		frm07.fDuration = _fDuration;
+		frm07.vLT = Vec2{ 278.f, 8.f };
+		frm07.vOffset = Vec2{ 0.f, 0.f };
+		frm07.vSlice = Vec2{ 44.f, 36.f };
+		m_vecFrm.push_back(frm07);
+
+		tAnimFrm frm08 = {};
+		frm08.fDuration = _fDuration;
+		frm08.vLT = Vec2{ 326.f, 6.f };
+		frm08.vOffset = Vec2{ 0.f, 0.f };
+		frm08.vSlice = Vec2{ 38.f, 38.f };
+		m_vecFrm.push_back(frm08);
+
+		tAnimFrm frm09 = {};
+		frm09.fDuration = _fDuration;
+		frm09.vLT = Vec2{ 368.f, 4.f };
+		frm09.vOffset = Vec2{ 0.f, 0.f };
+		frm09.vSlice = Vec2{ 38.f, 40.f };
+		m_vecFrm.push_back(frm09);
+
+		return;
+	}
+
 	if (_strName == L"WADDLE_DEE_WALK_RIGHT" || _strName == L"WADDLE_DEE_WALK_LEFT")
 	{
 		tAnimFrm frm01 = {};
@@ -851,6 +1018,53 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, float _f
 		frm01.vOffset = Vec2{ 0.f, 0.f };
 		frm01.vSlice = Vec2{ 46.f, 48.f };
 		m_vecFrm.push_back(frm01);
+
+		return;
+	}
+
+	if (_strName == L"STAR_DESTROY")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 32.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 32.f, 32.f };
+		m_vecFrm.push_back(frm01);
+
+		tAnimFrm frm02 = {};
+		frm02.fDuration = _fDuration;
+		frm02.vLT = Vec2{ 36.f, 0.f };
+		frm02.vOffset = Vec2{ 0.f, 0.f };
+		frm02.vSlice = Vec2{ 66.f, 64.f };
+		m_vecFrm.push_back(frm02);
+
+		tAnimFrm frm03 = {};
+		frm03.fDuration = _fDuration;
+		frm03.vLT = Vec2{ 106.f, 32.f };
+		frm03.vOffset = Vec2{ 0.f, 0.f };
+		frm03.vSlice = Vec2{ 32.f, 32.f };
+		m_vecFrm.push_back(frm03);
+
+		tAnimFrm frm04 = {};
+		frm04.fDuration = _fDuration;
+		frm04.vLT = Vec2{ 142.f, 32.f };
+		frm04.vOffset = Vec2{ 0.f, 0.f };
+		frm04.vSlice = Vec2{ 32.f, 32.f };
+		m_vecFrm.push_back(frm04);
+
+		tAnimFrm frm05 = {};
+		frm05.fDuration = _fDuration;
+		frm05.vLT = Vec2{ 178.f, 32.f };
+		frm05.vOffset = Vec2{ 0.f, 0.f };
+		frm05.vSlice = Vec2{ 32.f, 32.f };
+		m_vecFrm.push_back(frm05);
+
+		tAnimFrm frm06 = {};
+		frm06.fDuration = _fDuration;
+		frm06.vLT = Vec2{ 214.f, 36.f };
+		frm06.vOffset = Vec2{ 0.f, 0.f };
+		frm06.vSlice = Vec2{ 28.f, 28.f };
+		m_vecFrm.push_back(frm06);
 
 		return;
 	}
