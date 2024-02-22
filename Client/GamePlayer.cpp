@@ -26,6 +26,7 @@
 #include "AI.h"
 #include "GameState.h"
 #include "GameEatenState.h"
+#include "GameLaunchedState.h"
 
 #define IS_KIRBY_WALKING GetTouchBottom() && (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 #define IS_KIRBY_WALK_READYING GetTouchBottom() && (GetRigidBody()->GetVelocity().x != 0.f)
@@ -1067,6 +1068,7 @@ void GamePlayer::LaunchMon()
 	if (m_pEatenMon != nullptr)
 	{
 		((GameMonster*)m_pEatenMon)->GetAI()->SetCurState(MON_STATE::LAUNCHED);
+		((GameLaunchedState*)((GameMonster*)m_pEatenMon)->GetAI()->GetCurState())->SetLaunchDir(GetObjDir());
 	}
 
 	m_pEatenMon = nullptr;
@@ -1076,12 +1078,14 @@ void GamePlayer::OnCollisionEnter(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (m_eCurState == PLAYER_STATE::INHALE || m_eCurState == PLAYER_STATE::POWER_INHALE)
+	if (m_eCurState == PLAYER_STATE::INHALE // 커비가 일반 빨아들이기 상태라면
+		|| m_eCurState == PLAYER_STATE::POWER_INHALE) // 커비가 강한 빨아들이기 상태라면
 	{
 		if (pOtherObj->GetName() == L"Waddle_Dee")
 		{
 			GameMonster* pMon = (GameMonster*)pOtherObj;
 
+			// 몬스터를 먹힘 상태로 변경
 			m_pEatenMon = pMon;
 			pMon->SetIsMonStar(true);
 			pMon->GetAI()->SetCurState(MON_STATE::EATEN);
@@ -1096,22 +1100,26 @@ void GamePlayer::OnCollision(GameCollider* _pOther)
 
 	if (pOtherObj->GetName() == L"Waddle_Dee")
 	{
+		// 커비가 무적상태가 아니고, 몬스터가 별 상태가 아니라면
 		if (!GetIsInvincible() && !((GameMonster*)pOtherObj)->IsMonStar())
 		{
+			// 커비를 무적상태로 변경
 			SetIsInvincible(true);
 
+			// 커비가 몬스터와 맞은 위치가 x값 기준 몬스터보다 앞이라면
 			if (pOtherObj->GetPos().x < GetPos().x)
 			{
 				SetObjDir(-1);
 				GetRigidBody()->SetVelocity(Vec2{ 100.f * -GetObjDir(), GetRigidBody()->GetVelocity().y });
 			}
-			else
+			else // 커비가 몬스터와 맞은 위치가 x값 기준 몬스터보다 뒤라면
 			{
 				SetObjDir(1);
 				GetRigidBody()->SetVelocity(Vec2{ 100.f * -GetObjDir(), GetRigidBody()->GetVelocity().y });
 			}
 
-			if ((int)m_eCurState >= 12 && (int)m_eCurState <= 18)
+			// 커비가 뭔가 물고 있는 상태에서 맞았다면 (KEEP_START ~ KEEP_HIT : 값 변경 주의)
+			if ((int)m_eCurState >= 15 && (int)m_eCurState <= 22)
 			{
 				m_eCurState = PLAYER_STATE::KEEP_HIT;
 
@@ -1120,7 +1128,7 @@ void GamePlayer::OnCollision(GameCollider* _pOther)
 				else
 					GetAnimator()->Play(L"KEEP_HIT_RIGHT", false);
 			}
-			else
+			else // 커비가 뭔가 물고 있지않는 상태에서 맞았다면
 			{
 				m_eCurState = PLAYER_STATE::HIT;
 

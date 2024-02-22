@@ -142,20 +142,17 @@ void GameMonster::OnCollision(GameCollider* _pOther)
 {
 	GameObject* pOther = _pOther->GetObj();
 
-	if (pOther->GetName() == L"Tile" && m_bIsStar && m_pAI->GetCurState()->GetType() == MON_STATE::LAUNCHED && GetTouchRight())
+	if (pOther->GetName() == L"Tile" 
+		&& m_bIsStar // 몬스터가 별 상태이고
+		&& m_pAI->GetCurState()->GetType() == MON_STATE::LAUNCHED) // 발사되어진 상태라면
 	{
-		m_bIsDestroying = true;
+		if (GetTouchRight() || GetTouchLeft())
+		{
+			m_bIsDestroying = true;
+		}
 	}
 }
 
 void GameMonster::OnCollisionExit(GameCollider* _pOther)
 {
-	if (_pOther->GetObj()->GetName() == L"Inhale"
-		|| _pOther->GetObj()->GetName() == L"Power_Inhale")
-	{
-		if (!m_bIsStar)
-		{
-			m_pAI->SetCurState(MON_STATE::WALK);
-		}
-	}
 }

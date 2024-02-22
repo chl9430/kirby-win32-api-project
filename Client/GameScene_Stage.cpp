@@ -35,8 +35,8 @@ void GameScene_Stage::Enter()
 	GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 140.f, 80.f });
 	AddObject(pWaddleDee, GROUP_TYPE::MONSTER);
 
-	/*GameMonster* pWaddleDee2 = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 100.f, 80.f });
-	AddObject(pWaddleDee2, GROUP_TYPE::MONSTER);*/
+	GameMonster* pWaddleDee2 = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 220.f, 80.f });
+	AddObject(pWaddleDee2, GROUP_TYPE::MONSTER);
 
 	/*GameMonster* pScarfy = GameMonsterFactory::CreateMonster(MON_TYPE::SCARFY, Vec2{ 140.f, 100.f });
 	AddObject(pScarfy, GROUP_TYPE::MONSTER);

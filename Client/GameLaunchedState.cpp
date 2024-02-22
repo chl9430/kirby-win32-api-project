@@ -9,6 +9,7 @@
 
 GameLaunchedState::GameLaunchedState()
 	: GameState{ MON_STATE::LAUNCHED }
+	, m_iDir{ 1 }
 {
 }
 
@@ -18,7 +19,7 @@ GameLaunchedState::~GameLaunchedState()
 
 void GameLaunchedState::Update()
 {
-	GetAI()->GetObj()->GetRigidBody()->SetVelocity(Vec2{ 400.f, 0.f });
+	GetAI()->GetObj()->GetRigidBody()->SetVelocity(Vec2{ 400.f * m_iDir, 0.f });
 }
 
 void GameLaunchedState::Enter()
