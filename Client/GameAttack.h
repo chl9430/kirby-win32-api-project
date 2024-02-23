@@ -1,17 +1,19 @@
 #pragma once
 #include "GameObject.h"
 
+class GamePlayer;
+
 class GameAttack :
 	public GameObject
 {
 private:
-	GameObject* m_pOwner;
+	GamePlayer* m_pOwner;
 	Vec2 m_vOffset;
 
 public:
 	virtual void Update();
 
-	GameObject* GetOwner()
+	GamePlayer* GetOwner()
 	{
 		return m_pOwner;
 	}

@@ -267,11 +267,11 @@
     <ClInclude Include="GameMonster.h">
       <Filter>Engine\06. Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="GameEatenState.h">
+    <ClInclude Include="GameHitState.h">
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClInclude>
-    <ClInclude Include="GameLaunchedState.h">
-      <Filter>Engine\08. Module\AI\State</Filter>
+    <ClInclude Include="GameMissile.h">
+      <Filter>Engine\06. Object\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -393,11 +393,11 @@
     <ClCompile Include="GameDrawnState.cpp">
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClCompile>
-    <ClCompile Include="GameEatenState.cpp">
+    <ClCompile Include="GameHitState.cpp">
       <Filter>Engine\08. Module\AI\State</Filter>
     </ClCompile>
-    <ClCompile Include="GameLaunchedState.cpp">
-      <Filter>Engine\08. Module\AI\State</Filter>
+    <ClCompile Include="GameMissile.cpp">
+      <Filter>Engine\06. Object\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -972,6 +972,18 @@ void GameAnimation::Create(const wstring& _strName, GameTexture* _pTex, float _f
 		return;
 	}
 
+	if (_strName == L"WADDLE_DEE_HIT_RIGHT" || _strName == L"WADDLE_DEE_HIT_LEFT")
+	{
+		tAnimFrm frm01 = {};
+		frm01.fDuration = _fDuration;
+		frm01.vLT = Vec2{ 0.f, 0.f };
+		frm01.vOffset = Vec2{ 0.f, 0.f };
+		frm01.vSlice = Vec2{ 46.f, 46.f };
+		m_vecFrm.push_back(frm01);
+
+		return;
+	}
+
 	if (_strName == L"SCARFY_IDLE_RIGHT" || _strName == L"SCARFY_IDLE_LEFT")
 	{
 		tAnimFrm frm01 = {};

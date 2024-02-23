@@ -32,10 +32,10 @@ void GameScene_Stage::Enter()
 
 	RegisterPlayer(pObj);
 
-	GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 140.f, 80.f });
+	GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_NAME::WADDLE_DEE, Vec2{ 140.f, 80.f });
 	AddObject(pWaddleDee, GROUP_TYPE::MONSTER);
 
-	GameMonster* pWaddleDee2 = GameMonsterFactory::CreateMonster(MON_TYPE::WADDLE_DEE, Vec2{ 220.f, 80.f });
+	GameMonster* pWaddleDee2 = GameMonsterFactory::CreateMonster(MON_NAME::WADDLE_DEE, Vec2{ 220.f, 80.f });
 	AddObject(pWaddleDee2, GROUP_TYPE::MONSTER);
 
 	/*GameMonster* pScarfy = GameMonsterFactory::CreateMonster(MON_TYPE::SCARFY, Vec2{ 140.f, 100.f });
@@ -45,6 +45,8 @@ void GameScene_Stage::Enter()
 	AddObject(pPengy, GROUP_TYPE::MONSTER);*/
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
+	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::STAR, GROUP_TYPE::MONSTER);
+	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::STAR, GROUP_TYPE::TILE);
 
 	Start();
 }

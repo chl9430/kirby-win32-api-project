@@ -31,6 +31,7 @@ enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
 	MONSTER,
 	PLAYER,
 	TILE,
+	STAR,
 	PROJ_PLAYER,
 	PROJ_MONSTER,
 	UI = 31,
@@ -70,6 +71,20 @@ enum class EVENT_TYPE
 	END
 };
 
+enum class MON_TYPE
+{
+	ICE,
+	NORMAL,
+	END
+};
+
+enum class MON_NAME
+{
+	WADDLE_DEE,
+	SCARFY,
+	PENGY
+};
+
 enum class MON_STATE
 {
 	IDLE,
@@ -78,6 +93,7 @@ enum class MON_STATE
 	DRAWN,
 	EATEN,
 	LAUNCHED,
+	HIT,
 	PATROL,
 	TRACE,
 	ATT,

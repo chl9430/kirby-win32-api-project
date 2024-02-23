@@ -3,6 +3,7 @@
 
 #include "GameCamera.h"
 #include "GameTimeMgr.h"
+#include "GameEventMgr.h"
 
 #include "GameSight.h"
 #include "GameCollider.h"
@@ -15,6 +16,7 @@ GameObject::GameObject(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	: m_strName{ _strName }
 	, m_vPos{ _vPos }
 	, m_vScale{ _vScale }
+	, m_eGroupType{ GROUP_TYPE::DEFAULT }
 	, m_bAlive{ true }
 	, m_iDir{ 1 }
 	, m_iPrevDir{ 1 }
@@ -155,4 +157,13 @@ void GameObject::SetTouchBottom(bool _b)
 		Vec2 vV = GetRigidBody()->GetVelocity();
 		GetRigidBody()->SetVelocity(Vec2{ vV.x, 0.f });
 	}
+}
+
+void GameObject::DestroyObj()
+{
+	tEvent tEve = {};
+	tEve.eEven = EVENT_TYPE::DELETE_OBJECT;
+	tEve.lParam = (DWORD_PTR)this;
+
+	GameEventMgr::GetInst()->AddEvent(tEve);
 }

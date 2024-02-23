@@ -176,6 +176,12 @@ void GameScene::DeleteGroup(GROUP_TYPE _eTarget)
 	Safe_Delete_Vec<GameObject*>(m_arrObj[(UINT)_eTarget]);
 }
 
+void GameScene::AddObject(GameObject* _pObj, GROUP_TYPE _eType)
+{
+	m_arrObj[(UINT)_eType].push_back(_pObj);
+	_pObj->SetGroupType(_eType);
+}
+
 void GameScene::SortObjectGroup(GROUP_TYPE _eType)
 {
 	sort(m_arrObj[(UINT)_eType].begin(), m_arrObj[(UINT)_eType].end()

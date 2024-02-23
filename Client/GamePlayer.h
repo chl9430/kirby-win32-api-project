@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+class GameMissile;
+
 enum class PLAYER_STATE
 {
     IDLE,
@@ -42,7 +44,10 @@ private:
     float m_fWalkSpeed;
     float m_fFloatMoveSpeed;
 
-    GameObject* m_pEatenMon;
+    vector<GameObject*> m_vecInhaleRangeMon;
+    vector<GameObject*> m_vecPowerInhaleRangeMon;
+    MON_TYPE m_eEatenMon;
+    GameMissile* m_pStarMissile;
 
 public:
     virtual void Update();
@@ -56,6 +61,7 @@ public:
     void UpdateAnimation();
 
     void JumpKirby();
+    void InhaleMon();
     void SwallowMon();
     void LaunchMon();
 
@@ -66,6 +72,22 @@ public:
     PLAYER_STATE GetPlayerState()
     {
         return m_eCurState;
+    }
+    void AddInhaleRangeMon(GameObject* _pObj)
+    {
+        m_vecInhaleRangeMon.push_back(_pObj);
+    }
+    void RemoveInhaleRangeMon(GameObject* _pObj)
+    {
+        m_vecInhaleRangeMon.erase(remove(m_vecInhaleRangeMon.begin(), m_vecInhaleRangeMon.end(), _pObj), m_vecInhaleRangeMon.end());
+    }
+    void AddPowerInhaleRangeMon(GameObject* _pObj)
+    {
+        m_vecPowerInhaleRangeMon.push_back(_pObj);
+    }
+    void RemovePowerInhaleRangeMon(GameObject* _pObj)
+    {
+        m_vecPowerInhaleRangeMon.erase(remove(m_vecPowerInhaleRangeMon.begin(), m_vecPowerInhaleRangeMon.end(), _pObj), m_vecPowerInhaleRangeMon.end());
     }
 
     GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale);

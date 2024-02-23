@@ -3,6 +3,7 @@
 
 #include "GameResMgr.h"
 #include "GameEventMgr.h"
+#include "GameTimeMgr.h"
 
 #include "GamePlayer.h"
 #include "GameAttack.h"
@@ -15,30 +16,23 @@
 #include "AI.h"
 #include "GameState.h"
 #include "GameDrawnState.h"
-#include "GameEatenState.h"
+#include "GameHitState.h"
 
 GameMonster::GameMonster(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	: GameObject(_strName, _vPos, _vScale)
 	, m_tInfo{}
+	, m_eMonType{ MON_TYPE::NORMAL }
 	, m_pAI{ nullptr }
 	, m_strWalkRightAnimKey{}
 	, m_strWalkLeftAnimKey{}
 	, m_strDrawnRightAnimKey{}
 	, m_strDrawnLeftAnimKey{}
-	, m_strStarAnimKey{}
-	, m_strStarDestroyAnimKey{}
-	, m_bIsStar{ false }
+	, m_strHitRightAnimKey{}
+	, m_strHitLeftAnimKey{}
+	, m_fHitTime{ 0.f }
+	, m_fHitFinishTime{ 0.1f }
 {
 	CreateAnimator();
-
-	GameTexture* m_pStarTex = GameResMgr::GetInst()->LoadTexture(L"Star", L"texture\\Star.bmp");
-	GameTexture* m_pStarDestroyTex = GameResMgr::GetInst()->LoadTexture(L"Star_Destroy", L"texture\\Star_Destroy.bmp");
-
-	GetAnimator()->CreateAnimation(L"STAR", m_pStarTex, 0.15f);
-	GetAnimator()->CreateAnimation(L"STAR_DESTROY", m_pStarDestroyTex, 0.03f);
-
-	m_strStarAnimKey = L"STAR";
-	m_strStarDestroyAnimKey = L"STAR_DESTROY";
 }
 
 GameMonster::~GameMonster()
@@ -49,22 +43,22 @@ GameMonster::~GameMonster()
 
 void GameMonster::Update()
 {
-	if (m_bIsDestroying)
-	{
-		GetAnimator()->Play(m_strStarDestroyAnimKey, false);
+	UpdateAnimation();
 
-		if (GetAnimator()->GetCurrentAnim()->IsFinish())
+	if (GetAI()->GetCurState()->GetType() == MON_STATE::HIT)
+	{
+		m_fHitTime += fDT;
+
+		if (m_fHitTime >= m_fHitFinishTime)
 		{
-			DestroyMon();
+			m_pAI->SetCurState(MON_STATE::WALK);
+
+			m_fHitTime = 0.f;
 		}
 	}
-	else
-	{
-		UpdateAnimation();
 
-		if (nullptr != m_pAI)
-			m_pAI->Update();
-	}
+	if (nullptr != m_pAI)
+		m_pAI->Update();
 }
 
 void GameMonster::Render(HDC _dc)
@@ -77,12 +71,6 @@ void GameMonster::Render(HDC _dc)
 
 void GameMonster::UpdateAnimation()
 {
-	if (m_bIsStar)
-	{
-		GetAnimator()->Play(m_strStarAnimKey, true);
-		return;
-	}
-
 	MON_STATE eCurMonState = m_pAI->GetCurState()->GetType();
 
 	switch (eCurMonState)
@@ -107,25 +95,21 @@ void GameMonster::UpdateAnimation()
 	break;
 	case MON_STATE::DRAWN:
 	{
-		if (GetAnimator()->GetCurrentAnim()->GetName() != m_strStarAnimKey)
-		{
-			if (GetObjDir() == 1)
-				GetAnimator()->Play(m_strDrawnRightAnimKey, true);
-			else
-				GetAnimator()->Play(m_strDrawnLeftAnimKey, true);
-		}
+		if (GetObjDir() == 1)
+			GetAnimator()->Play(m_strDrawnRightAnimKey, true);
+		else
+			GetAnimator()->Play(m_strDrawnLeftAnimKey, true);
+	}
+	break;
+	case MON_STATE::HIT:
+	{
+		if (GetObjDir() == 1)
+			GetAnimator()->Play(m_strHitRightAnimKey, true);
+		else
+			GetAnimator()->Play(m_strHitLeftAnimKey, true);
 	}
 	break;
 	}
-}
-
-void GameMonster::DestroyMon()
-{
-	tEvent tEve = {};
-	tEve.eEven = EVENT_TYPE::DELETE_OBJECT;
-	tEve.lParam = (DWORD_PTR)this;
-
-	GameEventMgr::GetInst()->AddEvent(tEve);
 }
 
 void GameMonster::SetAI(AI* _pAI)
@@ -136,21 +120,16 @@ void GameMonster::SetAI(AI* _pAI)
 
 void GameMonster::OnCollisionEnter(GameCollider* _pOther)
 {
+	GameObject* pOtherObj = _pOther->GetObj();
+
+	if (pOtherObj->GetGroupType() == GROUP_TYPE::STAR)
+	{
+		GetAI()->SetCurState(MON_STATE::HIT);
+	}
 }
 
 void GameMonster::OnCollision(GameCollider* _pOther)
 {
-	GameObject* pOther = _pOther->GetObj();
-
-	if (pOther->GetName() == L"Tile" 
-		&& m_bIsStar // 몬스터가 별 상태이고
-		&& m_pAI->GetCurState()->GetType() == MON_STATE::LAUNCHED) // 발사되어진 상태라면
-	{
-		if (GetTouchRight() || GetTouchLeft())
-		{
-			m_bIsDestroying = true;
-		}
-	}
 }
 
 void GameMonster::OnCollisionExit(GameCollider* _pOther)

@@ -17,17 +17,19 @@ class GameMonster :
 {
 private:
 	tMonInfo m_tInfo;
+	MON_TYPE m_eMonType;
 	AI* m_pAI;
 
 	wstring m_strWalkRightAnimKey;
 	wstring m_strWalkLeftAnimKey;
 	wstring m_strDrawnRightAnimKey;
 	wstring m_strDrawnLeftAnimKey;
-	wstring m_strStarAnimKey;
-	wstring m_strStarDestroyAnimKey;
+	wstring m_strHitRightAnimKey;
+	wstring m_strHitLeftAnimKey;
 
-	bool m_bIsStar;
 	bool m_bIsDestroying;
+	float m_fHitTime;
+	float m_fHitFinishTime;
 
 	void SetMonInfo(const tMonInfo& _info)
 	{
@@ -40,8 +42,6 @@ public:
 
 	void UpdateAnimation();
 
-	void DestroyMon();
-
 	void SetAI(AI* _pAI);
 	AI* GetAI()
 	{
@@ -50,6 +50,14 @@ public:
 	tMonInfo& GetMonInfo()
 	{
 		return m_tInfo;
+	}
+	void SetMonType(MON_TYPE _eType)
+	{
+		m_eMonType = _eType;
+	}
+	MON_TYPE GetMonType()
+	{
+		return m_eMonType;
 	}
 	void SetWalkAnimationKey(wstring _pRightAnimKey, wstring _pLeftAnimKey)
 	{
@@ -61,13 +69,10 @@ public:
 		m_strDrawnRightAnimKey = _pRightAnimKey;
 		m_strDrawnLeftAnimKey = _pLeftAnimKey;
 	}
-	void SetIsMonStar(bool _b)
+	void SetHitAnimationKey(wstring _pRightAnimKey, wstring _pLeftAnimKey)
 	{
-		m_bIsStar = _b;
-	}
-	bool IsMonStar()
-	{
-		return m_bIsStar;
+		m_strHitRightAnimKey = _pRightAnimKey;
+		m_strHitLeftAnimKey = _pLeftAnimKey;
 	}
 
 	virtual void OnCollisionEnter(GameCollider* _pOther);

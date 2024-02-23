@@ -15,6 +15,7 @@
 #include "GameScene.h"
 
 #include "GameAttack.h"
+#include "GameMissile.h"
 #include "GameMonster.h"
 
 #include "GameAnimator.h"
@@ -25,8 +26,7 @@
 
 #include "AI.h"
 #include "GameState.h"
-#include "GameEatenState.h"
-#include "GameLaunchedState.h"
+#include "GameDrawnState.h"
 
 #define IS_KIRBY_WALKING GetTouchBottom() && (KEY_HOLD(KEY::LEFT) || KEY_HOLD(KEY::RIGHT))
 #define IS_KIRBY_WALK_READYING GetTouchBottom() && (GetRigidBody()->GetVelocity().x != 0.f)
@@ -43,7 +43,10 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_fFloatJumpPower{ -150.f }
 	, m_fWalkSpeed{ 120.f }
 	, m_fFloatMoveSpeed{ 60.f }
-	, m_pEatenMon{ nullptr }
+	, m_vecInhaleRangeMon{}
+	, m_vecPowerInhaleRangeMon{}
+	, m_eEatenMon{ MON_TYPE::END }
+	, m_pStarMissile{ nullptr }
 {
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
@@ -181,6 +184,11 @@ void GamePlayer::Update()
 	UpdateMove();
 	UpdateAnimation();
 
+	if (m_pStarMissile != nullptr)
+	{
+		m_pStarMissile->FollowOwner();
+	}
+
 	if (GetPos().y >= (float)GameCore::GetInst()->GetResolution().y / 2 || GetPos().x >= (float)GameCore::GetInst()->GetResolution().x / 2)
 	{
 		GameCamera::GetInst()->SetTargetObj(this);
@@ -218,7 +226,8 @@ void GamePlayer::CreateInhale()
 
 void GamePlayer::UpdateDir()
 {
-	if (m_eCurState != PLAYER_STATE::HIT && m_eCurState != PLAYER_STATE::KEEP_HIT)
+	if (m_eCurState != PLAYER_STATE::HIT && m_eCurState != PLAYER_STATE::KEEP_HIT 
+		&& m_eCurState != PLAYER_STATE::INHALE && m_eCurState != PLAYER_STATE::POWER_INHALE)
 	{
 		if (KEY_TAP(KEY::LEFT))
 		{
@@ -336,10 +345,35 @@ void GamePlayer::UpdateState()
 
 	if (m_eCurState == PLAYER_STATE::INHALE)
 	{
+		InhaleMon();
+
 		m_fInhaleTime += fDT;
 
-		if (m_fInhaleTime > 0.5f)
+		if (m_fInhaleTime > 0.5f && m_vecInhaleRangeMon.empty())
 		{
+			if (GetAnimator()->GetCurrentAnim()->GetName() == L"INHALE_LEFT") // 방향을 바꿀 수 없었기에 방향을 애니메이션이 끝나면 맞춰줌
+			{
+				if (KEY_HOLD(KEY::RIGHT))
+				{
+					SetObjDir(1);
+				}
+				else if (KEY_HOLD(KEY::LEFT))
+				{
+					SetObjDir(-1);
+				}
+			}
+			else if (GetAnimator()->GetCurrentAnim()->GetName() == L"INHALE_RIGHT")
+			{
+				if (KEY_HOLD(KEY::LEFT))
+				{
+					SetObjDir(-1);
+				}
+				else if (KEY_HOLD(KEY::RIGHT))
+				{
+					SetObjDir(1);
+				}
+			}
+
 			m_eCurState = PLAYER_STATE::IDLE;
 
 			if (IS_KIRBY_WALKING)
@@ -360,7 +394,7 @@ void GamePlayer::UpdateState()
 			m_fInhaleTime = 0.f;
 		}
 
-		if (m_pEatenMon)
+		if (m_vecInhaleRangeMon.empty() && m_eEatenMon != MON_TYPE::END)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_START;
 		}
@@ -370,10 +404,35 @@ void GamePlayer::UpdateState()
 
 	if (m_eCurState == PLAYER_STATE::POWER_INHALE)
 	{
+		InhaleMon();
+
 		m_fPowerInhaleTime += fDT;
 
-		if (m_fPowerInhaleTime > 1.5f)
+		if (m_fPowerInhaleTime > 1.5f && m_vecPowerInhaleRangeMon.empty())
 		{
+			if (GetAnimator()->GetCurrentAnim()->GetName() == L"POWER_INHALE_LEFT") // 방향을 바꿀 수 없었기에 방향을 애니메이션이 끝나면 맞춰줌
+			{
+				if (KEY_HOLD(KEY::RIGHT))
+				{
+					SetObjDir(1);
+				}
+				else if (KEY_HOLD(KEY::LEFT))
+				{
+					SetObjDir(-1);
+				}
+			}
+			else if (GetAnimator()->GetCurrentAnim()->GetName() == L"POWER_INHALE_RIGHT")
+			{
+				if (KEY_HOLD(KEY::LEFT))
+				{
+					SetObjDir(-1);
+				}
+				else if (KEY_HOLD(KEY::RIGHT))
+				{
+					SetObjDir(1);
+				}
+			}
+
 			m_eCurState = PLAYER_STATE::IDLE;
 
 			if (IS_KIRBY_WALKING)
@@ -389,7 +448,7 @@ void GamePlayer::UpdateState()
 			m_fPowerInhaleTime = 0.f;
 		}
 
-		if (m_pEatenMon)
+		if (m_vecInhaleRangeMon.empty() && m_eEatenMon != MON_TYPE::END)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_START;
 		}
@@ -673,7 +732,7 @@ void GamePlayer::UpdateState()
 	{
 		if (GetAnimator()->GetCurrentAnim()->IsFinish())
 		{
-			if (GetAnimator()->GetCurrentAnim()->GetName() == L"KEEP_HIT_LEFT")
+			if (GetAnimator()->GetCurrentAnim()->GetName() == L"KEEP_HIT_LEFT") // 방향을 바꿀 수 없었기에 방향을 애니메이션이 끝나면 맞춰줌
 			{
 				if (KEY_HOLD(KEY::RIGHT))
 				{
@@ -780,7 +839,7 @@ void GamePlayer::UpdateState()
 	{
 		if (GetAnimator()->GetCurrentAnim()->IsFinish())
 		{
-			if (GetAnimator()->GetCurrentAnim()->GetName() == L"HIT_LEFT")
+			if (GetAnimator()->GetCurrentAnim()->GetName() == L"HIT_LEFT") // 방향을 바꿀 수 없었기에 방향을 애니메이션이 끝나면 맞춰줌
 			{
 				if (KEY_HOLD(KEY::RIGHT))
 				{
@@ -1035,7 +1094,6 @@ void GamePlayer::UpdateAnimation()
 
 void GamePlayer::JumpKirby()
 {
-
 	if (m_eCurState >= PLAYER_STATE::KEEP_IDLE)
 	{
 		m_eCurState = PLAYER_STATE::KEEP_JUMP;
@@ -1048,6 +1106,27 @@ void GamePlayer::JumpKirby()
 	GetRigidBody()->SetVelocity(Vec2{ GetRigidBody()->GetVelocity().x, m_fJumpPower });
 }
 
+void GamePlayer::InhaleMon()
+{
+	if (m_eCurState == PLAYER_STATE::INHALE)
+	{
+		for (int i = 0; i < m_vecInhaleRangeMon.size(); i++)
+		{
+			((GameMonster*)m_vecInhaleRangeMon[i])->GetAI()->SetCurState(MON_STATE::DRAWN);
+			((GameDrawnState*)((GameMonster*)m_vecInhaleRangeMon[i])->GetAI()->GetCurState())->SetDestPos(GetPos());
+		}
+	}
+
+	if (m_eCurState == PLAYER_STATE::POWER_INHALE)
+	{
+		for (int i = 0; i < m_vecPowerInhaleRangeMon.size(); i++)
+		{
+			((GameMonster*)m_vecPowerInhaleRangeMon[i])->GetAI()->SetCurState(MON_STATE::DRAWN);
+			((GameDrawnState*)((GameMonster*)m_vecPowerInhaleRangeMon[i])->GetAI()->GetCurState())->SetDestPos(GetPos());
+		}
+	}
+}
+
 void GamePlayer::SwallowMon()
 {
 	m_eCurState = PLAYER_STATE::SWALLOW;
@@ -1056,63 +1135,83 @@ void GamePlayer::SwallowMon()
 	//{
 
 	//}
-
-	((GameMonster*)m_pEatenMon)->DestroyMon();
-	m_pEatenMon = nullptr;
+	m_eEatenMon = MON_TYPE::END;
 }
 
 void GamePlayer::LaunchMon()
 {
 	m_eCurState = PLAYER_STATE::EXHALE;
 
-	if (m_pEatenMon != nullptr)
+	if (m_pStarMissile != nullptr)
 	{
-		((GameMonster*)m_pEatenMon)->GetAI()->SetCurState(MON_STATE::LAUNCHED);
-		((GameLaunchedState*)((GameMonster*)m_pEatenMon)->GetAI()->GetCurState())->SetLaunchDir(GetObjDir());
+		GetObjScene()->AddObject(m_pStarMissile, GROUP_TYPE::STAR);
 	}
 
-	m_pEatenMon = nullptr;
+	m_pStarMissile = nullptr;
+	m_eEatenMon = MON_TYPE::END;
 }
 
 void GamePlayer::OnCollisionEnter(GameCollider* _pOther)
 {
-	GameObject* pOtherObj = _pOther->GetObj();
-
-	if (m_eCurState == PLAYER_STATE::INHALE // 커비가 일반 빨아들이기 상태라면
-		|| m_eCurState == PLAYER_STATE::POWER_INHALE) // 커비가 강한 빨아들이기 상태라면
-	{
-		if (pOtherObj->GetName() == L"Waddle_Dee")
-		{
-			GameMonster* pMon = (GameMonster*)pOtherObj;
-
-			// 몬스터를 먹힘 상태로 변경
-			m_pEatenMon = pMon;
-			pMon->SetIsMonStar(true);
-			pMon->GetAI()->SetCurState(MON_STATE::EATEN);
-			((GameEatenState*)pMon->GetAI()->GetCurState())->RegisterPlayer(this);
-		}
-	}
+	
 }
 
 void GamePlayer::OnCollision(GameCollider* _pOther)
 {
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Waddle_Dee")
+	if (pOtherObj->GetGroupType() == GROUP_TYPE::MONSTER)
 	{
-		// 커비가 무적상태가 아니고, 몬스터가 별 상태가 아니라면
-		if (!GetIsInvincible() && !((GameMonster*)pOtherObj)->IsMonStar())
+		// 몬스터를 먹는 로직
+		if ((m_eCurState == PLAYER_STATE::INHALE
+			|| m_eCurState == PLAYER_STATE::POWER_INHALE)
+			&& ((GameMonster*)pOtherObj)->GetAI()->GetCurState()->GetType() == MON_STATE::DRAWN)
+		{
+			RemoveInhaleRangeMon(pOtherObj);
+			RemovePowerInhaleRangeMon(pOtherObj);
+
+			if (m_eEatenMon != MON_TYPE::END) // 먹은 몬스터가 이미 있을 경우에는 타입 우선순위 확인
+			{
+				if (((GameMonster*)pOtherObj)->GetMonType() < m_eEatenMon)
+				{
+					m_eEatenMon = ((GameMonster*)pOtherObj)->GetMonType();
+				}
+			}
+			else
+			{
+				m_eEatenMon = ((GameMonster*)pOtherObj)->GetMonType();
+			}
+
+			pOtherObj->DestroyObj();
+
+			// 별 미사일 생성
+			GameTexture* m_pStarTex = GameResMgr::GetInst()->LoadTexture(L"Star", L"texture\\Star.bmp");
+			GameTexture* m_pStarDestroyTex = GameResMgr::GetInst()->LoadTexture(L"Star_Destroy", L"texture\\Star_Destroy.bmp");
+
+			m_pStarMissile = new GameMissile{ L"Star", GetPos(), Vec2{ TILE_SIZE, TILE_SIZE } };
+			m_pStarMissile->CreateAnimator();
+			m_pStarMissile->GetAnimator()->CreateAnimation(L"STAR", m_pStarTex, 0.15f);
+			m_pStarMissile->GetAnimator()->CreateAnimation(L"STAR_DESTROY", m_pStarDestroyTex, 0.03f);
+			m_pStarMissile->GetAnimator()->Play(L"STAR", true);
+			m_pStarMissile->SetOwner(this);
+
+			m_pStarMissile->CreateCollider();
+			m_pStarMissile->GetCollider()->SetScale(m_pStarMissile->GetScale());
+		}
+
+		// 커비가 맞는 로직
+		if (!GetIsInvincible() && (m_eCurState != PLAYER_STATE::INHALE && m_eCurState != PLAYER_STATE::POWER_INHALE))
 		{
 			// 커비를 무적상태로 변경
 			SetIsInvincible(true);
 
-			// 커비가 몬스터와 맞은 위치가 x값 기준 몬스터보다 앞이라면
+			// 커비가 몬스터와 맞은 위치에 따라 커비를 밀침
 			if (pOtherObj->GetPos().x < GetPos().x)
 			{
 				SetObjDir(-1);
 				GetRigidBody()->SetVelocity(Vec2{ 100.f * -GetObjDir(), GetRigidBody()->GetVelocity().y });
 			}
-			else // 커비가 몬스터와 맞은 위치가 x값 기준 몬스터보다 뒤라면
+			else
 			{
 				SetObjDir(1);
 				GetRigidBody()->SetVelocity(Vec2{ 100.f * -GetObjDir(), GetRigidBody()->GetVelocity().y });
@@ -1128,7 +1227,7 @@ void GamePlayer::OnCollision(GameCollider* _pOther)
 				else
 					GetAnimator()->Play(L"KEEP_HIT_RIGHT", false);
 			}
-			else // 커비가 뭔가 물고 있지않는 상태에서 맞았다면
+			else
 			{
 				m_eCurState = PLAYER_STATE::HIT;
 

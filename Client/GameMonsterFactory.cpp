@@ -17,8 +17,7 @@
 #include "GameDrawnState.h"
 #include "GameFloatIdleState.h"
 #include "GameIdleState.h"
-#include "GameEatenState.h"
-#include "GameLaunchedState.h"
+#include "GameHitState.h"
 
 GameMonsterFactory::GameMonsterFactory()
 {
@@ -28,13 +27,13 @@ GameMonsterFactory::~GameMonsterFactory()
 {
 }
 
-GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
+GameMonster* GameMonsterFactory::CreateMonster(MON_NAME _eType, Vec2 _vPos)
 {
 	GameMonster* pMon = nullptr;
 
 	switch (_eType)
 	{
-	case MON_TYPE::WADDLE_DEE:
+	case MON_NAME::WADDLE_DEE:
 	{
 		pMon = new GameMonster{ L"Waddle_Dee", _vPos, Vec2{  TILE_SIZE, TILE_SIZE } };
 
@@ -60,26 +59,30 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		GameTexture* pWalkLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeWalkLeft", L"texture\\Waddle_Dee_Walk_Left.bmp");
 		GameTexture* pDrawnRightTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeDrawnRight", L"texture\\Waddle_Dee_Drawn_Right.bmp");
 		GameTexture* pDrawnLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeDrawnLeft", L"texture\\Waddle_Dee_Drawn_Left.bmp");
+		GameTexture* pHitRightTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeHitRight", L"texture\\Waddle_Dee_Hit_Right.bmp");
+		GameTexture* pHitLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeHitLeft", L"texture\\Waddle_Dee_Hit_Left.bmp");
 
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_RIGHT", pWalkRightTex, 0.15f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_LEFT", pWalkLeftTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_RIGHT", pDrawnRightTex, 0.15f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_LEFT", pDrawnLeftTex, 0.2f);
+		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_HIT_RIGHT", pHitRightTex, 0.2f);
+		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_HIT_LEFT", pHitLeftTex, 0.2f);
 
 		pMon->SetWalkAnimationKey(L"WADDLE_DEE_WALK_RIGHT", L"WADDLE_DEE_WALK_LEFT");
 		pMon->SetDrawnAnimationKey(L"WADDLE_DEE_DRAWN_RIGHT", L"WADDLE_DEE_DRAWN_LEFT");
+		pMon->SetHitAnimationKey(L"WADDLE_DEE_HIT_RIGHT", L"WADDLE_DEE_HIT_LEFT");
 
 		AI* pAI = new AI;
-		pAI->AddState(new GameEatenState);
 		pAI->AddState(new GameWalkState);
 		pAI->AddState(new GameDrawnState);
-		pAI->AddState(new GameLaunchedState);
+		pAI->AddState(new GameHitState);
 		pAI->SetCurState(MON_STATE::WALK);
 
 		pMon->SetAI(pAI);
 	}
 	break;
-	case MON_TYPE::SCARFY:
+	case MON_NAME::SCARFY:
 	{
 		pMon = new GameMonster{ L"Scarfy", _vPos, Vec2{  TILE_SIZE, TILE_SIZE } };
 
@@ -113,7 +116,7 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		pMon->SetAI(pAI);
 	}
 	break;
-	case MON_TYPE::PENGY:
+	case MON_NAME::PENGY:
 	{
 		pMon = new GameMonster{ L"Pengy", _vPos, Vec2{  TILE_SIZE, TILE_SIZE } };
 

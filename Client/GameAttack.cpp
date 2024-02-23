@@ -27,42 +27,38 @@ void GameAttack::Update()
 
 void GameAttack::OnCollisionEnter(GameCollider* _pOther)
 {
-}
-
-void GameAttack::OnCollision(GameCollider* _pOther)
-{
 	GameObject* pOtherObj = _pOther->GetObj();
 
-	if (_pOther->GetObj()->GetName() == L"Waddle_Dee")
+	if (_pOther->GetObj()->GetGroupType() == GROUP_TYPE::MONSTER)
 	{
-		GameMonster* pMon = (GameMonster*)pOtherObj;
-
-		if (GetName() == L"Inhale" // 커비가 일반 빨아들이기 상태일 경우, 몬스터가 일반 빨아들이기 범위 내라면
-			&& ((GamePlayer*)m_pOwner)->GetPlayerState() == PLAYER_STATE::INHALE
-			&& pMon->GetAI()->GetCurState()->GetType() != MON_STATE::EATEN)
+		if (GetName() == L"Inhale")
 		{
-			pMon->GetAI()->SetCurState(MON_STATE::DRAWN);
-
-			((GameDrawnState*)pMon->GetAI()->GetCurState())->SetDestPos(m_pOwner->GetPos());
+			m_pOwner->AddInhaleRangeMon(pOtherObj);
 		}
-		else if (GetName() == L"Power_Inhale" // 커비가 강한 빨아들이기 상태일 경우, 몬스터가 강한 빨아들이기 범위 내라면
-			&& ((GamePlayer*)m_pOwner)->GetPlayerState() == PLAYER_STATE::POWER_INHALE
-			&& pMon->GetAI()->GetCurState()->GetType() != MON_STATE::EATEN)
+		else if (GetName() == L"Power_Inhale")
 		{
-			pMon->GetAI()->SetCurState(MON_STATE::DRAWN);
-
-			((GameDrawnState*)pMon->GetAI()->GetCurState())->SetDestPos(m_pOwner->GetPos());
-		}
-
-		// 커비가 제한 시간 내로 몬스터를 빨아들이지 못했다면
-		if (pMon->GetAI()->GetCurState()->GetType() == MON_STATE::DRAWN
-			&& ((GamePlayer*)m_pOwner)->GetPlayerState() == PLAYER_STATE::IDLE)
-		{
-			pMon->GetAI()->SetCurState(MON_STATE::WALK);
+			m_pOwner->AddPowerInhaleRangeMon(pOtherObj);
 		}
 	}
 }
 
+void GameAttack::OnCollision(GameCollider* _pOther)
+{
+}
+
 void GameAttack::OnCollisionExit(GameCollider* _pOther)
 {
+	GameObject* pOtherObj = _pOther->GetObj();
+
+	if (_pOther->GetObj()->GetGroupType() == GROUP_TYPE::MONSTER)
+	{
+		if (GetName() == L"Inhale")
+		{
+			m_pOwner->RemoveInhaleRangeMon(pOtherObj);
+		}
+		else if (GetName() == L"Power_Inhale")
+		{
+			m_pOwner->RemovePowerInhaleRangeMon(pOtherObj);
+		}
+	}
 }

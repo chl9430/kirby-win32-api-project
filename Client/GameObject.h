@@ -15,8 +15,9 @@ private:
 	wstring m_strName;
 	Vec2 m_vPos;
 	Vec2 m_vScale;
+	GROUP_TYPE m_eGroupType;
 	bool m_bAlive;
-	int m_iDir; // 방향정보
+	int m_iDir;
 	int m_iPrevDir;
 	float m_fInvincibleCount;
 	float m_fInvincibleTime;
@@ -66,6 +67,14 @@ public:
 	const wstring& GetName()
 	{
 		return m_strName;
+	}
+	void SetGroupType(GROUP_TYPE _eGroup)
+	{
+		m_eGroupType = _eGroup;
+	}
+	GROUP_TYPE GetGroupType()
+	{
+		return m_eGroupType;
 	}
 	void SetScale(Vec2 _vScale)
 	{
@@ -175,6 +184,8 @@ public:
 	{
 		return m_pGravity;
 	}
+
+	void DestroyObj();
 
 	GameObject(wstring _strName, Vec2 _vPos, Vec2 _vScale);
 	virtual ~GameObject();
