@@ -1145,6 +1145,7 @@ void GamePlayer::LaunchMon()
 	if (m_pStarMissile != nullptr)
 	{
 		GetObjScene()->AddObject(m_pStarMissile, GROUP_TYPE::STAR);
+		m_pStarMissile->SetObjDir(GetObjDir());
 	}
 
 	m_pStarMissile = nullptr;

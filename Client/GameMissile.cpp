@@ -32,7 +32,7 @@ void GameMissile::Update()
 	{
 		Vec2 vPos = GetPos();
 
-		SetPos(Vec2{ vPos.x + (m_fMissileSpeed * fDT), vPos.y });
+		SetPos(Vec2{ vPos.x + (m_fMissileSpeed * fDT * GetObjDir()), vPos.y });
 	}
 }
 

@@ -22,10 +22,13 @@
 #define MOUSE_POS GameKeyMgr::GetInst()->GetMousePos()
 
 #define TILE_SIZE 40
+#define MAX_TILE_COUNT_WIDTH 30
+#define MAX_TILE_COUNT_HEIGHT 20
 
 enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
 {
 	DEFAULT,
+	BACKGROUND,
 	ATTACK,
 	GROUND,
 	MONSTER,
@@ -34,7 +37,7 @@ enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
 	STAR,
 	PROJ_PLAYER,
 	PROJ_MONSTER,
-	UI = 31,
+	UI,
 	END = 32
 };
 

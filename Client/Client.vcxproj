@@ -149,6 +149,7 @@
     <ClInclude Include="GameAnimation.h" />
     <ClInclude Include="GameAnimator.h" />
     <ClInclude Include="GameAttack.h" />
+    <ClInclude Include="GameBackground.h" />
     <ClInclude Include="GameBtnUI.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameCollider.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="GameAnimation.cpp" />
     <ClCompile Include="GameAnimator.cpp" />
     <ClCompile Include="GameAttack.cpp" />
+    <ClCompile Include="GameBackground.cpp" />
     <ClCompile Include="GameBtnUI.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameCollider.cpp" />

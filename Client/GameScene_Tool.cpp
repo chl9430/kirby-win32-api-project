@@ -145,8 +145,8 @@ void GameScene_Tool::Update()
 		int iCol = (int)vMousePos.x / TILE_SIZE;
 		int iRow = (int)vMousePos.y / TILE_SIZE;
 
-		if (vMousePos.x < 0.f || 30 <= iCol
-			|| vMousePos.y < 0.f || 20 <= iRow)
+		if (vMousePos.x < 0.f || MAX_TILE_COUNT_WIDTH <= iCol
+			|| vMousePos.y < 0.f || MAX_TILE_COUNT_HEIGHT <= iRow)
 		{
 			return;
 		}

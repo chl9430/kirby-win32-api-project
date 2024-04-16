@@ -129,6 +129,9 @@
     <Filter Include="Engine\06. Object\Attack">
       <UniqueIdentifier>{3ad68d11-8e11-4774-b281-d2d0233f524a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06. Object\Background">
+      <UniqueIdentifier>{16994ca5-0717-400f-b14a-2389759cc8cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -273,6 +276,9 @@
     <ClInclude Include="GameMissile.h">
       <Filter>Engine\06. Object\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="GameBackground.h">
+      <Filter>Engine\06. Object\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -398,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="GameMissile.cpp">
       <Filter>Engine\06. Object\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBackground.cpp">
+      <Filter>Engine\06. Object\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
