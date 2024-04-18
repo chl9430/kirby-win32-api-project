@@ -8,6 +8,7 @@
 // typedef void(*BTN_FUNC) (DWORD_PTR, DWORD_PTR);
 
 typedef void(GameScene::*SCENE_MEMFUNC_1) (wstring);
+typedef void(GameScene::*SCENE_MEMFUNC_2) (EDIT_MODE);
 
 class GameBtnUI :
     public GameUI
@@ -57,5 +58,5 @@ public:
     }
 
     GameBtnUI(bool _bCamAff, wstring _strName, Vec2 _vPos, Vec2 _vScale);
-    ~GameBtnUI();
+    virtual ~GameBtnUI();
 };

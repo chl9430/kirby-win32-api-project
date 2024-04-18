@@ -59,7 +59,7 @@ public:
     }
 
     GameUI(bool _bCamAff, wstring _strName, Vec2 _vPos, Vec2 _vScale);
-    ~GameUI();
+    virtual ~GameUI();
 
     friend class GameUIMgr;
 };

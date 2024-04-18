@@ -6,7 +6,7 @@ class GameUI;
 enum class EDIT_MODE
 {
     NONE,
-    BACKGROUND,
+    TILE,
     LAST,
 };
 
@@ -40,5 +40,5 @@ public:
     }
 
     GameScene_Tool();
-    ~GameScene_Tool();
+    virtual ~GameScene_Tool();
 };

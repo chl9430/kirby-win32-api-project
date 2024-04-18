@@ -13,5 +13,5 @@ public:
 	virtual void LoadTile(const wstring& _strRelativePath);
 
 	GameScene_Stage();
-	~GameScene_Stage();
+	virtual ~GameScene_Stage();
 };

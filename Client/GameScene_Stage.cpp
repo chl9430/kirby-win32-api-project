@@ -28,7 +28,7 @@ void GameScene_Stage::Enter()
 {
 	LoadTile(L"tile\\1-1");
 
-	GamePlayer* pObj = new GamePlayer{ L"Player", Vec2{ 100.f, 100.f }, Vec2{ TILE_SIZE, TILE_SIZE } }; // 부모 클래스에서 삭제 담당
+	GamePlayer* pObj = new GamePlayer{ L"Player", Vec2{ 140.f, 0.f }, Vec2{ TILE_SIZE, TILE_SIZE } }; // 부모 클래스에서 삭제 담당
 	pObj->SetObjScene(this);
 	pObj->CreateInhale();
 	AddObject(pObj, GROUP_TYPE::PLAYER);

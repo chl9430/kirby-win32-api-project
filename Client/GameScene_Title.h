@@ -11,5 +11,5 @@ public:
 	virtual void Exit();
 
 	GameScene_Title();
-	~GameScene_Title();
+	virtual ~GameScene_Title();
 };

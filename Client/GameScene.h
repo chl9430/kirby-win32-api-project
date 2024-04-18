@@ -53,5 +53,5 @@ public:
 	}
 
 	GameScene();
-	~GameScene();
+	virtual ~GameScene();
 };

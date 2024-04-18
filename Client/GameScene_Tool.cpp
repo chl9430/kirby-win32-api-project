@@ -19,7 +19,7 @@
 #include "SelectGDI.h"
 
 GameScene_Tool::GameScene_Tool()
-	: m_eCurMode{ EDIT_MODE::NONE }
+	: m_eCurMode{ EDIT_MODE::TILE }
 	, m_strSelectedTileName{}
 	, m_pPanel{ nullptr }
 {
@@ -45,6 +45,24 @@ void GameScene_Tool::Enter()
 
 	AddObject(pPanelUI, GROUP_TYPE::UI);
 
+	// 커비 버튼 생성
+	GameBtnUI* pKirbyBtn = new GameBtnUI{ false, L"KirbyButton", Vec2{ 0, 0 }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	pKirbyBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"KirbyButton", L"texture\\Kirby_Button.bmp"));
+	pKirbyBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pKirbyBtn->GetName());
+	pPanelUI->AddChild(pKirbyBtn);
+
+	// 와이들디 버튼 생성
+	GameBtnUI* pWaddleDeeBtn = new GameBtnUI{ false, L"WaddleDeeButton", Vec2{ TILE_SIZE, 0 }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	pWaddleDeeBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"WaddleDeeButton", L"texture\\Waddle_Dee_Button.bmp"));
+	pWaddleDeeBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pWaddleDeeBtn->GetName());
+	pPanelUI->AddChild(pWaddleDeeBtn);
+
+	// 게이트 버튼 생성
+	GameBtnUI* pGateBtn = new GameBtnUI{ false, L"GateButton", Vec2{ (int)pPanelUI->GetScale().x - TILE_SIZE, 0 }, Vec2{TILE_SIZE, TILE_SIZE}};
+	pGateBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"GateButton", L"texture\\Gate_Button.bmp"));
+	pGateBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pGateBtn->GetName());
+	pPanelUI->AddChild(pGateBtn);
+
 	// Save 버튼 생성
 	GameBtnUI* pSaveBtn = new GameBtnUI{ false, L"SaveButton", Vec2{ 0, (int)pPanelUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
 	pSaveBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"SaveButton", L"texture\\Save_Button.bmp"));
@@ -52,7 +70,6 @@ void GameScene_Tool::Enter()
 	pSaveBtn->SetMouseUpTexture(GameResMgr::GetInst()->FindTexture(L"SaveButton"));
 	pSaveBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SaveTileData);
 	pPanelUI->AddChild(pSaveBtn);
-	AddObject(pSaveBtn, GROUP_TYPE::UI);
 
 	// Load 버튼 생성
 	GameBtnUI* pLoadBtn = new GameBtnUI{ false, L"LoadButton", Vec2{ TILE_SIZE, (int)pPanelUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
@@ -61,7 +78,12 @@ void GameScene_Tool::Enter()
 	pLoadBtn->SetMouseUpTexture(GameResMgr::GetInst()->FindTexture(L"LoadButton"));
 	pLoadBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::LoadTileData);
 	pPanelUI->AddChild(pLoadBtn);
-	AddObject(pLoadBtn, GROUP_TYPE::UI);
+
+	// Erase 버튼 생성
+	GameBtnUI* pEraserBtn = new GameBtnUI{ false, L"EraserButton", Vec2{ (int)pPanelUI->GetScale().x - TILE_SIZE, (int)pPanelUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	pEraserBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"EraserButton", L"texture\\Eraser_Button.bmp"));
+	pEraserBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pEraserBtn->GetName());
+	pPanelUI->AddChild(pEraserBtn);
 
 	// 만들 수 있는 Tile의 종류 개수 가져오기
 	UINT iTileCount = (iWidth * iHeight) / (TILE_SIZE * TILE_SIZE);
@@ -79,7 +101,7 @@ void GameScene_Tool::Enter()
 		pTileBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pTileBtn->GetName());
 
 		pPanelUI->AddChild(pTileBtn);
-		AddObject(pTileBtn, GROUP_TYPE::UI);
+		// AddObject(pTileBtn, GROUP_TYPE::UI);
 
 		if (iX == TILE_SIZE * 2)
 		{
@@ -107,7 +129,7 @@ void GameScene_Tool::Update()
 	// 선택 된 타일 버튼은 흑백 처리 한다.
 	for (; iter != vecChildUI.end(); ++iter)
 	{
-		// 타일 버튼만 검사한다.
+		// 타일들을 검사한다.
 		if ((*iter)->GetName().find(L"Stage1TileButton") != string::npos)
 		{
 			if (m_strSelectedTileName == (*iter)->GetName())
@@ -115,6 +137,58 @@ void GameScene_Tool::Update()
 				wstring strTileName = (*iter)->GetName();
 
 				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(strTileName + L"Selected", L"texture\\tile\\Stage1_Tile_Button_" + strTileName.substr(16, 1) + L"_Selected.bmp"));
+			}
+			else
+			{
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->FindTexture((*iter)->GetName()));
+			}
+		}
+		else if ((*iter)->GetName().find(L"EraserButton") != string::npos)
+		{
+			if (m_strSelectedTileName == (*iter)->GetName())
+			{
+				wstring strTileName = (*iter)->GetName();
+
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(L"EraserButtonSelected", L"texture\\Eraser_Button_Selected.bmp"));
+			}
+			else
+			{
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->FindTexture((*iter)->GetName()));
+			}
+		}
+		else if ((*iter)->GetName().find(L"KirbyButton") != string::npos)
+		{
+			if (m_strSelectedTileName == (*iter)->GetName())
+			{
+				wstring strTileName = (*iter)->GetName();
+
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(L"KirbyButtonSelected", L"texture\\Kirby_Button_Selected.bmp"));
+			}
+			else
+			{
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->FindTexture((*iter)->GetName()));
+			}
+		}
+		else if ((*iter)->GetName().find(L"WaddleDeeButton") != string::npos)
+		{
+			if (m_strSelectedTileName == (*iter)->GetName())
+			{
+				wstring strTileName = (*iter)->GetName();
+
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(L"WaddleDeeButtonSelected", L"texture\\Waddle_Dee_Button_Selected.bmp"));
+			}
+			else
+			{
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->FindTexture((*iter)->GetName()));
+			}
+		}
+		else if ((*iter)->GetName().find(L"GateButton") != string::npos)
+		{
+			if (m_strSelectedTileName == (*iter)->GetName())
+			{
+				wstring strTileName = (*iter)->GetName();
+
+				(*iter)->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(L"GateButtonSelected", L"texture\\Gate_Button_Selected.bmp"));
 			}
 			else
 			{
@@ -151,11 +225,61 @@ void GameScene_Tool::Update()
 			return;
 		}
 
-		// 위치를 기반으로 타일 생성
-		GameTile* pTile = new GameTile( L"Tile", Vec2{ (float)(iCol * TILE_SIZE) + TILE_SIZE / 2, (float)(iRow * TILE_SIZE) + TILE_SIZE / 2 }, Vec2{ TILE_SIZE, TILE_SIZE });
-		pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(m_strSelectedTileName));
+		// 같은 위치에 타일이 있는 지 확인한다.
+		const vector<GameObject*>& vecTileGroup = GetGroupObject(GROUP_TYPE::TILE);
 
-		AddObject(pTile, GROUP_TYPE::TILE);
+		for (GameObject* pObj : vecTileGroup) 
+		{
+			// 클릭한 곳에 타일이 이미 있는지 확인
+			if (pObj->GetPos().x == (iCol * TILE_SIZE) + TILE_SIZE / 2 
+				&& pObj->GetPos().y == (iRow * TILE_SIZE) + TILE_SIZE / 2)
+			{
+				if (m_strSelectedTileName != L"EraserButton")
+				{
+					return;
+				}
+				else // 지우개 버튼이 선택된 상태라면
+				{
+					pObj->DestroyObj();
+				}
+			}
+		}
+
+		// 위치를 기반으로 타일 생성
+		if (m_strSelectedTileName != L"EraserButton")
+		{
+			if (m_strSelectedTileName == L"KirbyButton")
+			{
+				// 이미 커비가 있는지 찾는다.
+				auto kirby = find_if(vecTileGroup.begin(), vecTileGroup.end(), [&](GameObject* _pObj) {
+					return _pObj->GetName() == L"Kirby";
+				});
+
+				// 커비가 이미 있다면
+				if (kirby != vecTileGroup.end()) {
+					// 위치만 바꾼다.
+					(*kirby)->SetPos(Vec2{ (float)(iCol * TILE_SIZE) + TILE_SIZE / 2, (float)(iRow * TILE_SIZE) + TILE_SIZE / 2 });
+				}
+				else { // 커비가 없다면
+					// 새로 생성한다.
+					GameObject* pTile = nullptr;
+
+					pTile = new GameTile(L"Kirby", Vec2{ (float)(iCol * TILE_SIZE) + TILE_SIZE / 2, (float)(iRow * TILE_SIZE) + TILE_SIZE / 2 }, Vec2{ TILE_SIZE, TILE_SIZE });
+					pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(m_strSelectedTileName));
+
+					AddObject(pTile, GROUP_TYPE::TILE);
+				}
+			}
+			else
+			{
+				GameObject* pTile = nullptr;
+
+				pTile = new GameTile(L"Tile", Vec2{(float)(iCol * TILE_SIZE) + TILE_SIZE / 2, (float)(iRow * TILE_SIZE) + TILE_SIZE / 2}, Vec2{TILE_SIZE, TILE_SIZE});
+				pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(m_strSelectedTileName));
+
+				AddObject(pTile, GROUP_TYPE::TILE);
+			}
+		}
 	}
 
 	// 카메라 이동
