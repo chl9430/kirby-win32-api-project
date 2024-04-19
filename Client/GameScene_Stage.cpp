@@ -28,19 +28,7 @@ void GameScene_Stage::Enter()
 {
 	LoadTile(L"tile\\1-1");
 
-	GamePlayer* pObj = new GamePlayer{ L"Player", Vec2{ 140.f, 0.f }, Vec2{ TILE_SIZE, TILE_SIZE } }; // 부모 클래스에서 삭제 담당
-	pObj->SetObjScene(this);
-	pObj->CreateInhale();
-	AddObject(pObj, GROUP_TYPE::PLAYER);
-
-	RegisterPlayer(pObj);
-
-	GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_NAME::WADDLE_DEE, Vec2{ 140.f, 80.f });
-	AddObject(pWaddleDee, GROUP_TYPE::MONSTER);
-
-	GameMonster* pWaddleDee2 = GameMonsterFactory::CreateMonster(MON_NAME::WADDLE_DEE, Vec2{ 220.f, 80.f });
-	AddObject(pWaddleDee2, GROUP_TYPE::MONSTER);
-
+	// 배경화면
 	GameBackground* pBackground_1 = new GameBackground{ L"Stage_01_Background", Vec2{ 0.f, 0.f}, Vec2{ TILE_SIZE, TILE_SIZE } };
 
 	GameTexture* pBackgroundTex = GameResMgr::GetInst()->LoadTexture(L"Stage01Background", L"texture\\tile\\Stage1_Background.bmp");
@@ -77,6 +65,7 @@ void GameScene_Stage::LoadTile(const wstring& _strRelativePath)
 {
 	GameScene::LoadTile(_strRelativePath);
 
+	// 타일에 콜라이더 생성
 	const vector<GameObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
 	vector < GameObject*>::const_iterator iter = vecTile.begin();
 
@@ -87,6 +76,18 @@ void GameScene_Stage::LoadTile(const wstring& _strRelativePath)
 		(*iter)->GetCollider()->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
 	}
 
+	// 문에 콜라이더 생성
+	const vector<GameObject*>& vecGate = GetGroupObject(GROUP_TYPE::GATE);
+	vector < GameObject*>::const_iterator gateIter = vecGate.begin();
+
+	for (; gateIter != vecGate.end(); ++gateIter)
+	{
+		(*gateIter)->CreateCollider();
+		(*gateIter)->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
+		(*gateIter)->GetCollider()->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+	}
+
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::TILE);
+	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::GATE);
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TILE, GROUP_TYPE::MONSTER);
 }

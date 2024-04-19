@@ -158,6 +158,7 @@
     <ClInclude Include="GameDrawnState.h" />
     <ClInclude Include="GameEventMgr.h" />
     <ClInclude Include="GameFloatIdleState.h" />
+    <ClInclude Include="GameGate.h" />
     <ClInclude Include="GameGravity.h" />
     <ClInclude Include="GameHitState.h" />
     <ClInclude Include="GameIdleState.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="GameDrawnState.cpp" />
     <ClCompile Include="GameEventMgr.cpp" />
     <ClCompile Include="GameFloatIdleState.cpp" />
+    <ClCompile Include="GameGate.cpp" />
     <ClCompile Include="GameGravity.cpp" />
     <ClCompile Include="GameHitState.cpp" />
     <ClCompile Include="GameIdleState.cpp" />

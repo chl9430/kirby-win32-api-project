@@ -5,10 +5,17 @@
 #include "GameResMgr.h"
 #include "GamePathMgr.h"
 
-#include "GameObject.h"
 #include "GameTexture.h"
+
+#include "GameObject.h"
+#include "GamePlayer.h"
+#include "GameMonster.h"
 #include "GameTile.h"
+#include "GameGate.h"
+
 #include "SelectGDI.h"
+
+#include "GameMonsterFactory.h"
 
 GameScene::GameScene()
 	: m_strName{}
@@ -151,10 +158,44 @@ void GameScene::LoadTile(const wstring& _strRelativePath)
 
 			strTileTexKey = str;
 
-			GameTile* pTile = new GameTile{ L"Tile", vTilePos, Vec2{ TILE_SIZE, TILE_SIZE } };
-			pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(strTileTexKey));
+			// 스테이지 씬일 때만
+			if (m_strName == L"Stage Scene")
+			{
+				if (strTileTexKey == L"KirbyButton")
+				{
+					GamePlayer* pObj = new GamePlayer{ L"Player", vTilePos, Vec2{ TILE_SIZE, TILE_SIZE } }; // 부모 클래스에서 삭제 담당
+					pObj->SetObjScene(this);
+					pObj->CreateInhale();
+					AddObject(pObj, GROUP_TYPE::PLAYER);
 
-			AddObject(pTile, GROUP_TYPE::TILE);
+					RegisterPlayer(pObj);
+				}
+				else if (strTileTexKey == L"WaddleDeeButton")
+				{
+					GameMonster* pWaddleDee = GameMonsterFactory::CreateMonster(MON_NAME::WADDLE_DEE, Vec2{ vTilePos });
+					AddObject(pWaddleDee, GROUP_TYPE::MONSTER);
+				}
+				else if (strTileTexKey == L"GateButton")
+				{
+					GameGate* pGate = new GameGate{ L"Gate", vTilePos, Vec2{ TILE_SIZE, TILE_SIZE } };
+					pGate->SetCurrentTexture(GameResMgr::GetInst()->LoadTexture(L"Gate", L"texture\\Gate.bmp"));
+					AddObject(pGate, GROUP_TYPE::GATE);
+				}
+				else if (strTileTexKey.find(L"Stage1TileButton") != string::npos)
+				{
+					GameTile* pTile = new GameTile{ L"Tile", vTilePos, Vec2{ TILE_SIZE, TILE_SIZE } };
+					pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(strTileTexKey));
+
+					AddObject(pTile, GROUP_TYPE::TILE);
+				}
+			}
+			else // 툴씬이라면
+			{
+				GameTile* pTile = new GameTile{ L"Tile", vTilePos, Vec2{ TILE_SIZE, TILE_SIZE } };
+				pTile->SetCurrentTexture(GameResMgr::GetInst()->FindTexture(strTileTexKey));
+
+				AddObject(pTile, GROUP_TYPE::TILE);
+			}
 		}
 
 		str = szBuff;

@@ -30,6 +30,10 @@ public:
 	{
 		m_strName = _strName;
 	}
+	const wstring& GetName()
+	{
+		return m_strName;
+	}
 	void RegisterPlayer(GameObject* _pPlayer)
 	{
 		m_pPlayer = _pPlayer;

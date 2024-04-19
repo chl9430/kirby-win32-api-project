@@ -31,6 +31,7 @@ enum class GROUP_TYPE // 번호가 높을 수록 나중에 렌더
 	BACKGROUND,
 	ATTACK,
 	GROUND,
+	GATE,
 	MONSTER,
 	PLAYER,
 	TILE,
