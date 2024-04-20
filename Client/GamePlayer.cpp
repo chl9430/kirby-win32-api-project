@@ -17,6 +17,7 @@
 #include "GameAttack.h"
 #include "GameMissile.h"
 #include "GameMonster.h"
+#include "GameGate.h"
 
 #include "GameAnimator.h"
 #include "GameAnimation.h"
@@ -47,6 +48,7 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_vecPowerInhaleRangeMon{}
 	, m_eEatenMon{ MON_TYPE::END }
 	, m_pStarMissile{ nullptr }
+	, m_pGate{ nullptr }
 {
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
@@ -106,6 +108,9 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	GameTexture* pHitRightTex = GameResMgr::GetInst()->LoadTexture(L"HitRight", L"texture\\Kirby_Hit_Right.bmp");
 	GameTexture* pHitLeftTex = GameResMgr::GetInst()->LoadTexture(L"HitLeft", L"texture\\Kirby_Hit_Left.bmp");
 
+	GameTexture* pGoneRightTex = GameResMgr::GetInst()->LoadTexture(L"GoneRight", L"texture\\Kirby_Gone_Right.bmp");
+	GameTexture* pGoneLeftTex = GameResMgr::GetInst()->LoadTexture(L"GoneLeft", L"texture\\Kirby_Gone_Left.bmp");
+
 	CreateAnimator();
 
 	GetAnimator()->CreateAnimation(L"IDLE_RIGHT", pIdleRightTex, 0.07f);
@@ -164,6 +169,9 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 
 	GetAnimator()->CreateAnimation(L"HIT_RIGHT", pHitRightTex, 0.07f);
 	GetAnimator()->CreateAnimation(L"HIT_LEFT", pHitLeftTex, 0.07f);
+
+	GetAnimator()->CreateAnimation(L"GONE_RIGHT", pGoneRightTex, 0.05f);
+	GetAnimator()->CreateAnimation(L"GONE_LEFT", pGoneLeftTex, 0.05f);
 
 	// GetAnimator()->LoadAnimation(L"animation\\walk_down.anim");
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
@@ -227,7 +235,8 @@ void GamePlayer::CreateInhale()
 void GamePlayer::UpdateDir()
 {
 	if (m_eCurState != PLAYER_STATE::HIT && m_eCurState != PLAYER_STATE::KEEP_HIT 
-		&& m_eCurState != PLAYER_STATE::INHALE && m_eCurState != PLAYER_STATE::POWER_INHALE)
+		&& m_eCurState != PLAYER_STATE::INHALE && m_eCurState != PLAYER_STATE::POWER_INHALE
+		&& m_eCurState != PLAYER_STATE::GONE)
 	{
 		if (KEY_TAP(KEY::LEFT))
 		{
@@ -283,6 +292,25 @@ void GamePlayer::UpdateState()
 		if (IS_KIRBY_FALLING)
 		{
 			m_eCurState = PLAYER_STATE::DROP;
+		}
+
+		if (KEY_TAP(KEY::UP) && m_pGate)
+		{
+			m_eCurState = PLAYER_STATE::GONE;
+
+			// 커비가 문의 방향을 향해 애니메이션을 취하도록 한다.
+			if (GetPos().x > m_pGate->GetPos().x)
+			{
+				SetPos(m_pGate->GetPos());
+				SetObjDir(-1);
+			}
+			else
+			{
+				SetPos(m_pGate->GetPos());
+				SetObjDir(1);
+			}
+
+			GameCamera::GetInst()->FadeOut(0.5f);
 		}
 
 		return;
@@ -1088,6 +1116,13 @@ void GamePlayer::UpdateAnimation()
 		else
 			GetAnimator()->Play(L"SWALLOW_RIGHT", false);
 	}
+	case PLAYER_STATE::GONE:
+	{
+		if (GetObjDir() == -1)
+			GetAnimator()->Play(L"GONE_LEFT", false);
+		else
+			GetAnimator()->Play(L"GONE_RIGHT", false);
+	}
 	break;
 	}
 }
@@ -1201,7 +1236,9 @@ void GamePlayer::OnCollision(GameCollider* _pOther)
 		}
 
 		// 커비가 맞는 로직
-		if (!GetIsInvincible() && (m_eCurState != PLAYER_STATE::INHALE && m_eCurState != PLAYER_STATE::POWER_INHALE))
+		if (!GetIsInvincible() 
+			&& (m_eCurState != PLAYER_STATE::INHALE && m_eCurState != PLAYER_STATE::POWER_INHALE)
+			&& m_eCurState != PLAYER_STATE::GONE)
 		{
 			// 커비를 무적상태로 변경
 			SetIsInvincible(true);
@@ -1219,7 +1256,7 @@ void GamePlayer::OnCollision(GameCollider* _pOther)
 			}
 
 			// 커비가 뭔가 물고 있는 상태에서 맞았다면 (KEEP_START ~ KEEP_HIT : 값 변경 주의)
-			if ((int)m_eCurState >= 15 && (int)m_eCurState <= 22)
+			if (m_eCurState >= PLAYER_STATE::KEEP_START && m_eCurState <= PLAYER_STATE::KEEP_HIT)
 			{
 				m_eCurState = PLAYER_STATE::KEEP_HIT;
 
@@ -1237,6 +1274,22 @@ void GamePlayer::OnCollision(GameCollider* _pOther)
 				else
 					GetAnimator()->Play(L"HIT_RIGHT", false);
 			}
+		}
+	}
+
+	if (pOtherObj->GetGroupType() == GROUP_TYPE::GATE)
+	{
+		// 커비가 문이랑 어느정도 중앙에 있다면
+		if (GetPos().x >= pOtherObj->GetPos().x - pOtherObj->GetScale().x / 2
+			&& GetPos().x <= pOtherObj->GetPos().x + pOtherObj->GetScale().x / 2
+			&& GetPos().y >= pOtherObj->GetPos().y - pOtherObj->GetScale().y / 2
+			&& GetPos().y <= pOtherObj->GetPos().y + pOtherObj->GetScale().y / 2)
+		{
+			m_pGate = (GameGate*)pOtherObj;
+		}
+		else
+		{
+			m_pGate = nullptr;
 		}
 	}
 }

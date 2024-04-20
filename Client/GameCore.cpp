@@ -89,7 +89,7 @@ void GameCore::Progress()
 
 	// 렌더링
 	GameSceneMgr::GetInst()->Render(m_pMemTex->GetDC());
-	// GameCamera::GetInst()->Render();
+	GameCamera::GetInst()->Render(m_pMemTex->GetDC());
 
 	// 사본용 DC에 그려진 걸 메인 DC에 복사한다.
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_pMemTex->GetDC(), 0, 0, SRCCOPY);
@@ -123,6 +123,7 @@ void GameCore::CreateBrush()
 {
 	m_arrBrush[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
 	m_arrBrush[(UINT)BRUSH_TYPE::BLACK] = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	m_arrBrush[(UINT)BRUSH_TYPE::WHITE] = (HBRUSH)GetStockObject(WHITE_BRUSH);
 
 	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));

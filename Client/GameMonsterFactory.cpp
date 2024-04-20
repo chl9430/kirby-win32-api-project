@@ -62,9 +62,9 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_NAME _eType, Vec2 _vPos)
 		GameTexture* pHitRightTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeHitRight", L"texture\\Waddle_Dee_Hit_Right.bmp");
 		GameTexture* pHitLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeHitLeft", L"texture\\Waddle_Dee_Hit_Left.bmp");
 
-		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_RIGHT", pWalkRightTex, 0.15f);
+		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_RIGHT", pWalkRightTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_LEFT", pWalkLeftTex, 0.2f);
-		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_RIGHT", pDrawnRightTex, 0.15f);
+		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_RIGHT", pDrawnRightTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_LEFT", pDrawnLeftTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_HIT_RIGHT", pHitRightTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_HIT_LEFT", pHitLeftTex, 0.2f);

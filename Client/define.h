@@ -55,6 +55,7 @@ enum class BRUSH_TYPE
 {
 	HOLLOW, // 채우기 색상이 없는 브러쉬 타입
 	BLACK,
+	WHITE,
 	END
 };
 

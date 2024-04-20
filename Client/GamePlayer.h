@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 class GameMissile;
+class GameGate;
 
 enum class PLAYER_STATE
 {
@@ -20,6 +21,7 @@ enum class PLAYER_STATE
     EXHALE,
     SWALLOW,
     HIT,
+    GONE,
     KEEP_START,
     KEEP_IDLE,
     KEEP_WALK_READY,
@@ -48,6 +50,7 @@ private:
     vector<GameObject*> m_vecPowerInhaleRangeMon;
     MON_TYPE m_eEatenMon;
     GameMissile* m_pStarMissile;
+    GameGate* m_pGate;
 
 public:
     virtual void Update();
