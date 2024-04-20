@@ -913,6 +913,20 @@ void GamePlayer::UpdateState()
 
 		return;
 	}
+
+	if (m_eCurState == PLAYER_STATE::GONE)
+	{
+		if (GameCamera::GetInst()->IsAllCamEffectFinish())
+		{
+			tEvent tEve = {};
+			tEve.eEven = EVENT_TYPE::SCENE_CHANGE;
+			tEve.lParam = (DWORD_PTR)SCENE_TYPE::TITLE;
+
+			GameEventMgr::GetInst()->AddEvent(tEve);
+		}
+
+		return;
+	}
 }
 
 void GamePlayer::UpdateMove()

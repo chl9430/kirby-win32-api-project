@@ -26,4 +26,9 @@ public:
 	void Update();
 
 	void CheckGroup(GROUP_TYPE _eLeft, GROUP_TYPE _eRight);
+	void Reset()
+	{
+		// 배열을 전부 0으로 초기화
+		memset(m_arrCheck, 0, sizeof(UINT) * (UINT)GROUP_TYPE::END);
+	}
 };

@@ -58,7 +58,7 @@ void GameScene_Stage::Exit()
 	DeleteAll();
 
 	// 다른 씬에서는 다른 그룹간의 충돌 체크를 하게될 수 있으니 리셋한다.
-	// CCollisionMgr::GetInst()->Reset();
+	GameCollisionMgr::GetInst()->Reset();
 }
 
 void GameScene_Stage::LoadTile(const wstring& _strRelativePath)

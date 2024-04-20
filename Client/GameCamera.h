@@ -73,4 +73,8 @@ public:
 		if (0.f == _fDuration)
 			assert(nullptr);
 	}
+	bool IsAllCamEffectFinish()
+	{
+		return m_listCamEffect.size() == 0;
+	}
 };

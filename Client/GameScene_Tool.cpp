@@ -315,6 +315,29 @@ void GameScene_Tool::Update()
 	}*/
 }
 
+void GameScene_Tool::Render(HDC _dc)
+{
+	SelectGDI gdiPen(_dc, PEN_TYPE::GREEN);
+	SelectGDI gdiBrush(_dc, BRUSH_TYPE::BLACK);
+
+	for (int i = 0; i < MAX_TILE_COUNT_WIDTH; i++)
+	{
+		for (int j = 0; j < MAX_TILE_COUNT_HEIGHT; j++)
+		{
+			Vec2 vPos = GameCamera::GetInst()->GetRenderPos(Vec2{ i * TILE_SIZE, j * TILE_SIZE });
+
+			Rectangle(_dc
+				, (int)vPos.x
+				, (int)vPos.y
+				, (int)(vPos.x + TILE_SIZE)
+				, (int)(vPos.y + TILE_SIZE)
+			);
+		}
+	}
+
+	GameScene::Render(_dc);
+}
+
 void GameScene_Tool::SaveTileData()
 {
 	OPENFILENAME ofn = {};
