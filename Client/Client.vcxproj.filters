@@ -135,6 +135,12 @@
     <Filter Include="Engine\06. Object\Gate">
       <UniqueIdentifier>{d2531fe6-7ea8-484b-a5b1-2bb30eaa33cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Resource\Sound">
+      <UniqueIdentifier>{c1ffa3be-0d5b-4a40-b9f9-c4a8f9981dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Manager\SoundMgr">
+      <UniqueIdentifier>{25a688fb-f414-48a9-b6d5-a483af62603d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -285,6 +291,12 @@
     <ClInclude Include="GameGate.h">
       <Filter>Engine\06. Object\Gate</Filter>
     </ClInclude>
+    <ClInclude Include="GameSound.h">
+      <Filter>Engine\04. Resource\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSoundMgr.h">
+      <Filter>Engine\03. Manager\SoundMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCore.cpp">
@@ -416,6 +428,12 @@
     </ClCompile>
     <ClCompile Include="GameGate.cpp">
       <Filter>Engine\06. Object\Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSound.cpp">
+      <Filter>Engine\04. Resource\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSoundMgr.cpp">
+      <Filter>Engine\03. Manager\SoundMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 
 class GameMissile;
 class GameGate;
+class GameSound;
 
 enum class PLAYER_STATE
 {
@@ -51,6 +52,15 @@ private:
     MON_TYPE m_eEatenMon;
     GameMissile* m_pStarMissile;
     GameGate* m_pGate;
+
+    // Sound
+    GameSound* m_pJumpSound;
+    GameSound* m_pInhaleSound;
+    GameSound* m_pExhaleSound;
+    GameSound* m_pLaunchSound;
+    GameSound* m_pHoldSound;
+    GameSound* m_pSwallowSound;
+    GameSound* m_pGoneSound;
 
 public:
     virtual void Update();

@@ -179,6 +179,8 @@
     <ClInclude Include="GameScene_Title.h" />
     <ClInclude Include="GameScene_Tool.h" />
     <ClInclude Include="GameSight.h" />
+    <ClInclude Include="GameSound.h" />
+    <ClInclude Include="GameSoundMgr.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameTexture.h" />
     <ClInclude Include="GameTile.h" />
@@ -228,6 +230,8 @@
     <ClCompile Include="GameScene_Title.cpp" />
     <ClCompile Include="GameScene_Tool.cpp" />
     <ClCompile Include="GameSight.cpp" />
+    <ClCompile Include="GameSound.cpp" />
+    <ClCompile Include="GameSoundMgr.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameTexture.cpp" />
     <ClCompile Include="GameTile.cpp" />

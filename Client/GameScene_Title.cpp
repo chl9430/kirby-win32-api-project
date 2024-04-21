@@ -5,25 +5,35 @@
 
 #include "GameResMgr.h"
 #include "GameEventMgr.h"
+#include "GameCollisionMgr.h"
 
 #include "GameTexture.h"
+#include "GameSound.h"
 
 #include "GameObject.h"
 #include "GameBackground.h"
 #include "GamePanelUI.h"
 #include "GameBtnUI.h"
 
-GameScene_Title::GameScene_Title() 
+GameScene_Title::GameScene_Title()
+	: m_pBGM{ nullptr }
 {
 }
 
 GameScene_Title::~GameScene_Title()
 {
+	delete m_pBGM;
 }
 
 void GameScene_Title::Enter()
 {
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
+
+	m_pBGM = new GameSound{};
+
+	m_pBGM->Load(L"sound\\Title.wav");
+	m_pBGM->PlayToBGM(true);
+	m_pBGM->SetVolume(100.f);
 
 	GameTexture* pBackgroundTex = GameResMgr::GetInst()->LoadTexture(L"TitleBackground", L"texture\\Title_Background.bmp");
 	GameTexture* pStartBtnTex = GameResMgr::GetInst()->LoadTexture(L"TitleStartButton", L"texture\\Title_Start_Button.bmp");
@@ -67,5 +77,5 @@ void GameScene_Title::Exit()
 	DeleteAll();
 
 	// 다른 씬에서는 다른 그룹간의 충돌 체크를 하게될 수 있으니 리셋한다.
-	// GameCollisionMgr::GetInst()->Reset();
+	GameCollisionMgr::GetInst()->Reset();
 }

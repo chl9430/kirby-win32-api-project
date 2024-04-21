@@ -1,10 +1,13 @@
 #pragma once
 #include "GameScene.h"
 
+class GameSound;
+
 class GameScene_Title :
 	public GameScene
 {
 private:
+	GameSound* m_pBGM;
 
 public:
 	virtual void Enter();

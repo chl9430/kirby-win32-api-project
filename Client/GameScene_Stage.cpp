@@ -7,6 +7,7 @@
 #include "GameResMgr.h"
 
 #include "GameTexture.h"
+#include "GameSound.h"
 
 #include "GamePlayer.h"
 #include "GameMonster.h"
@@ -17,16 +18,24 @@
 #include "GameMonsterFactory.h"
 
 GameScene_Stage::GameScene_Stage()
+	: m_pBGM{ nullptr }
 {
 }
 
 GameScene_Stage::~GameScene_Stage()
 {
+	delete m_pBGM;
 }
 
 void GameScene_Stage::Enter()
 {
 	LoadTile(L"tile\\1-1");
+
+	m_pBGM = new GameSound{};
+
+	m_pBGM->Load(L"sound\\Stage_01.wav");
+	m_pBGM->PlayToBGM(true);
+	m_pBGM->SetVolume(100.f);
 
 	// 배경화면
 	GameBackground* pBackground_1 = new GameBackground{ L"Stage_01_Background", Vec2{ 0.f, 0.f}, Vec2{ TILE_SIZE, TILE_SIZE } };

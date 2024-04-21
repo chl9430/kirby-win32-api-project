@@ -10,24 +10,29 @@
 #include "GameResMgr.h"
 #include "GameTimeMgr.h"
 #include "GameEventMgr.h"
+#include "GameCollisionMgr.h"
+
+#include "GameTexture.h"
+#include "GameSound.h"
 
 #include "GameUI.h"
 #include "GamePanelUI.h"
 #include "GameBtnUI.h"
 #include "GameTile.h"
-#include "GameTexture.h"
 
 #include "SelectGDI.h"
 
 GameScene_Tool::GameScene_Tool()
 	: m_eCurMode{ EDIT_MODE::TILE }
 	, m_strSelectedTileName{}
+	, m_pBGM{ nullptr }
 	, m_pPanel{ nullptr }
 {
 }
 
 GameScene_Tool::~GameScene_Tool()
 {
+	delete m_pBGM;
 }
 
 void GameScene_Tool::Enter()
@@ -37,6 +42,12 @@ void GameScene_Tool::Enter()
 	GameCore::GetInst()->DockMenu();
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
+
+	m_pBGM = new GameSound{};
+
+	m_pBGM->Load(L"sound\\Tool.wav");
+	m_pBGM->PlayToBGM(true);
+	m_pBGM->SetVolume(100.f);
 
 	GameTexture* pDragBoxTex = GameResMgr::GetInst()->LoadTexture(L"DragBoxPanel", L"texture\\Drag_Box_Panel.bmp");
 
@@ -133,6 +144,9 @@ void GameScene_Tool::Exit()
 	GameCore::GetInst()->DivideMenu();
 
 	DeleteAll();
+
+	// 다른 씬에서는 다른 그룹간의 충돌 체크를 하게될 수 있으니 리셋한다.
+	GameCollisionMgr::GetInst()->Reset();
 }
 
 void GameScene_Tool::Update()

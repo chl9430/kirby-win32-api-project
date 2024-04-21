@@ -2,6 +2,7 @@
 #include "GameScene.h"
 
 class GameUI;
+class GameSound;
 
 enum class EDIT_MODE
 {
@@ -17,6 +18,7 @@ private:
     EDIT_MODE m_eCurMode;
     wstring m_strSelectedTileName;
     GameUI* m_pPanel;
+    GameSound* m_pBGM;
 
 public:
     virtual void Enter();

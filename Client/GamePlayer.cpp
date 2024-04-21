@@ -11,6 +11,7 @@
 #include "GameEventMgr.h"
 
 #include "GameTexture.h"
+#include "GameSound.h"
 
 #include "GameScene.h"
 
@@ -49,6 +50,13 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_eEatenMon{ MON_TYPE::END }
 	, m_pStarMissile{ nullptr }
 	, m_pGate{ nullptr }
+	, m_pJumpSound{ nullptr }
+	, m_pInhaleSound{ nullptr }
+	, m_pExhaleSound{ nullptr }
+	, m_pLaunchSound{ nullptr }
+	, m_pHoldSound{ nullptr }
+	, m_pSwallowSound{ nullptr }
+	, m_pGoneSound{ nullptr }
 {
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
@@ -177,10 +185,38 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	// GetAnimator()->FindAnimation(L"WALK_DOWN")->Save(L"animation\\walk_down.anim");
 
 	CreateGravity();
+
+	// Sound
+	m_pJumpSound = new GameSound{};
+	m_pJumpSound->Load(L"sound\\Jump.wav");
+
+	m_pInhaleSound = new GameSound{};
+	m_pInhaleSound->Load(L"sound\\Inhale.wav");
+
+	m_pExhaleSound = new GameSound{};
+	m_pExhaleSound->Load(L"sound\\Exhale.wav");
+
+	m_pLaunchSound = new GameSound{};
+	m_pLaunchSound->Load(L"sound\\Launch.wav");
+
+	m_pHoldSound = new GameSound{};
+	m_pHoldSound->Load(L"sound\\Hold.wav");
+
+	m_pSwallowSound = new GameSound{};
+	m_pSwallowSound->Load(L"sound\\Swallow.wav");
+
+	m_pGoneSound = new GameSound{};
+	m_pGoneSound->Load(L"sound\\Gone.wav");
 }
 
 GamePlayer::~GamePlayer()
 {
+	delete m_pJumpSound;
+	delete m_pExhaleSound;
+	delete m_pLaunchSound;
+	delete m_pHoldSound;
+	delete m_pSwallowSound;
+	delete m_pGoneSound;
 }
 
 void GamePlayer::Update()
@@ -476,7 +512,7 @@ void GamePlayer::UpdateState()
 			m_fPowerInhaleTime = 0.f;
 		}
 
-		if (m_vecInhaleRangeMon.empty() && m_eEatenMon != MON_TYPE::END)
+		if (m_vecPowerInhaleRangeMon.empty() && m_eEatenMon != MON_TYPE::END)
 		{
 			m_eCurState = PLAYER_STATE::KEEP_START;
 		}
@@ -1005,6 +1041,9 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::JUMP:
 	{
+		m_pJumpSound->Play(false);
+		m_pJumpSound->SetVolume(100.f);
+
 		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"JUMP_LEFT", true);
 		else
@@ -1029,6 +1068,9 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::FLOAT_END:
 	{
+		m_pExhaleSound->Play(false);
+		m_pExhaleSound->SetVolume(100.f);
+
 		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"FLOAT_END_LEFT", false);
 		else
@@ -1045,6 +1087,9 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::INHALE:
 	{
+		m_pInhaleSound->Play(false);
+		m_pInhaleSound->SetVolume(100.f);
+
 		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"INHALE_LEFT", true);
 		else
@@ -1061,6 +1106,10 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::KEEP_START:
 	{
+		m_pInhaleSound->Stop();
+		m_pHoldSound->Play(false);
+		m_pHoldSound->SetVolume(100.f);
+
 		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"KEEP_START_LEFT", false);
 		else
@@ -1117,6 +1166,9 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::EXHALE:
 	{
+		m_pLaunchSound->Play(false);
+		m_pLaunchSound->SetVolume(100.f);
+
 		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"EXHALE_LEFT", false);
 		else
@@ -1125,13 +1177,20 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::SWALLOW:
 	{
+		m_pSwallowSound->Play(false);
+		m_pSwallowSound->SetVolume(100.f);
+
 		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"SWALLOW_LEFT", false);
 		else
 			GetAnimator()->Play(L"SWALLOW_RIGHT", false);
 	}
+	break;
 	case PLAYER_STATE::GONE:
 	{
+		m_pGoneSound->Play(false);
+		m_pGoneSound->SetVolume(100.f);
+
 		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"GONE_LEFT", false);
 		else

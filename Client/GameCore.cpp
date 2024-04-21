@@ -9,6 +9,7 @@
 #include "GameSceneMgr.h"
 #include "GameEventMgr.h"
 #include "GameCollisionMgr.h"
+#include "GameSoundMgr.h"
 #include "GameUIMgr.h"
 
 #include "GameTexture.h"
@@ -67,6 +68,7 @@ int GameCore::Init(HWND _hWnd, POINT _ptResolution)
 	GameKeyMgr::GetInst()->Init();
 	GameCamera::GetInst()->Init();
 	GameResMgr::GetInst()->Init();
+	GameSoundMgr::GetInst()->init();
 	GameSceneMgr::GetInst()->Init();
 
 	return S_OK;
