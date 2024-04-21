@@ -17,6 +17,8 @@ private:
 	HBRUSH m_arrBrush[(UINT)BRUSH_TYPE::END];
 	HPEN m_arrPen[(UINT)PEN_TYPE::END];
 
+	bool isShowingLine;
+
 	void Clear();
 public:
 	int Init(HWND _hWnd, POINT _ptResolution);
@@ -46,5 +48,9 @@ public:
 	HBRUSH GetBrush(BRUSH_TYPE _eType)
 	{
 		return m_arrBrush[(UINT)_eType];
+	}
+	bool GetIsShowingLine()
+	{
+		return isShowingLine;
 	}
 };

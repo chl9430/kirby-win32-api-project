@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GameObject.h"
 
+#include "GameCore.h"
+
 #include "GameCamera.h"
 #include "GameTimeMgr.h"
 #include "GameEventMgr.h"
@@ -87,11 +89,14 @@ void GameObject::Render(HDC _dc)
 	}
 	else
 	{
-		Rectangle(_dc
+		if (GameCore::GetInst()->GetIsShowingLine())
+		{
+			Rectangle(_dc
 			, (int)(vRenderPos.x - m_vScale.x / 2.f)
 			, (int)(vRenderPos.y - m_vScale.y / 2.f)
 			, (int)(vRenderPos.x + m_vScale.x / 2.f)
 			, (int)(vRenderPos.y + m_vScale.y / 2.f));
+		}
 	}
 
 	ComponentRender(_dc);

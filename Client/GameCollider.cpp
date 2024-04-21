@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GameCollider.h"
 
+#include "GameCore.h"
+
 #include "GameCamera.h"
 
 #include "GameObject.h"
@@ -45,11 +47,14 @@ void GameCollider::Render(HDC _dc)
 
 	Vec2 vRenderPos = GameCamera::GetInst()->GetRenderPos(m_vFinalPos);
 
-	Rectangle(_dc
-		, (int)(vRenderPos.x - m_vScale.x / 2.f)
-		, (int)(vRenderPos.y - m_vScale.y / 2.f)
-		, (int)(vRenderPos.x + m_vScale.x / 2.f)
-		, (int)(vRenderPos.y + m_vScale.y / 2.f));
+	if (GameCore::GetInst()->GetIsShowingLine())
+	{
+		Rectangle(_dc
+			, (int)(vRenderPos.x - m_vScale.x / 2.f)
+			, (int)(vRenderPos.y - m_vScale.y / 2.f)
+			, (int)(vRenderPos.x + m_vScale.x / 2.f)
+			, (int)(vRenderPos.y + m_vScale.y / 2.f));
+	}
 }
 
 void GameCollider::OnCollision(GameCollider* _pOther)

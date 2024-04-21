@@ -21,6 +21,7 @@ GameCore::GameCore()
 	, m_hDC{ 0 }
 	, m_pMemTex{ nullptr }
 	, m_hMenu{}
+	, isShowingLine{ false }
 {
 }
 
@@ -86,6 +87,19 @@ void GameCore::Progress()
 
 	// 화면 클리어
 	Clear();
+
+	// 라인을 보여줄 건지 정한다.
+	if (KEY_TAP(KEY::E))
+	{
+		if (isShowingLine)
+		{
+			isShowingLine = false;
+		}
+		else
+		{
+			isShowingLine = true;
+		}
+	}
 
 	// 렌더링
 	GameSceneMgr::GetInst()->Render(m_pMemTex->GetDC());
