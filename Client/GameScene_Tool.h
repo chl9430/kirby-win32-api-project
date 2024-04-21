@@ -31,6 +31,7 @@ public:
     {
         m_eCurMode = _eMode;
     }
+    void ExitBtnChangeScene();
     void SetSelectedTileName(wstring _strTileName)
     {
         m_strSelectedTileName = _strTileName;

@@ -9,6 +9,7 @@
 #include "GamePathMgr.h"
 #include "GameResMgr.h"
 #include "GameTimeMgr.h"
+#include "GameEventMgr.h"
 
 #include "GameUI.h"
 #include "GamePanelUI.h"
@@ -31,59 +32,74 @@ GameScene_Tool::~GameScene_Tool()
 
 void GameScene_Tool::Enter()
 {
+	m_strSelectedTileName = {};
 	// 툴 Scene에서 사용할 메뉴를 붙인다.
 	GameCore::GetInst()->DockMenu();
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
+
+	GameTexture* pDragBoxTex = GameResMgr::GetInst()->LoadTexture(L"DragBoxPanel", L"texture\\Drag_Box_Panel.bmp");
 
 	GameTexture* pTileTex = GameResMgr::GetInst()->FindTexture(L"Stage1TileSet");
 	UINT iWidth = pTileTex->Width();
 	UINT iHeight = pTileTex->Height();
 
 	// Panel 생성
-	GameUI* pPanelUI = new GamePanelUI{ false, L"ParentUI", Vec2{ vResolution.x - iWidth, 0.f }, Vec2{ (float)iWidth, (float)iHeight + TILE_SIZE * 2 } };
+	GameUI* pDragBoxUI = new GamePanelUI{ false, L"DragBox", Vec2{ vResolution.x - pDragBoxTex->Width(), 0.f }, Vec2{ (int)pDragBoxTex->Width(), (int)pDragBoxTex->Height() }};
+	pDragBoxUI->SetCurrentTexture(pDragBoxTex);
+	AddObject(pDragBoxUI, GROUP_TYPE::UI);
 
-	AddObject(pPanelUI, GROUP_TYPE::UI);
+	// 나가기 버튼 생성
+	GameBtnUI* pExitButtonUI = new GameBtnUI{ false, L"BtnArea", Vec2{ pDragBoxUI->GetScale().x - TILE_SIZE, 0.f }, Vec2{TILE_SIZE, TILE_SIZE}};
+	pExitButtonUI->SetTexture(GameResMgr::GetInst()->LoadTexture(L"ExitButton", L"texture\\Exit_Button.bmp"));
+	pExitButtonUI->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"ExitButtonSelected", L"texture\\Exit_Button_Selected.bmp"));
+	pExitButtonUI->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::ExitBtnChangeScene);
+	pDragBoxUI->AddChild(pExitButtonUI);
+
+	// 버튼 구역 설정
+	GameUI* pTileAreaUI = new GamePanelUI{ false, L"BtnArea", Vec2{ 0.f, 0.f }, Vec2{(int)iWidth, (int)iHeight + (TILE_SIZE * 2) }};
+	pTileAreaUI->SetPos(Vec2{ pDragBoxUI->GetScale().x / 2 - pTileAreaUI->GetScale().x / 2, pDragBoxUI->GetScale().y / 2 - pTileAreaUI->GetScale().y / 2 });
+	pDragBoxUI->AddChild(pTileAreaUI);
 
 	// 커비 버튼 생성
 	GameBtnUI* pKirbyBtn = new GameBtnUI{ false, L"KirbyButton", Vec2{ 0, 0 }, Vec2{ TILE_SIZE, TILE_SIZE } };
 	pKirbyBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"KirbyButton", L"texture\\Kirby_Button.bmp"));
 	pKirbyBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pKirbyBtn->GetName());
-	pPanelUI->AddChild(pKirbyBtn);
+	pTileAreaUI->AddChild(pKirbyBtn);
 
 	// 와이들디 버튼 생성
 	GameBtnUI* pWaddleDeeBtn = new GameBtnUI{ false, L"WaddleDeeButton", Vec2{ TILE_SIZE, 0 }, Vec2{ TILE_SIZE, TILE_SIZE } };
 	pWaddleDeeBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"WaddleDeeButton", L"texture\\Waddle_Dee_Button.bmp"));
 	pWaddleDeeBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pWaddleDeeBtn->GetName());
-	pPanelUI->AddChild(pWaddleDeeBtn);
+	pTileAreaUI->AddChild(pWaddleDeeBtn);
 
 	// 게이트 버튼 생성
-	GameBtnUI* pGateBtn = new GameBtnUI{ false, L"GateButton", Vec2{ (int)pPanelUI->GetScale().x - TILE_SIZE, 0 }, Vec2{TILE_SIZE, TILE_SIZE}};
+	GameBtnUI* pGateBtn = new GameBtnUI{ false, L"GateButton", Vec2{ (int)pTileAreaUI->GetScale().x - TILE_SIZE, 0 }, Vec2{TILE_SIZE, TILE_SIZE}};
 	pGateBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"GateButton", L"texture\\Gate_Button.bmp"));
 	pGateBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pGateBtn->GetName());
-	pPanelUI->AddChild(pGateBtn);
+	pTileAreaUI->AddChild(pGateBtn);
 
 	// Save 버튼 생성
-	GameBtnUI* pSaveBtn = new GameBtnUI{ false, L"SaveButton", Vec2{ 0, (int)pPanelUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	GameBtnUI* pSaveBtn = new GameBtnUI{ false, L"SaveButton", Vec2{ 0, (int)pTileAreaUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
 	pSaveBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"SaveButton", L"texture\\Save_Button.bmp"));
 	pSaveBtn->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"SaveButtonSelected", L"texture\\Save_Button_Selected.bmp"));
 	pSaveBtn->SetMouseUpTexture(GameResMgr::GetInst()->FindTexture(L"SaveButton"));
 	pSaveBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SaveTileData);
-	pPanelUI->AddChild(pSaveBtn);
+	pTileAreaUI->AddChild(pSaveBtn);
 
 	// Load 버튼 생성
-	GameBtnUI* pLoadBtn = new GameBtnUI{ false, L"LoadButton", Vec2{ TILE_SIZE, (int)pPanelUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	GameBtnUI* pLoadBtn = new GameBtnUI{ false, L"LoadButton", Vec2{ TILE_SIZE, (int)pTileAreaUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
 	pLoadBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"LoadButton", L"texture\\Load_Button.bmp"));
 	pLoadBtn->SetMouseDownTexture(GameResMgr::GetInst()->LoadTexture(L"LoadButtonSelected", L"texture\\Load_Button_Selected.bmp"));
 	pLoadBtn->SetMouseUpTexture(GameResMgr::GetInst()->FindTexture(L"LoadButton"));
 	pLoadBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::LoadTileData);
-	pPanelUI->AddChild(pLoadBtn);
+	pTileAreaUI->AddChild(pLoadBtn);
 
 	// Erase 버튼 생성
-	GameBtnUI* pEraserBtn = new GameBtnUI{ false, L"EraserButton", Vec2{ (int)pPanelUI->GetScale().x - TILE_SIZE, (int)pPanelUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	GameBtnUI* pEraserBtn = new GameBtnUI{ false, L"EraserButton", Vec2{ (int)pTileAreaUI->GetScale().x - TILE_SIZE, (int)pTileAreaUI->GetScale().y - TILE_SIZE }, Vec2{ TILE_SIZE, TILE_SIZE } };
 	pEraserBtn->SetTexture(GameResMgr::GetInst()->LoadTexture(L"EraserButton", L"texture\\Eraser_Button.bmp"));
 	pEraserBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pEraserBtn->GetName());
-	pPanelUI->AddChild(pEraserBtn);
+	pTileAreaUI->AddChild(pEraserBtn);
 
 	// 만들 수 있는 Tile의 종류 개수 가져오기
 	UINT iTileCount = (iWidth * iHeight) / (TILE_SIZE * TILE_SIZE);
@@ -94,13 +110,13 @@ void GameScene_Tool::Enter()
 	// 타일 버튼 생성
 	for (UINT i = 0; i < iTileCount; ++i)
 	{
-		iX = i * TILE_SIZE % (UINT)pPanelUI->GetScale().x;
+		iX = i * TILE_SIZE % (UINT)pTileAreaUI->GetScale().x;
 
 		GameBtnUI* pTileBtn = new GameBtnUI{ false, L"Stage1TileButton" + to_wstring(i), Vec2{ (float)iX, (float)iY }, Vec2{ TILE_SIZE, TILE_SIZE } };
 		pTileBtn->SetTexture(GameResMgr::GetInst()->FindTexture(L"Stage1TileButton" + to_wstring(i)));
 		pTileBtn->SetClickedCallBack(this, (SCENE_MEMFUNC_1)&GameScene_Tool::SetSelectedTileName, pTileBtn->GetName());
 
-		pPanelUI->AddChild(pTileBtn);
+		pTileAreaUI->AddChild(pTileBtn);
 		// AddObject(pTileBtn, GROUP_TYPE::UI);
 
 		if (iX == TILE_SIZE * 2)
@@ -109,7 +125,7 @@ void GameScene_Tool::Enter()
 		}
 	}
 
-	m_pPanel = pPanelUI;
+	 m_pPanel = pDragBoxUI;
 }
 
 void GameScene_Tool::Exit()
@@ -123,7 +139,7 @@ void GameScene_Tool::Update()
 {
 	GameScene::Update();
 
-	const vector<GameUI*>& vecChildUI = m_pPanel->GetChildUI();
+	const vector<GameUI*>& vecChildUI = m_pPanel->GetChildUI()[1]->GetChildUI();
 	vector<GameUI*>::const_iterator iter = vecChildUI.begin();
 
 	// 선택 된 타일 버튼은 흑백 처리 한다.
@@ -419,6 +435,15 @@ void GameScene_Tool::LoadTileData()
 		wstring strRelativePath = GamePathMgr::GetInst()->GetRelativePath(szName);
 		LoadTile(strRelativePath);
 	}
+}
+
+void GameScene_Tool::ExitBtnChangeScene()
+{
+	tEvent tEve = {};
+	tEve.eEven = EVENT_TYPE::SCENE_CHANGE;
+	tEve.lParam = (DWORD_PTR)SCENE_TYPE::TITLE;
+
+	GameEventMgr::GetInst()->AddEvent(tEve);
 }
 
 INT_PTR CALLBACK TileCountProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) // CALLBACK(__stdcall) : 함수호출규약
