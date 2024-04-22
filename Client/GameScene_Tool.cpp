@@ -449,6 +449,13 @@ void GameScene_Tool::LoadTileData()
 	// Modal
 	if (GetOpenFileName(&ofn))
 	{
+		const vector<GameObject*>& vecTileGroup = GetGroupObject(GROUP_TYPE::TILE);
+
+		for (GameObject* pObj : vecTileGroup)
+		{
+			pObj->DestroyObj();
+		}
+
 		wstring strRelativePath = GamePathMgr::GetInst()->GetRelativePath(szName);
 		LoadTile(strRelativePath);
 	}

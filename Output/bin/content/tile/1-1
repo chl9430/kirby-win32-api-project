@@ -1,67 +1,1362 @@
 [Tile Pos]
-20 140
+20 20
 
 [Tile Texture]
-KirbyButton
+Stage1TileButton4
 
 [Tile Pos]
-60 140
+60 20
 
 [Tile Texture]
-WaddleDeeButton
+Stage1TileButton7
 
 [Tile Pos]
-180 140
+100 20
 
 [Tile Texture]
-GateButton
+Stage1TileButton7
 
 [Tile Pos]
-20 180
+140 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+180 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+220 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+260 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+300 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+340 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+380 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+420 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+460 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+500 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+540 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+580 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+620 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+660 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+700 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+740 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+780 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+820 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+860 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+900 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+940 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+980 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1020 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1060 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1100 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1140 20
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1180 20
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+20 60
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1180 60
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 100
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+260 100
 
 [Tile Texture]
 Stage1TileButton0
 
 [Tile Pos]
-60 180
-
-[Tile Texture]
-Stage1TileButton1
-
-[Tile Pos]
-100 180
-
-[Tile Texture]
-Stage1TileButton1
-
-[Tile Pos]
-140 180
-
-[Tile Texture]
-Stage1TileButton1
-
-[Tile Pos]
-180 180
+300 100
 
 [Tile Texture]
 Stage1TileButton2
 
 [Tile Pos]
+500 100
+
+[Tile Texture]
+Stage1TileButton0
+
+[Tile Pos]
+540 100
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
+860 100
+
+[Tile Texture]
+Stage1TileButton0
+
+[Tile Pos]
+900 100
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
+1180 100
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 140
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+260 140
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+300 140
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+500 140
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+540 140
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+580 140
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+660 140
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+740 140
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+860 140
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+900 140
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1180 140
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 180
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+100 180
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+180 180
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+260 180
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+300 180
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+500 180
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+540 180
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+580 180
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+620 180
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+660 180
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+700 180
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+740 180
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+780 180
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+820 180
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+860 180
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+900 180
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1180 180
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
 20 220
 
 [Tile Texture]
-Stage1TileButton6
+Stage1TileButton4
 
 [Tile Pos]
 60 220
 
 [Tile Texture]
-Stage1TileButton7
+Stage1TileButton1
 
 [Tile Pos]
 100 220
 
 [Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+140 220
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+180 220
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+220 220
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+260 220
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+300 220
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+500 220
+
+[Tile Texture]
+Stage1TileButton6
+
+[Tile Pos]
+540 220
+
+[Tile Texture]
 Stage1TileButton7
 
+[Tile Pos]
+580 220
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+620 220
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+660 220
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+700 220
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+740 220
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+780 220
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+820 220
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+860 220
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+900 220
+
+[Tile Texture]
+Stage1TileButton8
+
+[Tile Pos]
+1180 220
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 260
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+60 260
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+100 260
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+140 260
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+180 260
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+220 260
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+260 260
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+300 260
+
+[Tile Texture]
+Stage1TileButton8
+
+[Tile Pos]
+1180 260
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 300
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1100 300
+
+[Tile Texture]
+KirbyButton
+
+[Tile Pos]
+1180 300
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 340
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1060 340
+
+[Tile Texture]
+Stage1TileButton0
+
+[Tile Pos]
+1100 340
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1140 340
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1180 340
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+20 380
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1060 380
+
+[Tile Texture]
+Stage1TileButton6
+
+[Tile Pos]
+1100 380
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1140 380
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1180 380
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+20 420
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1180 420
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 460
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+60 460
+
+[Tile Texture]
+GateButton
+
+[Tile Pos]
+1180 460
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 500
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+60 500
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+100 500
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
+340 500
+
+[Tile Texture]
+Stage1TileButton0
+
+[Tile Pos]
+380 500
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
+420 500
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+500 500
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+660 500
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+740 500
+
+[Tile Texture]
+Stage1TileButton0
+
+[Tile Pos]
+780 500
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+820 500
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
+860 500
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+940 500
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+1100 500
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+1180 500
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 540
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+60 540
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+100 540
+
+[Tile Texture]
+Stage1TileButton8
+
+[Tile Pos]
+340 540
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+380 540
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+420 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+460 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+500 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+540 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+580 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+620 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+660 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+700 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+740 540
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+780 540
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+820 540
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+860 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+900 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+940 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+980 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1020 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1060 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1100 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1140 540
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1180 540
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+20 580
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+340 580
+
+[Tile Texture]
+Stage1TileButton6
+
+[Tile Pos]
+380 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+420 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+460 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+500 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+540 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+580 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+620 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+660 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+700 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+740 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+780 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+820 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+860 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+900 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+940 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+980 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1020 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1060 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1100 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1140 580
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+1180 580
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+20 620
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1180 620
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 660
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1180 660
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 700
+
+[Tile Texture]
+Stage1TileButton5
+
+[Tile Pos]
+1180 700
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 740
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+60 740
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
+140 740
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+300 740
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+500 740
+
+[Tile Texture]
+Stage1TileButton0
+
+[Tile Pos]
+540 740
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
+620 740
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+700 740
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+820 740
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+900 740
+
+[Tile Texture]
+Stage1TileButton0
+
+[Tile Pos]
+940 740
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
+1060 740
+
+[Tile Texture]
+WaddleDeeButton
+
+[Tile Pos]
+1180 740
+
+[Tile Texture]
+Stage1TileButton3
+
+[Tile Pos]
+20 780
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+60 780
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+100 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+140 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+180 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+220 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+260 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+300 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+340 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+380 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+420 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+460 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+500 780
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+540 780
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+580 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+620 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+660 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+700 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+740 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+780 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+820 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+860 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+900 780
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+940 780
+
+[Tile Texture]
+Stage1TileButton4
+
+[Tile Pos]
+980 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1020 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1060 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1100 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1140 780
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+1180 780
+
+[Tile Texture]
+Stage1TileButton4
 
