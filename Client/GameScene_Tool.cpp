@@ -38,8 +38,9 @@ GameScene_Tool::~GameScene_Tool()
 void GameScene_Tool::Enter()
 {
 	m_strSelectedTileName = {};
+
 	// 툴 Scene에서 사용할 메뉴를 붙인다.
-	GameCore::GetInst()->DockMenu();
+	// GameCore::GetInst()->DockMenu();
 
 	Vec2 vResolution = GameCore::GetInst()->GetResolution();
 
@@ -141,7 +142,7 @@ void GameScene_Tool::Enter()
 
 void GameScene_Tool::Exit()
 {
-	GameCore::GetInst()->DivideMenu();
+	// GameCore::GetInst()->DivideMenu();
 
 	DeleteAll();
 
