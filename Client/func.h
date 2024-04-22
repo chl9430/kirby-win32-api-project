@@ -25,3 +25,4 @@ void Safe_Delete_Map(map<T1, T2>& _map)
 }
 
 bool WScanf(wchar_t* _pOutBuff, FILE* _pFile);
+bool FScanf(char* _pOutBuff, FILE* _pFile);

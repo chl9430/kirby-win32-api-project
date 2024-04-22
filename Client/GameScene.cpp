@@ -115,30 +115,36 @@ void GameScene::LoadTile(const wstring& _strRelativePath)
 
 	assert(pFile);
 
-	wchar_t szBuff[256] = {};
+	char szBuff[256] = {};
 
 	wstring str = {};
 
 	Vec2 vTilePos = {};
 	wstring strTileTexKey = {};
 
-	while (WScanf(szBuff, pFile))
+	while (FScanf(szBuff, pFile))
 	{
-		if (wcscmp(L"[Tile Pos]", szBuff) == 0)
+		if (strcmp("[Tile Pos]", szBuff) == 0)
 		{
 			int iX = 0;
 			int iY = 0;
 
-			fwscanf_s(pFile, L"%d %d", &iX, &iY);
+			fscanf_s(pFile, "%d %d", &iX, &iY);
 
 			vTilePos = { POINT{ iX, iY } };
 		}
 
-		if (wcscmp(L"[Tile Texture]", str.c_str()) == 0)
+		if (strcmp("[Tile Texture]", szBuff) == 0)
 		{
-			str = szBuff;
+			char textureKeyBuff[256] = {};
 
-			strTileTexKey = str;
+			FScanf(textureKeyBuff, pFile);
+
+			strTileTexKey = L"";
+
+			for (int i = 0; textureKeyBuff[i] != '\0'; i++) {
+				strTileTexKey += wchar_t(textureKeyBuff[i]);
+			}
 
 			// 스테이지 씬일 때만
 			if (m_strName == L"Stage Scene")
@@ -179,8 +185,6 @@ void GameScene::LoadTile(const wstring& _strRelativePath)
 				AddObject(pTile, GROUP_TYPE::TILE);
 			}
 		}
-
-		str = szBuff;
 	}
 
 	fclose(pFile); // 파일(스트림)을 닫아준다.

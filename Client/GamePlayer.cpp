@@ -43,7 +43,7 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_fPowerInhaleTime{ 0.f }
 	, m_fJumpPower{ -300.f }
 	, m_fFloatJumpPower{ -150.f }
-	, m_fWalkSpeed{ 120.f }
+	, m_fWalkSpeed{ 200.f }
 	, m_fFloatMoveSpeed{ 60.f }
 	, m_vecInhaleRangeMon{}
 	, m_vecPowerInhaleRangeMon{}
@@ -260,14 +260,6 @@ void GamePlayer::Render(HDC _dc)
 
 void GamePlayer::CreateInhale()
 {
-	GameAttack* pInhale = new GameAttack{ L"Inhale", Vec2{ GetPos().x + TILE_SIZE * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE, TILE_SIZE } };
-	pInhale->CreateCollider();
-	pInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
-	pInhale->GetCollider()->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
-	pInhale->m_pOwner = this;
-	pInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (pInhale->GetScale().x / 2.f), 0.f };
-	GetObjScene()->AddObject(pInhale, GROUP_TYPE::ATTACK);
-
 	GameAttack* pPowerInhale = new GameAttack{ L"Power_Inhale", Vec2{ GetPos().x + TILE_SIZE * 2 * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE * 2, TILE_SIZE * 2 } };
 	pPowerInhale->CreateCollider();
 	pPowerInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
@@ -275,6 +267,14 @@ void GamePlayer::CreateInhale()
 	pPowerInhale->m_pOwner = this;
 	pPowerInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (pPowerInhale->GetScale().x / 2.f), 0.f };
 	GetObjScene()->AddObject(pPowerInhale, GROUP_TYPE::ATTACK);
+
+	GameAttack* pInhale = new GameAttack{ L"Inhale", Vec2{ GetPos().x + TILE_SIZE * GetObjDir(), GetPos().y }, Vec2{ TILE_SIZE, TILE_SIZE } };
+	pInhale->CreateCollider();
+	pInhale->GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
+	pInhale->GetCollider()->SetScale(Vec2{ TILE_SIZE, TILE_SIZE });
+	pInhale->m_pOwner = this;
+	pInhale->m_vOffset = Vec2{ GetScale().x / 2.f + (pInhale->GetScale().x / 2.f), 0.f };
+	GetObjScene()->AddObject(pInhale, GROUP_TYPE::ATTACK);
 
 	GameCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::ATTACK, GROUP_TYPE::MONSTER);
 }
@@ -1121,6 +1121,7 @@ void GamePlayer::UpdateAnimation()
 	case PLAYER_STATE::KEEP_START:
 	{
 		m_pInhaleSound->Stop();
+		m_pPowerInhaleSound->Stop();
 		m_pHoldSound->Play(false);
 		m_pHoldSound->SetVolume(100.f);
 

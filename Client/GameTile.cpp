@@ -25,15 +25,25 @@ void GameTile::Update()
 
 void GameTile::Save(FILE* _pFile)
 {
+	//// 타일의 위치
+	//fwprintf(_pFile, L"[Tile Pos]\n");
+	//fwprintf(_pFile, L"%d %d\n", (int)GetPos().x, (int)GetPos().y);
+	//fwprintf(_pFile, L"\n");
+
+	//// 타일의 텍스처
+	//fwprintf(_pFile, L"[Tile Texture]\n");
+	//fwprintf(_pFile, GetCurrentTexture()->GetKey().c_str());
+	//fwprintf(_pFile, L"\n\n");
+
 	// 타일의 위치
-	fwprintf(_pFile, L"[Tile Pos]\n");
-	fwprintf(_pFile, L"%d %d\n", (int)GetPos().x, (int)GetPos().y);
-	fwprintf(_pFile, L"\n");
+	fprintf(_pFile, "[Tile Pos]\n");
+	fprintf(_pFile, "%d %d\n", (int)GetPos().x, (int)GetPos().y);
+	fprintf(_pFile, "\n");
 
 	// 타일의 텍스처
-	fwprintf(_pFile, L"[Tile Texture]\n");
-	fwprintf(_pFile, GetCurrentTexture()->GetKey().c_str());
-	fwprintf(_pFile, L"\n\n");
+	fprintf(_pFile, "[Tile Texture]\n");
+	fprintf(_pFile, string(GetCurrentTexture()->GetKey().begin(), GetCurrentTexture()->GetKey().end()).c_str());
+	fprintf(_pFile, "\n\n");
 }
 
 void GameTile::OnCollisionEnter(GameCollider* _pOther)
