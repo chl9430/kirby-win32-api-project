@@ -56,11 +56,13 @@ private:
     // Sound
     GameSound* m_pJumpSound;
     GameSound* m_pInhaleSound;
+    GameSound* m_pPowerInhaleSound;
     GameSound* m_pExhaleSound;
     GameSound* m_pLaunchSound;
     GameSound* m_pHoldSound;
     GameSound* m_pSwallowSound;
     GameSound* m_pGoneSound;
+    GameSound* m_pHitSound;
 
 public:
     virtual void Update();

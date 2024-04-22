@@ -52,11 +52,13 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_pGate{ nullptr }
 	, m_pJumpSound{ nullptr }
 	, m_pInhaleSound{ nullptr }
+	, m_pPowerInhaleSound{ nullptr }
 	, m_pExhaleSound{ nullptr }
 	, m_pLaunchSound{ nullptr }
 	, m_pHoldSound{ nullptr }
 	, m_pSwallowSound{ nullptr }
 	, m_pGoneSound{ nullptr }
+	, m_pHitSound{ nullptr }
 {
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2{ 0.f, 0.f });
@@ -193,6 +195,9 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	m_pInhaleSound = new GameSound{};
 	m_pInhaleSound->Load(L"sound\\Inhale.wav");
 
+	m_pPowerInhaleSound = new GameSound{};
+	m_pPowerInhaleSound->Load(L"sound\\Power_Inhale.wav");
+
 	m_pExhaleSound = new GameSound{};
 	m_pExhaleSound->Load(L"sound\\Exhale.wav");
 
@@ -207,16 +212,22 @@ GamePlayer::GamePlayer(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 
 	m_pGoneSound = new GameSound{};
 	m_pGoneSound->Load(L"sound\\Gone.wav");
+
+	m_pHitSound = new GameSound{};
+	m_pHitSound->Load(L"sound\\Hit.wav");
 }
 
 GamePlayer::~GamePlayer()
 {
 	delete m_pJumpSound;
+	delete m_pInhaleSound;
+	delete m_pPowerInhaleSound;
 	delete m_pExhaleSound;
 	delete m_pLaunchSound;
 	delete m_pHoldSound;
 	delete m_pSwallowSound;
 	delete m_pGoneSound;
+	delete m_pHitSound;
 }
 
 void GamePlayer::Update()
@@ -649,7 +660,7 @@ void GamePlayer::UpdateState()
 			JumpKirby();
 		}
 
-		if (KEY_TAP(KEY::S))
+		if (KEY_TAP(KEY::S) && m_eEatenMon != MON_TYPE::END)
 		{
 			LaunchMon();
 		}
@@ -669,7 +680,7 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::KEEP_DROP;
 		}
 
-		if (KEY_TAP(KEY::DOWN))
+		if (KEY_TAP(KEY::DOWN) && m_eEatenMon != MON_TYPE::END)
 		{
 			SwallowMon();
 		}
@@ -689,7 +700,7 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::KEEP_WALK;
 		}
 
-		if (KEY_TAP(KEY::S))
+		if (KEY_TAP(KEY::S) && m_eEatenMon != MON_TYPE::END)
 		{
 			LaunchMon();
 		}
@@ -704,7 +715,7 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::KEEP_DROP;
 		}
 
-		if (KEY_TAP(KEY::DOWN))
+		if (KEY_TAP(KEY::DOWN) && m_eEatenMon != MON_TYPE::END)
 		{
 			SwallowMon();
 		}
@@ -719,7 +730,7 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::KEEP_WALK_READY;
 		}
 
-		if (KEY_TAP(KEY::S))
+		if (KEY_TAP(KEY::S) && m_eEatenMon != MON_TYPE::END)
 		{
 			LaunchMon();
 		}
@@ -734,7 +745,7 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::KEEP_DROP;
 		}
 
-		if (KEY_TAP(KEY::DOWN))
+		if (KEY_TAP(KEY::DOWN) && m_eEatenMon != MON_TYPE::END)
 		{
 			SwallowMon();
 		}
@@ -744,7 +755,7 @@ void GamePlayer::UpdateState()
 
 	if (m_eCurState == PLAYER_STATE::KEEP_JUMP)
 	{
-		if (KEY_TAP(KEY::S))
+		if (KEY_TAP(KEY::S) && m_eEatenMon != MON_TYPE::END)
 		{
 			LaunchMon();
 		}
@@ -784,7 +795,7 @@ void GamePlayer::UpdateState()
 			m_eCurState = PLAYER_STATE::KEEP_WALK;
 		}
 
-		if (KEY_TAP(KEY::S))
+		if (KEY_TAP(KEY::S) && m_eEatenMon != MON_TYPE::END)
 		{
 			LaunchMon();
 		}
@@ -1098,6 +1109,9 @@ void GamePlayer::UpdateAnimation()
 	break;
 	case PLAYER_STATE::POWER_INHALE:
 	{
+		m_pPowerInhaleSound->Play(false);
+		m_pPowerInhaleSound->SetVolume(100.f);
+
 		if (GetObjDir() == -1)
 			GetAnimator()->Play(L"POWER_INHALE_LEFT", true);
 		else
@@ -1331,6 +1345,9 @@ void GamePlayer::OnCollision(GameCollider* _pOther)
 			// 커비가 뭔가 물고 있는 상태에서 맞았다면 (KEEP_START ~ KEEP_HIT : 값 변경 주의)
 			if (m_eCurState >= PLAYER_STATE::KEEP_START && m_eCurState <= PLAYER_STATE::KEEP_HIT)
 			{
+				m_pHitSound->Play(false);
+				m_pHitSound->SetVolume(100.f);
+
 				m_eCurState = PLAYER_STATE::KEEP_HIT;
 
 				if (GetObjDir() == -1)
@@ -1340,6 +1357,9 @@ void GamePlayer::OnCollision(GameCollider* _pOther)
 			}
 			else
 			{
+				m_pHitSound->Play(false);
+				m_pHitSound->SetVolume(100.f);
+
 				m_eCurState = PLAYER_STATE::HIT;
 
 				if (GetObjDir() == -1)
