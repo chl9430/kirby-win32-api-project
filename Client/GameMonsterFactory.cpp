@@ -61,6 +61,7 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_NAME _eType, Vec2 _vPos)
 		GameTexture* pDrawnLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeDrawnLeft", L"texture\\Waddle_Dee_Drawn_Left.bmp");
 		GameTexture* pHitRightTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeHitRight", L"texture\\Waddle_Dee_Hit_Right.bmp");
 		GameTexture* pHitLeftTex = GameResMgr::GetInst()->LoadTexture(L"WaddleDeeHitLeft", L"texture\\Waddle_Dee_Hit_Left.bmp");
+		GameTexture* pStarDestroyTex = GameResMgr::GetInst()->LoadTexture(L"Star_Destroy", L"texture\\Star_Destroy.bmp");
 
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_RIGHT", pWalkRightTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_WALK_LEFT", pWalkLeftTex, 0.2f);
@@ -68,10 +69,12 @@ GameMonster* GameMonsterFactory::CreateMonster(MON_NAME _eType, Vec2 _vPos)
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_DRAWN_LEFT", pDrawnLeftTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_HIT_RIGHT", pHitRightTex, 0.2f);
 		pMon->GetAnimator()->CreateAnimation(L"WADDLE_DEE_HIT_LEFT", pHitLeftTex, 0.2f);
+		pMon->GetAnimator()->CreateAnimation(L"STAR_DESTROY", pStarDestroyTex, 0.03f);
 
 		pMon->SetWalkAnimationKey(L"WADDLE_DEE_WALK_RIGHT", L"WADDLE_DEE_WALK_LEFT");
 		pMon->SetDrawnAnimationKey(L"WADDLE_DEE_DRAWN_RIGHT", L"WADDLE_DEE_DRAWN_LEFT");
 		pMon->SetHitAnimationKey(L"WADDLE_DEE_HIT_RIGHT", L"WADDLE_DEE_HIT_LEFT");
+		pMon->SetDestroyAnimationKey(L"STAR_DESTROY");
 
 		AI* pAI = new AI;
 		pAI->AddState(new GameWalkState);

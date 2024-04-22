@@ -29,8 +29,11 @@ GameMonster::GameMonster(wstring _strName, Vec2 _vPos, Vec2 _vScale)
 	, m_strDrawnLeftAnimKey{}
 	, m_strHitRightAnimKey{}
 	, m_strHitLeftAnimKey{}
-	, m_fHitTime{ 0.f }
-	, m_fHitFinishTime{ 0.1f }
+	, m_strDestroyAnimKey{}
+	, m_fHitCurTime{ 0.f }
+	, m_fHitFinishTime{ 0.5f }
+	, m_fDeadCurTime{ 0.f }
+	, m_fDeadFinishTime{ 1.f }
 {
 	CreateAnimator();
 }
@@ -47,13 +50,34 @@ void GameMonster::Update()
 
 	if (GetAI()->GetCurState()->GetType() == MON_STATE::HIT)
 	{
-		m_fHitTime += fDT;
-
-		if (m_fHitTime >= m_fHitFinishTime)
+		// 몬스터가 죽음 처리 됬다면
+		if (((GameHitState*)GetAI()->GetCurState())->GetIsDead())
 		{
-			m_pAI->SetCurState(MON_STATE::WALK);
+			m_fDeadCurTime += fDT;
 
-			m_fHitTime = 0.f;
+			// 일정 시간 뒤에 파괴 애니메이션을 실행한다.
+			if (m_fDeadCurTime >= m_fDeadFinishTime)
+			{
+				m_pAI->GetObj()->GetAnimator()->Play(L"STAR_DESTROY", false);
+
+				// 파괴 애니메이션이 끝났다면 몬스터를 삭제한다.
+				if (m_pAI->GetObj()->GetAnimator()->GetCurrentAnim()->IsFinish())
+				{
+					m_pAI->GetObj()->DestroyObj();
+				}
+			}
+		}
+		else
+		{
+			m_fHitCurTime += fDT;
+
+			// 일정 시간 뒤에 다시 걷는 애니메이션으로 전환한다.
+			if (m_fHitCurTime >= m_fHitFinishTime)
+			{
+				m_pAI->SetCurState(MON_STATE::WALK);
+
+				m_fHitCurTime = 0.f;
+			}
 		}
 	}
 
@@ -103,10 +127,17 @@ void GameMonster::UpdateAnimation()
 	break;
 	case MON_STATE::HIT:
 	{
-		if (GetObjDir() == 1)
-			GetAnimator()->Play(m_strHitRightAnimKey, true);
+		if (((GameHitState*)m_pAI->GetCurState())->GetIsDead())
+		{
+			return;
+		}
 		else
-			GetAnimator()->Play(m_strHitLeftAnimKey, true);
+		{
+			if (GetObjDir() == 1)
+				GetAnimator()->Play(m_strHitRightAnimKey, true);
+			else
+				GetAnimator()->Play(m_strHitLeftAnimKey, true);
+		}
 	}
 	break;
 	}
@@ -125,6 +156,7 @@ void GameMonster::OnCollisionEnter(GameCollider* _pOther)
 	if (pOtherObj->GetGroupType() == GROUP_TYPE::STAR)
 	{
 		GetAI()->SetCurState(MON_STATE::HIT);
+		m_tInfo.fHP -= 50.f;
 	}
 }
 

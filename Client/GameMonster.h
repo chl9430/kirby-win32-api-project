@@ -26,10 +26,13 @@ private:
 	wstring m_strDrawnLeftAnimKey;
 	wstring m_strHitRightAnimKey;
 	wstring m_strHitLeftAnimKey;
+	wstring m_strDestroyAnimKey;
 
 	bool m_bIsDestroying;
-	float m_fHitTime;
+	float m_fHitCurTime;
 	float m_fHitFinishTime;
+	float m_fDeadCurTime;
+	float m_fDeadFinishTime;
 
 	void SetMonInfo(const tMonInfo& _info)
 	{
@@ -73,6 +76,10 @@ public:
 	{
 		m_strHitRightAnimKey = _pRightAnimKey;
 		m_strHitLeftAnimKey = _pLeftAnimKey;
+	}
+	void SetDestroyAnimationKey(wstring _AnimKey)
+	{
+		m_strDestroyAnimKey = _AnimKey;
 	}
 
 	virtual void OnCollisionEnter(GameCollider* _pOther);
