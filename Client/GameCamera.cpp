@@ -161,3 +161,9 @@ void GameCamera::FixDiff(Vec2& _vDiff)
 		_vDiff.y = fLimitY;
 	}
 }
+
+void GameCamera::ResetCameraPos()
+{
+	m_vDiff = Vec2{ 0.f, 0.f };
+	m_pTargetObj = nullptr;
+}

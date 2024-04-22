@@ -5,6 +5,7 @@
 
 #include "GameCollisionMgr.h"
 #include "GameResMgr.h"
+#include "GameCamera.h"
 
 #include "GameTexture.h"
 #include "GameSound.h"
@@ -65,6 +66,8 @@ void GameScene_Stage::Enter()
 void GameScene_Stage::Exit()
 {
 	DeleteAll();
+
+	GameCamera::GetInst()->ResetCameraPos();
 
 	// 다른 씬에서는 다른 그룹간의 충돌 체크를 하게될 수 있으니 리셋한다.
 	GameCollisionMgr::GetInst()->Reset();

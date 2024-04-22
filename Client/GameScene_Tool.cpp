@@ -145,6 +145,8 @@ void GameScene_Tool::Exit()
 
 	DeleteAll();
 
+	GameCamera::GetInst()->ResetCameraPos();
+
 	// 다른 씬에서는 다른 그룹간의 충돌 체크를 하게될 수 있으니 리셋한다.
 	GameCollisionMgr::GetInst()->Reset();
 }

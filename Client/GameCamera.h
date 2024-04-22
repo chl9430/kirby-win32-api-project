@@ -40,6 +40,7 @@ public:
 	void Render(HDC _dc);
 
 	void FixDiff(Vec2& _vDiff);
+	void ResetCameraPos();
 
 	Vec2 GetRenderPos(Vec2 _vObjPos)
 	{
