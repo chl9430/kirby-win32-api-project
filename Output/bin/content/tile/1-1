@@ -605,6 +605,30 @@ Stage1TileButton3
 Stage1TileButton5
 
 [Tile Pos]
+340 340
+
+[Tile Texture]
+Stage1TileButton0
+
+[Tile Pos]
+380 340
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+420 340
+
+[Tile Texture]
+Stage1TileButton1
+
+[Tile Pos]
+460 340
+
+[Tile Texture]
+Stage1TileButton2
+
+[Tile Pos]
 1060 340
 
 [Tile Texture]
@@ -633,6 +657,30 @@ Stage1TileButton4
 
 [Tile Texture]
 Stage1TileButton5
+
+[Tile Pos]
+340 380
+
+[Tile Texture]
+Stage1TileButton6
+
+[Tile Pos]
+380 380
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+420 380
+
+[Tile Texture]
+Stage1TileButton7
+
+[Tile Pos]
+460 380
+
+[Tile Texture]
+Stage1TileButton8
 
 [Tile Pos]
 1060 380
